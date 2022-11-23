@@ -6,7 +6,9 @@ using UnityEngine;
 public class Frustum : MonoBehaviour
 {
     /*====== PUBLIC ======*/
-    public float radius = 1;
+    public float height = 1;
+    public float top_radius = 0.9F;
+    public float base_radius = 1F;
     public int circle_subdivisions = 30;
 
     /*====== PRIVATE ======*/
@@ -22,17 +24,17 @@ public class Frustum : MonoBehaviour
 
         this.GetComponent<MeshFilter>().mesh = mesh;
 
-        CreateFrustum();
+        draw();
     }
 
     // OnValidate is called at each public input change
     private void OnValidate() {
-        CreateFrustum();
+        draw();
     }
 
-    private void CreateFrustum() {
-        vao = ComputeCircleVao(new Vector3(0,0,0), radius, circle_subdivisions);
-        ibo = ComputeCircleIbo(circle_subdivisions);
+    private void draw() {
+        ComputeFrustumVao();
+        ComputeFrustumIbo();
 
         mesh.Clear();
         mesh.vertices = vao;
@@ -43,7 +45,19 @@ public class Frustum : MonoBehaviour
         mesh.Optimize();
     }
 
-    private Vector3[] ComputeCircleVao(Vector3 origin, float radius, int nb_subdivisions) {
+    private void ComputeFrustumVao()
+    {
+        // COMPUTE BASE VERTICES
+        List<Vector3> vertices = ComputeCircleVertices(transform.position, base_radius, circle_subdivisions);
+    
+        // ADD TOP VERTICES
+        Vector3 top_origin = transform.position + new Vector3(0, height, 0);
+        vertices.AddRange(ComputeCircleVertices(top_origin, top_radius, circle_subdivisions));
+        
+        vao = vertices.ToArray();
+    }
+
+    private List<Vector3> ComputeCircleVertices(Vector3 origin, float radius, int nb_subdivisions) {
         List<Vector3> vao = new List<Vector3>();
         float step_angle = (2*Mathf.PI)/nb_subdivisions;
 
@@ -60,25 +74,43 @@ public class Frustum : MonoBehaviour
             vao.Add(new_vertex);
         }
 
-        return vao.ToArray();
+        return vao;
     }
 
-    private int[] ComputeCircleIbo(int nb_vertices) {
-        List<int> ibo = new List<int>();
-        int nb_triangles = nb_vertices - 2;
+    private void ComputeFrustumIbo() {
+        List<int> indices = new List<int>();
+        int nb_vertices = vao.Length;
+        int nb_vertices_per_circle = nb_vertices/2;
+        int nb_triangles =  nb_vertices_per_circle - 2;
 
+        // DRAW BASE
         for(int i = 0; i < nb_triangles; ++i){
-            ibo.Add(0);
-            ibo.Add(i+1);
-            ibo.Add(i+2);
+            indices.Add(0);
+            indices.Add(i + 1);
+            indices.Add(i + 2);
         }
 
-        return ibo.ToArray();
-    }
+        // DRAW TOP
+        for(int i = nb_vertices_per_circle; i < nb_vertices_per_circle + nb_triangles; ++i){
+            indices.Add(nb_vertices_per_circle);
+            indices.Add(i + 2);
+            indices.Add(i + 1);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // DRAW SIDES
+        for(int i = 0; i < nb_vertices_per_circle; ++i){
+            int next_index = (i + 1) % nb_vertices_per_circle;
+
+            indices.Add(i);                                     // BOTTOM LEFT
+            indices.Add( nb_vertices_per_circle + next_index);  // TOP RIGHT
+            indices.Add(next_index);                            // BOTTOM RIGHT
+
+
+            indices.Add(i);                                     // BOTTOM LEFT
+            indices.Add(i + nb_vertices_per_circle);            // TOP LEFT
+            indices.Add(nb_vertices_per_circle + next_index);   // TOP RIGHT
+        }
+
+        ibo = indices.ToArray();
     }
 }
