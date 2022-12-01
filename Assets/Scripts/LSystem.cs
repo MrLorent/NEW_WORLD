@@ -9,16 +9,15 @@ public class TransformInfos {
     public Quaternion rotation;
 }
 
-[ExecuteInEditMode]
 public class LSystem : MonoBehaviour
 {
     /*====== PUBLIC ======*/
     [Header("PEFABS")]
-    [SerializeField] private GameObject Branch;
+    [SerializeField] private GameObject branch;
 
     [Header("TREE PARAMETERS")]
     [SerializeField] private int number_of_iterations = 2;
-    [SerializeField] private float length = 10;
+    [SerializeField] private float length = 1;
     [SerializeField] private float x_angle = 30;
     [SerializeField] private float y_angle = 120;
     [SerializeField] private float z_angle = 30;
@@ -28,15 +27,12 @@ public class LSystem : MonoBehaviour
     private Dictionary<char, string> rules;
     private const string AXIOM = "X";
 
-    private GameObject TreeParent;
     private GameObject Tree = null;
     private string currentString = string.Empty;
 
     // Start is called before the first frame update
     void Start()
     {
-        TreeParent = new GameObject("Tree");
-        TreeParent.transform.parent = transform;
         transformStack = new Stack<TransformInfos>();
         rules = new Dictionary<char, string>
         {
@@ -54,8 +50,8 @@ public class LSystem : MonoBehaviour
     private void Generate()
     {
         Destroy(Tree);
-
-        Tree = Instantiate(TreeParent);
+        
+        Tree = new GameObject("Tree");
 
         currentString = AXIOM;
 
@@ -85,41 +81,45 @@ public class LSystem : MonoBehaviour
                     Vector3 initialPosition = transform.position;
                     transform.Translate(Vector3.up * length);
 
-                    GameObject treeSegment = Instantiate(Branch);
-                    treeSegment.transform.parent = Tree.transform;
-                    treeSegment.GetComponent<LineRenderer>().SetPosition(0, initialPosition);
-                    treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
+                    GameObject treeSegment = Instantiate(
+                        branch,
+                        transform.position,
+                        transform.rotation,
+                        Tree.transform
+                    );
+                    treeSegment.transform.localScale = new Vector3(1, length, 1);
+                    
                     break;
 
                 case 'X':
                     break;
                     
                 case '+':
-                    transform.Rotate(Vector3.up * -y_angle);
+                    transform.rotation *= Quaternion.AngleAxis(-y_angle, Vector3.up);
                     break;
                     
                 case '-':
-                    transform.Rotate(Vector3.up * y_angle);
+                    transform.rotation *= Quaternion.AngleAxis(y_angle, Vector3.up);
                     break;
                 
                 case '&':
-                    transform.Rotate(Vector3.right * x_angle);
+                    transform.rotation *= Quaternion.AngleAxis(x_angle, Vector3.right);
                     break;
                     
                 case '^':
-                    transform.Rotate(Vector3.right * -x_angle);
+                    transform.rotation *= Quaternion.AngleAxis(-x_angle, Vector3.right);
                     break;
 
                 case '>':
-                    transform.Rotate(Vector3.forward * z_angle);
+                    transform.rotation *= Quaternion.AngleAxis(z_angle, Vector3.forward);
                     break;
                     
                 case '<':
-                    transform.Rotate(Vector3.forward * -z_angle);
+                    transform.rotation *= Quaternion.AngleAxis(-z_angle, Vector3.forward);
                     break;
 
                 case '|':
-                    transform.Rotate(Vector3.up * 180);
+                    transform.rotation *= Quaternion.AngleAxis(180, Vector3.up);
                     break;
                     
                 case '[':
