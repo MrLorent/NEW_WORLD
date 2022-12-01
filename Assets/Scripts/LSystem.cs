@@ -39,20 +39,15 @@ public class LSystem : MonoBehaviour
             {'X', "[F[&FX][+&FX][-&FX]]"},
             {'F', "FF"}
         };
-
-        Generate();
+        GeneratePattern();
+        Draw();
     }
 
     private void OnValidate() {
-        Generate();    
+        Draw();    
     }
 
-    private void Generate()
-    {
-        Destroy(Tree);
-        
-        Tree = new GameObject("Tree");
-
+    private void GeneratePattern() {
         currentString = AXIOM;
 
         StringBuilder sb = new StringBuilder();
@@ -72,6 +67,13 @@ public class LSystem : MonoBehaviour
             currentString = sb.ToString();
             sb = new StringBuilder();
         }
+    }
+
+    private void Draw()
+    {
+        Destroy(Tree);
+        
+        Tree = new GameObject("Tree");
 
         foreach (char c in currentString)
         {
