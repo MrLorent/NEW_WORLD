@@ -34,10 +34,7 @@ public class LSystem : MonoBehaviour
 
     [Header("TREE PARAMETERS")]
     [SerializeField] private int number_of_iterations = 2;
-    [SerializeField] private float length = 1;
-    [SerializeField] private float x_angle = 30;
-    [SerializeField] private float y_angle = 120;
-    [SerializeField] private float z_angle = 30;
+    
 
     /*====== PRIVATE ======*/
     private Stack<TransformInfos> transformStack;
@@ -101,7 +98,6 @@ public class LSystem : MonoBehaviour
                             
                             char_idx = count;
                         }
-                        Debug.Log(new_instruction._name + ", " + new_instruction._value);
                         instructions.Add(new_instruction);
                         break;
                 }
@@ -147,7 +143,7 @@ public class LSystem : MonoBehaviour
             {
                 case 'F':
                     Vector3 initialPosition = transform.position;
-                    transform.Translate(Vector3.up * length);
+                    transform.Translate(Vector3.up * i._value);
 
                     GameObject treeSegment = Instantiate(
                         branch,
@@ -155,7 +151,7 @@ public class LSystem : MonoBehaviour
                         transform.rotation,
                         Tree.transform
                     );
-                    treeSegment.transform.localScale = new Vector3(1, length, 1);
+                    treeSegment.transform.localScale = new Vector3(1, i._value, 1);
                     
                     break;
 
@@ -163,31 +159,31 @@ public class LSystem : MonoBehaviour
                     break;
                     
                 case '+':
-                    transform.rotation *= Quaternion.AngleAxis(-y_angle, Vector3.up);
+                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.down);
                     break;
                     
                 case '-':
-                    transform.rotation *= Quaternion.AngleAxis(y_angle, Vector3.up);
+                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.up);
                     break;
                 
                 case '&':
-                    transform.rotation *= Quaternion.AngleAxis(x_angle, Vector3.right);
+                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.right);
                     break;
                     
                 case '^':
-                    transform.rotation *= Quaternion.AngleAxis(-x_angle, Vector3.right);
+                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.left);
                     break;
 
                 case '>':
-                    transform.rotation *= Quaternion.AngleAxis(z_angle, Vector3.forward);
+                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.forward);
                     break;
                     
                 case '<':
-                    transform.rotation *= Quaternion.AngleAxis(-z_angle, Vector3.forward);
+                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.back);
                     break;
 
                 case '|':
-                    transform.rotation *= Quaternion.AngleAxis(180, Vector3.up);
+                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.up);
                     break;
                     
                 case '[':
