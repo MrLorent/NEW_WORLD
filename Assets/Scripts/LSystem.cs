@@ -9,6 +9,23 @@ public class TransformInfos {
     public Quaternion rotation;
 }
 
+public class Instruction {
+    public char _name;
+    public float _value;
+
+    public Instruction(char name)
+    {
+        _name = name;
+        _value = 0.0F;
+    }
+
+    public Instruction(char name, float value)
+    {
+        _name = name;
+        _value = value;
+    }
+}
+
 public class LSystem : MonoBehaviour
 {
     /*====== PUBLIC ======*/
@@ -24,8 +41,10 @@ public class LSystem : MonoBehaviour
 
     /*====== PRIVATE ======*/
     private Stack<TransformInfos> transformStack;
-    private Dictionary<char, string> rules;
+    private Dictionary<char, string> string_rules;
+    private Dictionary<char, List<Instruction>> rules;
     private const string AXIOM = "X";
+    private List<Instruction> pattern = new List<Instruction>();
 
     private GameObject Tree = null;
     private string currentString = string.Empty;
@@ -34,50 +53,97 @@ public class LSystem : MonoBehaviour
     void Start()
     {
         transformStack = new Stack<TransformInfos>();
-        rules = new Dictionary<char, string>
+        string_rules = new Dictionary<char, string>
         {
-            {'X', "[F[&FX][+&FX][-&FX]]"},
-            {'F', "FF"}
+            {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
+            {'F', "F(5)F(5)"}
         };
+        rules = new Dictionary<char, List<Instruction>>();
+        
+        TraduceRules();
         GeneratePattern();
         Draw();
     }
 
     private void OnValidate() {
-        Draw();    
+        Draw();
+    }
+
+    private void TraduceRules() {
+        foreach(KeyValuePair<char,string> rule in string_rules)
+        {
+            String string_rule = string_rules[rule.Key];
+            List<Instruction> instructions = new List<Instruction>();
+
+            for(int char_idx = 0; char_idx < string_rule.Length; ++char_idx)
+            {
+                switch(char_idx)
+                {
+                    case '|':
+                        instructions.Add(new Instruction('|', 180));
+                        break;
+
+                    default:
+                        Instruction new_instruction = new Instruction(string_rule[char_idx]);
+                        
+                        if(char_idx+1 < string_rule.Length && string_rule[char_idx+1] == '(')
+                        {
+                            String string_value = "";
+                            int count = char_idx + 2;
+
+                            while(string_rule[count] != ')')
+                            {
+                                string_value += string_rule[count];
+                                count++;
+                            }
+
+                            new_instruction._value = float.Parse(string_value);
+                            
+                            char_idx = count;
+                        }
+                        Debug.Log(new_instruction._name + ", " + new_instruction._value);
+                        instructions.Add(new_instruction);
+                        break;
+                }
+            }
+            rules.Add(rule.Key, instructions);
+        }
     }
 
     private void GeneratePattern() {
-        currentString = AXIOM;
-
-        StringBuilder sb = new StringBuilder();
+        List<Instruction> tmp_pattern = new List<Instruction>();
+        pattern.Add(new Instruction('X'));
 
         for(int i = 0; i < number_of_iterations; ++i)
         {
             // For each character in our current string,
             // We check if there is an evolution rule we
             // need to apply 
-            foreach(char c in currentString)
+            foreach(Instruction instruct in pattern)
             {
-                sb.Append(rules.ContainsKey(c) ? rules[c] : c.ToString());
+                if(rules.ContainsKey(instruct._name)){
+                    tmp_pattern.AddRange(rules[instruct._name]);
+                }else{
+                    tmp_pattern.Add(instruct);
+                }
+                
             }
 
             // We store this need evolution iteration
             // in our tree pattern
-            currentString = sb.ToString();
-            sb = new StringBuilder();
+            pattern = tmp_pattern;
+            tmp_pattern = new List<Instruction>();
         }
     }
 
     private void Draw()
     {
         Destroy(Tree);
-        
         Tree = new GameObject("Tree");
 
-        foreach (char c in currentString)
+        foreach (Instruction i in pattern)
         {
-            switch(c)
+            switch(i._name)
             {
                 case 'F':
                     Vector3 initialPosition = transform.position;
@@ -141,7 +207,8 @@ public class LSystem : MonoBehaviour
                     break;
                     
                 default:
-                    throw new InvalidOperationException("Invalid L-Tree operation");
+                    Debug.Log("Invalid L-Tree operation");
+                    break;
             }
         }
     }
