@@ -26,6 +26,19 @@ public class Instruction {
     }
 }
 
+public class LSystemParams {
+    public String _axiom;
+    public Dictionary<char, string> _rules;
+    public Dictionary<char, float> _constants;
+
+    public LSystemParams(String axiom, Dictionary<char, string> rules, Dictionary<char, float> constants)
+    {
+        _axiom = axiom;
+        _rules = rules;
+        _constants = constants;
+    }
+}
+
 public class LSystem : MonoBehaviour
 {
     /*====== PUBLIC ======*/
@@ -38,31 +51,39 @@ public class LSystem : MonoBehaviour
 
     /*====== PRIVATE ======*/
     private Stack<TransformInfos> transformStack;
-    private Dictionary<char, string> string_rules;
+    private LSystemParams tree_params;
+    private List<Instruction> axiom;
     private Dictionary<char, List<Instruction>> rules;
-    private const string AXIOM = "X";
     private List<Instruction> pattern = new List<Instruction>();
-
     private GameObject Tree = null;
-    private string currentString = string.Empty;
 
     // Start is called before the first frame update
     void Start()
     {
-        transformStack = new Stack<TransformInfos>();
-        // string_rules = new Dictionary<char, string>
+        String string_axiom = "X";
+        // Dictionary<char, string> string_rules = new Dictionary<char, string>
         // {
         //     {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
         //     {'F', "F(5)F(5)"}
         // };
-        string_rules = new Dictionary<char, string>
+        Dictionary<char, string> string_rules = new Dictionary<char, string>
         {
             {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
             {'F', "F(5)F(5)"}
         };
+        Dictionary<char, float> constants = new Dictionary<char, float>();
+
+        tree_params = new LSystemParams(
+            string_axiom,
+            string_rules,
+            constants
+        );
+
+        transformStack = new Stack<TransformInfos>();
+        axiom = TraduceStringExpression(tree_params._axiom);
         rules = new Dictionary<char, List<Instruction>>();
         
-        TraduceRules();
+        TraduceRules(tree_params._rules, ref rules);
         GeneratePattern();
         Draw();
     }
@@ -109,18 +130,18 @@ public class LSystem : MonoBehaviour
         return instructions;
     }
 
-    private void TraduceRules() {
+    private void TraduceRules(Dictionary<char, String> string_rules, ref Dictionary<char, List<Instruction>> algorithmic_rules) {
         foreach(KeyValuePair<char,string> rule in string_rules)
         {
             String string_rule = string_rules[rule.Key];
             List<Instruction> instructions = TraduceStringExpression(string_rule);
-            rules.Add(rule.Key, instructions);
+            algorithmic_rules.Add(rule.Key, instructions);
         }
     }
 
     private void GeneratePattern() {
         List<Instruction> tmp_pattern = new List<Instruction>();
-        pattern.Add(new Instruction('X'));
+        pattern.AddRange(axiom);
 
         for(int i = 0; i < number_of_iterations; ++i)
         {
