@@ -50,6 +50,11 @@ public class LSystem : MonoBehaviour
     void Start()
     {
         transformStack = new Stack<TransformInfos>();
+        // string_rules = new Dictionary<char, string>
+        // {
+        //     {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
+        //     {'F', "F(5)F(5)"}
+        // };
         string_rules = new Dictionary<char, string>
         {
             {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
@@ -66,42 +71,49 @@ public class LSystem : MonoBehaviour
         Draw();
     }
 
+    private List<Instruction> TraduceStringExpression(String string_expression)
+    {
+        List<Instruction> instructions = new List<Instruction>();
+
+        for(int char_idx = 0; char_idx < string_expression.Length; ++char_idx)
+        {
+            switch(string_expression[char_idx])
+            {
+                case '|':
+                    instructions.Add(new Instruction('|', 180));
+                    break;
+
+                default:
+                    Instruction new_instruction = new Instruction(string_expression[char_idx]);
+                    
+                    if(char_idx+1 < string_expression.Length && string_expression[char_idx+1] == '(')
+                    {
+                        String string_value = "";
+                        int count = char_idx + 2;
+
+                        while(string_expression[count] != ')')
+                        {
+                            string_value += string_expression[count];
+                            count++;
+                        }
+
+                        new_instruction._value = float.Parse(string_value);
+                        
+                        char_idx = count;
+                    }
+                    instructions.Add(new_instruction);
+                    break;
+            }
+        }
+
+        return instructions;
+    }
+
     private void TraduceRules() {
         foreach(KeyValuePair<char,string> rule in string_rules)
         {
             String string_rule = string_rules[rule.Key];
-            List<Instruction> instructions = new List<Instruction>();
-
-            for(int char_idx = 0; char_idx < string_rule.Length; ++char_idx)
-            {
-                switch(char_idx)
-                {
-                    case '|':
-                        instructions.Add(new Instruction('|', 180));
-                        break;
-
-                    default:
-                        Instruction new_instruction = new Instruction(string_rule[char_idx]);
-                        
-                        if(char_idx+1 < string_rule.Length && string_rule[char_idx+1] == '(')
-                        {
-                            String string_value = "";
-                            int count = char_idx + 2;
-
-                            while(string_rule[count] != ')')
-                            {
-                                string_value += string_rule[count];
-                                count++;
-                            }
-
-                            new_instruction._value = float.Parse(string_value);
-                            
-                            char_idx = count;
-                        }
-                        instructions.Add(new_instruction);
-                        break;
-                }
-            }
+            List<Instruction> instructions = TraduceStringExpression(string_rule);
             rules.Add(rule.Key, instructions);
         }
     }
