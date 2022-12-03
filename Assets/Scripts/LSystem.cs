@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using System;
+using System.Globalization;
 
 public class TransformInfos {
     public Vector3 position;
@@ -61,16 +62,18 @@ public class LSystem : MonoBehaviour
     void Start()
     {
         String string_axiom = "X";
-        // Dictionary<char, string> string_rules = new Dictionary<char, string>
-        // {
-        //     {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
-        //     {'F', "F(5)F(5)"}
-        // };
         Dictionary<char, string> string_rules = new Dictionary<char, string>
         {
             {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
             {'F', "F(5)F(5)"}
         };
+        // String string_axiom = "!(1)F(200)>(45)A";
+        // Dictionary<char, string> string_rules = new Dictionary<char, string>
+        // {
+        //     {'A', "[!(1.732)F(50)[&(18.95)F(50)A]>(94.74)[&(18.95)F(50)A]>(132.63)[&(18.95))F(50)A]"},
+        //     {'F', "F(1.109)"},
+        //     {'!', "!(1.732)"},
+        // };
         Dictionary<char, float> constants = new Dictionary<char, float>();
 
         tree_params = new LSystemParams(
@@ -118,7 +121,7 @@ public class LSystem : MonoBehaviour
                             count++;
                         }
 
-                        new_instruction._value = float.Parse(string_value);
+                        new_instruction._value = float.Parse(string_value, CultureInfo.InvariantCulture);
                         
                         char_idx = count;
                     }
@@ -152,6 +155,7 @@ public class LSystem : MonoBehaviour
             {
                 if(rules.ContainsKey(instruct._name)){
                     tmp_pattern.AddRange(rules[instruct._name]);
+                   
                 }else{
                     tmp_pattern.Add(instruct);
                 }
@@ -180,11 +184,11 @@ public class LSystem : MonoBehaviour
 
                     GameObject treeSegment = Instantiate(
                         branch,
-                        transform.position,
+                        initialPosition,
                         transform.rotation,
                         Tree.transform
                     );
-                    treeSegment.transform.localScale = new Vector3(1, i._value, 1);
+                    treeSegment.transform.localScale = new Vector3(1, i._value * 0.5F, 1);
                     
                     break;
 
@@ -224,7 +228,7 @@ public class LSystem : MonoBehaviour
                     transformStack.Push(new TransformInfos()
                     {
                         position = transform.position,
-                        rotation = transform.rotation
+                        rotation = transform.rotation,
                     });
                     break;
                     
