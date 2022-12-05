@@ -8,19 +8,21 @@ using System.Globalization;
 public class TransformInfos {
     public Vector3 position;
     public Quaternion rotation;
+    public float length;
+    public float width;
 }
 
 public class Instruction {
     public char _name;
-    public float _value;
+    public String _value;
 
     public Instruction(char name)
     {
         _name = name;
-        _value = 0.0F;
+        _value = null;
     }
 
-    public Instruction(char name, float value)
+    public Instruction(char name, String value)
     {
         _name = name;
         _value = value;
@@ -30,9 +32,9 @@ public class Instruction {
 public class LSystemParams {
     public String _axiom;
     public Dictionary<char, string> _rules;
-    public Dictionary<char, float> _constants;
+    public Dictionary<String, float> _constants;
 
-    public LSystemParams(String axiom, Dictionary<char, string> rules, Dictionary<char, float> constants)
+    public LSystemParams(String axiom, Dictionary<char, string> rules, Dictionary<String, float> constants)
     {
         _axiom = axiom;
         _rules = rules;
@@ -47,34 +49,37 @@ public class LSystem : MonoBehaviour
     [SerializeField] private GameObject branch;
 
     [Header("TREE PARAMETERS")]
-    [SerializeField] private int number_of_iterations = 2;
+    [SerializeField] private int number_of_iterations = 1;
     
 
     /*====== PRIVATE ======*/
-    private Stack<TransformInfos> transformStack;
     private LSystemParams tree_params;
-    private List<Instruction> axiom;
-    private Dictionary<char, List<Instruction>> rules;
+    private List<Instruction> axiom = new List<Instruction>();
+    private Dictionary<char, List<Instruction>> rules = new Dictionary<char, List<Instruction>>();
+    private Dictionary<String, float> constants;
     private List<Instruction> pattern = new List<Instruction>();
+    private Stack<TransformInfos> transformStack = new Stack<TransformInfos>();
     private GameObject Tree = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        String string_axiom = "X";
+        String string_axiom = "!(wr)F(l)[&(a0)!(wr)!(r2)B]+(d)!(wr)!(r1)A";
         Dictionary<char, string> string_rules = new Dictionary<char, string>
         {
-            {'X', "[F(5)[&(30)F(5)X][+(120)&(30)F(5)X][-(120)&(30)F(5)X]]"},
-            {'F', "F(5)F(5)"}
+            {'A', "F(l)[&(a0)!(wr)!(r2)B]+(d)!(wr)!(r1)A"},
+            {'B', "F(l)[-(a2)$!(wr)!(r2)C]!(wr)!(r1)C"},
+            {'C', "F(l)[+(a2)$!(wr)!(r2)B]!(wr)!(r1)B"}
         };
-        // String string_axiom = "!(1)F(200)>(45)A";
-        // Dictionary<char, string> string_rules = new Dictionary<char, string>
-        // {
-        //     {'A', "[!(1.732)F(50)[&(18.95)F(50)A]>(94.74)[&(18.95)F(50)A]>(132.63)[&(18.95))F(50)A]"},
-        //     {'F', "F(1.109)"},
-        //     {'!', "!(1.732)"},
-        // };
-        Dictionary<char, float> constants = new Dictionary<char, float>();
+        constants = new Dictionary<String, float>()
+        {
+            {"r1", 0.9F},
+            {"r2", 0.7F},
+            {"a0", 45.0F},
+            {"a2", 45.0F},
+            {"d", 92.5F},
+            {"wr", 0.707F},
+        };
 
         tree_params = new LSystemParams(
             string_axiom,
@@ -82,11 +87,9 @@ public class LSystem : MonoBehaviour
             constants
         );
 
-        transformStack = new Stack<TransformInfos>();
         axiom = TraduceStringExpression(tree_params._axiom);
-        rules = new Dictionary<char, List<Instruction>>();
-        
         TraduceRules(tree_params._rules, ref rules);
+
         GeneratePattern();
         Draw();
     }
@@ -104,7 +107,7 @@ public class LSystem : MonoBehaviour
             switch(string_expression[char_idx])
             {
                 case '|':
-                    instructions.Add(new Instruction('|', 180));
+                    instructions.Add(new Instruction('|', "180"));
                     break;
 
                 default:
@@ -121,7 +124,7 @@ public class LSystem : MonoBehaviour
                             count++;
                         }
 
-                        new_instruction._value = float.Parse(string_value, CultureInfo.InvariantCulture);
+                        new_instruction._value = string_value;
                         
                         char_idx = count;
                     }
@@ -169,18 +172,26 @@ public class LSystem : MonoBehaviour
         }
     }
 
+    private float GetInstructionValue(String value)
+    {
+        return constants.ContainsKey(value) ? constants[value] : float.Parse(value, CultureInfo.InvariantCulture);
+    }
+
     private void Draw()
     {
         Destroy(Tree);
         Tree = new GameObject("Tree");
+        float length = 10;
+        float width = 1;
 
         foreach (Instruction i in pattern)
         {
             switch(i._name)
             {
                 case 'F':
+                    float value = i._value == "l" ? length : GetInstructionValue(i._value);
                     Vector3 initialPosition = transform.position;
-                    transform.Translate(Vector3.up * i._value);
+                    transform.Translate(Vector3.up * value);
 
                     GameObject treeSegment = Instantiate(
                         branch,
@@ -188,39 +199,67 @@ public class LSystem : MonoBehaviour
                         transform.rotation,
                         Tree.transform
                     );
-                    treeSegment.transform.localScale = new Vector3(1, i._value * 0.5F, 1);
+                    treeSegment.transform.localScale = new Vector3(width, value * 0.5F, width);
                     
                     break;
 
-                case 'X':
+                case 'A':
+                    break;
+                
+                case 'B':
+                    break;
+                
+                case 'C':
                     break;
                     
                 case '+':
-                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.down);
+                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.down);
                     break;
                     
                 case '-':
-                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.up);
+                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.up);
                     break;
                 
                 case '&':
-                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.right);
+                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.right);
                     break;
                     
                 case '^':
-                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.left);
+                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.left);
                     break;
 
                 case '>':
-                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.forward);
+                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.forward);
                     break;
                     
                 case '<':
-                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.back);
+                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.back);
                     break;
 
                 case '|':
-                    transform.rotation *= Quaternion.AngleAxis(i._value, Vector3.up);
+                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.up);
+                    break;
+
+                case '$':
+                    
+                    transform.rotation *= Quaternion.FromToRotation(transform.up, Vector3.up);
+                    break;
+
+                case '!':
+                    switch(i._value)
+                    {
+                        case "wr":
+                            width *= constants["wr"];
+                            break;
+                        
+                        case "r1":
+                            length *= constants["r1"];
+                            break;
+
+                        case "r2":
+                            length *= constants["r2"];
+                            break;
+                    }
                     break;
                     
                 case '[':
@@ -229,6 +268,8 @@ public class LSystem : MonoBehaviour
                     {
                         position = transform.position,
                         rotation = transform.rotation,
+                        length = length,
+                        width = width,
                     });
                     break;
                     
@@ -237,6 +278,8 @@ public class LSystem : MonoBehaviour
                     TransformInfos ti = transformStack.Pop();
                     transform.position = ti.position;
                     transform.rotation = ti.rotation;
+                    length = ti.length;
+                    width = ti.width;
                     break;
                     
                 default:
