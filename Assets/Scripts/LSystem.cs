@@ -1,33 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using System;
 using System.Globalization;
-
-public class TransformInfos {
-    public Vector3 position;
-    public Quaternion rotation;
-    public float length;
-    public float width;
-}
-
-public class Instruction {
-    public char _name;
-    public String _value;
-
-    public Instruction(char name)
-    {
-        _name = name;
-        _value = null;
-    }
-
-    public Instruction(char name, String value)
-    {
-        _name = name;
-        _value = value;
-    }
-}
 
 public class LSystemParams {
     public String _axiom;
