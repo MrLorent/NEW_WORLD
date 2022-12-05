@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Instruction {
     public char _name;
-    public String _value;
+    public string _value;
 
     public Instruction(char name)
     {

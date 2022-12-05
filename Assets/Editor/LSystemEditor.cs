@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(LSystem1))]
+[CustomEditor(typeof(LSystem))]
 public class LSystemEditor : Editor
 {
     public override void OnInspectorGUI()

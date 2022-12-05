@@ -1,101 +1,115 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using System.Globalization;
-
-public class LSystemParams {
-    public String _axiom;
-    public Dictionary<char, string> _rules;
-    public Dictionary<String, float> _constants;
-
-    public LSystemParams(String axiom, Dictionary<char, string> rules, Dictionary<String, float> constants)
-    {
-        _axiom = axiom;
-        _rules = rules;
-        _constants = constants;
-    }
-}
+using System;
+using UnityEngine;
 
 public class LSystem : MonoBehaviour
 {
     /*====== PUBLIC ======*/
     [Header("PEFABS")]
-    [SerializeField] private GameObject branch;
+    [SerializeField] private GameObject turtle_mesh;
+    [SerializeField] private GameObject branch_mesh;
 
-    [Header("TREE PARAMETERS")]
-    [SerializeField] private int number_of_iterations = 1;
+    [Header("L-SYSTEM BASE")]
+    [SerializeField] private string axiom   = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
+    [SerializeField] private string rule_A  = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
+    [SerializeField] private string rule_B  = "F(l)[-(a2)$!(wr)_(r2)C]!(wr)_(r1)C";
+    [SerializeField] private string rule_C  = "F(l)[+(a2)$!(wr)_(r2)B]!(wr)_(r1)B";
+
+    [Header("L-SYSTEM PARAMETERS")]
+    [SerializeField] private int iterations = 1;
+    [SerializeField] private float start_width = 1;
+    [SerializeField] private float start_length = 10;
     
+    [Range(0f, 1f)]
+    [SerializeField] private float r1 = 0.9F;
+
+    [Range(0f, 1f)]
+    [SerializeField] private float r2 = 0.7F;
+
+    [Range(0f, 1f)]
+    [SerializeField] private float wr = 0.707F;
+
+    [Range(0f, 360f)]
+    [SerializeField] private float a0 = 45F;
+
+    [Range(0f, 360f)]
+    [SerializeField] private float a2 = 45F;
+
+    [Range(0f, 360f)]
+    [SerializeField] private float d = 92.5F;
+
 
     /*====== PRIVATE ======*/
-    private LSystemParams tree_params;
-    private List<Instruction> axiom = new List<Instruction>();
-    private Dictionary<char, List<Instruction>> rules = new Dictionary<char, List<Instruction>>();
+    private List<Instruction> axiom_instructions;
+    private Dictionary<char, List<Instruction>> rules;
     private Dictionary<String, float> constants;
-    private List<Instruction> pattern = new List<Instruction>();
-    private Stack<TransformInfos> transformStack = new Stack<TransformInfos>();
-    private GameObject Tree = null;
+    private List<Instruction> pattern;
 
     // Start is called before the first frame update
     void Start()
     {
-        String string_axiom = "!(wr)F(l)[&(a0)!(wr)!(r2)B]+(d)!(wr)!(r1)A";
-        Dictionary<char, string> string_rules = new Dictionary<char, string>
-        {
-            {'A', "F(l)[&(a0)!(wr)!(r2)B]+(d)!(wr)!(r1)A"},
-            {'B', "F(l)[-(a2)$!(wr)!(r2)C]!(wr)!(r1)C"},
-            {'C', "F(l)[+(a2)$!(wr)!(r2)B]!(wr)!(r1)B"}
-        };
-        constants = new Dictionary<String, float>()
-        {
-            {"r1", 0.9F},
-            {"r2", 0.7F},
-            {"a0", 45.0F},
-            {"a2", 45.0F},
-            {"d", 92.5F},
-            {"wr", 0.707F},
-        };
-
-        tree_params = new LSystemParams(
-            string_axiom,
-            string_rules,
-            constants
-        );
-
-        axiom = TraduceStringExpression(tree_params._axiom);
-        TraduceRules(tree_params._rules, ref rules);
-
+        Init();
         GeneratePattern();
         Draw();
     }
 
-    private void OnValidate() {
+    void OnValidate()
+    {
+        Init();
+        GeneratePattern();
         Draw();
     }
 
-    private List<Instruction> TraduceStringExpression(String string_expression)
+    private void Init()
+    {
+        // TRADUCE AXIOM
+        axiom_instructions = GetInstructionsFrom(axiom);
+
+        // RULES
+        rules = new Dictionary<char, List<Instruction>>()
+        {
+            {'A', GetInstructionsFrom(rule_A)},
+            {'B', GetInstructionsFrom(rule_B)},
+            {'C', GetInstructionsFrom(rule_C)}
+        };
+
+        // CONSTANTS
+        constants = new Dictionary<String, float>()
+        {
+            {"r1", r1},
+            {"r2", r2},
+            {"a0", a0},
+            {"a2", a2},
+            {"d", d},
+            {"wr", wr},
+        };
+    }
+
+    private List<Instruction> GetInstructionsFrom(string expression)
     {
         List<Instruction> instructions = new List<Instruction>();
 
-        for(int char_idx = 0; char_idx < string_expression.Length; ++char_idx)
+        for(int char_idx = 0; char_idx < expression.Length; ++char_idx)
         {
-            switch(string_expression[char_idx])
+            switch(expression[char_idx])
             {
                 case '|':
                     instructions.Add(new Instruction('|', "180"));
                     break;
 
                 default:
-                    Instruction new_instruction = new Instruction(string_expression[char_idx]);
+                    Instruction new_instruction = new Instruction(expression[char_idx]);
                     
-                    if(char_idx+1 < string_expression.Length && string_expression[char_idx+1] == '(')
+                    if(char_idx+1 < expression.Length && expression[char_idx+1] == '(')
                     {
-                        String string_value = "";
+                        string string_value = "";
                         int count = char_idx + 2;
 
-                        while(string_expression[count] != ')')
+                        while(expression[count] != ')')
                         {
-                            string_value += string_expression[count];
+                            string_value += expression[count];
                             count++;
                         }
 
@@ -111,20 +125,11 @@ public class LSystem : MonoBehaviour
         return instructions;
     }
 
-    private void TraduceRules(Dictionary<char, String> string_rules, ref Dictionary<char, List<Instruction>> algorithmic_rules) {
-        foreach(KeyValuePair<char,string> rule in string_rules)
-        {
-            String string_rule = string_rules[rule.Key];
-            List<Instruction> instructions = TraduceStringExpression(string_rule);
-            algorithmic_rules.Add(rule.Key, instructions);
-        }
-    }
-
     private void GeneratePattern() {
         List<Instruction> tmp_pattern = new List<Instruction>();
-        pattern.AddRange(axiom);
+        pattern = axiom_instructions;
 
-        for(int i = 0; i < number_of_iterations; ++i)
+        for(int i = 0; i < iterations; ++i)
         {
             // For each character in our current string,
             // We check if there is an evolution rule we
@@ -154,28 +159,35 @@ public class LSystem : MonoBehaviour
 
     private void Draw()
     {
-        Destroy(Tree);
-        Tree = new GameObject("Tree");
-        float length = 10;
-        float width = 1;
+        DestroyChildren();
+
+        GameObject turtle = Instantiate(
+            turtle_mesh,
+            Vector3.zero,
+            Quaternion.identity,
+            transform
+        );
+
+        Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
+        float current_width = start_width;
+        float current_length = start_length;
 
         foreach (Instruction i in pattern)
         {
             switch(i._name)
             {
                 case 'F':
-                    float value = i._value == "l" ? length : GetInstructionValue(i._value);
-                    Vector3 initialPosition = transform.position;
-                    transform.Translate(Vector3.up * value);
+                    float value = i._value == "l" ? current_length : GetInstructionValue(i._value);
+                    Vector3 initial_position = turtle.transform.position;
+                    turtle.transform.Translate(Vector3.up * value);
 
-                    GameObject treeSegment = Instantiate(
-                        branch,
-                        initialPosition,
-                        transform.rotation,
-                        Tree.transform
+                    GameObject branch = Instantiate(
+                        branch_mesh,
+                        initial_position,
+                        turtle.transform.rotation,
+                        transform
                     );
-                    treeSegment.transform.localScale = new Vector3(width, value * 0.5F, width);
-                    
+                    branch.transform.localScale = new Vector3(current_width, value * 0.5F, current_width);
                     break;
 
                 case 'A':
@@ -188,73 +200,63 @@ public class LSystem : MonoBehaviour
                     break;
                     
                 case '+':
-                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.down);
+                    turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.down);
                     break;
                     
                 case '-':
-                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.up);
+                    turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.up);
                     break;
                 
                 case '&':
-                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.right);
+                    turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.right);
                     break;
                     
                 case '^':
-                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.left);
+                    turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.left);
                     break;
 
                 case '>':
-                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.forward);
+                    turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.forward);
                     break;
                     
                 case '<':
-                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.back);
+                    turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.back);
                     break;
 
                 case '|':
-                    transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.up);
+                    turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.up);
                     break;
 
                 case '$':
-                    
-                    transform.rotation *= Quaternion.FromToRotation(transform.up, Vector3.up);
+                    turtle.transform.rotation *= Quaternion.FromToRotation(turtle.transform.up, Vector3.up);
                     break;
 
                 case '!':
-                    switch(i._value)
-                    {
-                        case "wr":
-                            width *= constants["wr"];
-                            break;
-                        
-                        case "r1":
-                            length *= constants["r1"];
-                            break;
-
-                        case "r2":
-                            length *= constants["r2"];
-                            break;
-                    }
+                    current_width *= constants[i._value];
+                    break;
+                
+                case '_':
+                    current_length *= constants[i._value];
                     break;
                     
                 case '[':
                     // We save the current position
-                    transformStack.Push(new TransformInfos()
+                    transform_history.Push(new TransformInfos()
                     {
-                        position = transform.position,
-                        rotation = transform.rotation,
-                        length = length,
-                        width = width,
+                        position = turtle.transform.position,
+                        rotation = turtle.transform.rotation,
+                        length = current_length,
+                        width = current_width,
                     });
                     break;
                     
                 case ']':
                     // We go back to the previous position saved
-                    TransformInfos ti = transformStack.Pop();
-                    transform.position = ti.position;
-                    transform.rotation = ti.rotation;
-                    length = ti.length;
-                    width = ti.width;
+                    TransformInfos ti = transform_history.Pop();
+                    turtle.transform.position = ti.position;
+                    turtle.transform.rotation = ti.rotation;
+                    current_length = ti.length;
+                    current_width = ti.width;
                     break;
                     
                 default:
@@ -263,5 +265,11 @@ public class LSystem : MonoBehaviour
             }
         }
     }
-    
+
+    private void DestroyChildren()
+    {
+        foreach (Transform child in transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
 }
