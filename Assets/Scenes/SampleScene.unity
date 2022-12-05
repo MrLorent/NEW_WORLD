@@ -294,7 +294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 250, z: -500}
+  m_LocalPosition: {x: 0, y: 10, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -310,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1815888011}
-  - component: {fileID: 1815888010}
+  - component: {fileID: 1815888012}
   m_Layer: 0
   m_Name: Tree Builder
   m_TagString: Untagged
@@ -318,24 +318,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1815888010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815888009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a295e083bbaf7c49a9012171e4c5174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  branch: {fileID: 249834124735456223, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
-  number_of_iterations: 5
-  length: 10
-  x_angle: 30
-  y_angle: 120
-  z_angle: 30
 --- !u!4 &1815888011
 Transform:
   m_ObjectHideFlags: 0
@@ -351,3 +333,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1815888012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815888009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9290cbea187b84e84cac7aec9050ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turtle_mesh: {fileID: 8246579523791496141, guid: 35c829f36c3b88b45b2fd93fd6cb26a3, type: 3}
+  branch_mesh: {fileID: 7588318906811468712, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
+  axiom: '!(wr)F(l)[&(a0)!(wr)!(r2)B]+(d)!(wr)!(r1)A'
+  rule_A: F(l)[&(a0)!(wr)!(r2)B]+(d)!(wr)!(r1)A
+  rule_B: F(l)[-(a2)$!(wr)!(r2)C]!(wr)!(r1)C
+  rule_C: F(l)[+(a2)$!(wr)!(r2)B]!(wr)!(r1)B
+  iterations: 5
+  start_width: 1
+  start_length: 10
+  r1: 0.9
+  r2: 0.7
+  wr: 0.707
+  a0: 45
+  a2: 45
+  d: 92.5
