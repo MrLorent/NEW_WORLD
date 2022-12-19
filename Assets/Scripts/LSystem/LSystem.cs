@@ -4,41 +4,63 @@ using System.Globalization;
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class LSystem : MonoBehaviour
 {
     /*====== PUBLIC ======*/
     [Header("PEFABS")]
-    [SerializeField] private GameObject turtle_mesh;
-    [SerializeField] private GameObject branch_mesh;
+    [SerializeField]
+    private GameObject turtle_mesh;
+    
+    [SerializeField]
+    private GameObject branch_mesh;
 
     [Header("L-SYSTEM BASE")]
-    [SerializeField] private string axiom   = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
-    [SerializeField] private string rule_A  = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
-    [SerializeField] private string rule_B  = "F(l)[-(a2)$!(wr)_(r2)C]!(wr)_(r1)C";
-    [SerializeField] private string rule_C  = "F(l)[+(a2)$!(wr)_(r2)B]!(wr)_(r1)B";
+    [SerializeField]
+    private string axiom   = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
+    
+    [SerializeField]
+    private string rule_A  = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
+    
+    [SerializeField]
+    private string rule_B  = "F(l)[-(a2)$!(wr)_(r2)C]!(wr)_(r1)C";
+    
+    [SerializeField]
+    private string rule_C  = "F(l)[+(a2)$!(wr)_(r2)B]!(wr)_(r1)B";
 
     [Header("L-SYSTEM PARAMETERS")]
-    [SerializeField] private int iterations = 1;
-    [SerializeField] private float start_width = 1;
-    [SerializeField] private float start_length = 10;
+    [SerializeField]
+    private int iterations = 1;
+    
+    [SerializeField]
+    private float start_width = 1;
+    
+    [SerializeField]
+    private float start_length = 10;
     
     [Range(0f, 1f)]
-    [SerializeField] private float r1 = 0.9F;
+    [SerializeField]
+    private float r1 = 0.9F;
 
     [Range(0f, 1f)]
-    [SerializeField] private float r2 = 0.7F;
+    [SerializeField]
+    private float r2 = 0.7F;
 
     [Range(0f, 1f)]
-    [SerializeField] private float wr = 0.707F;
+    [SerializeField]
+    private float wr = 0.707F;
 
     [Range(0f, 360f)]
-    [SerializeField] private float a0 = 45F;
+    [SerializeField]
+    private float a0 = 45F;
 
     [Range(0f, 360f)]
-    [SerializeField] private float a2 = 45F;
+    [SerializeField]
+    private float a2 = 45F;
 
     [Range(0f, 360f)]
-    [SerializeField] private float d = 92.5F;
+    [SerializeField]
+    private float d = 92.5F;
 
 
     /*====== PRIVATE ======*/
@@ -48,14 +70,9 @@ public class LSystem : MonoBehaviour
     private List<Instruction> pattern;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Init();
-    }
-
-    void OnValidate()
-    {
-        //Init();
     }
 
     public void Init()
@@ -163,7 +180,7 @@ public class LSystem : MonoBehaviour
 
     private void Draw()
     {
-        DestroyChildren();
+        Helpers.DestroyChildren(transform);
 
         GameObject turtle = Instantiate(
             turtle_mesh,
@@ -268,18 +285,11 @@ public class LSystem : MonoBehaviour
                     break;
             }
         }
-        //destroy turtle
-        Destroy(turtle.gameObject); //Why doesn't it work ???
-        //merge meshes
 
-    }
+        Helpers.Destroy(turtle.gameObject);
 
-    private void DestroyChildren()
-    {
-        // foreach (Transform child in transform) {
-        //     GameObject.Destroy(child.gameObject);
-        // }
-        Resources.UnloadUnusedAssets();
+        Helpers.MergeMeshes(this.gameObject);
 
+        Helpers.DestroyChildren(transform);
     }
 }
