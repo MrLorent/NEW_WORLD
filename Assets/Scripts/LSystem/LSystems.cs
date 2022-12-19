@@ -30,10 +30,10 @@ public class LSystems : MonoBehaviour
         _constants = new Dictionary<string, float>()
         {
             {"r1",  0.9F    },
-            {"r2",  0.7F    },
+            {"r2",  0.8F    },
             {"a0",  45.0F   },
             {"a2",  45.0F   },
-            {"d",   92.5F   },
+            {"d",   137.5F   },
             {"wr",  0.707F  },
         };
 

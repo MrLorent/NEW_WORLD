@@ -203,7 +203,8 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case '$':
-                    turtle.transform.rotation *= Quaternion.FromToRotation(turtle.transform.up, Vector3.up);
+                    Vector3 new_right = Vector3.Cross(Vector3.up, turtle.transform.forward) / Vector3.Cross(Vector3.up, turtle.transform.forward).magnitude;
+                    turtle.transform.rotation *= Quaternion.FromToRotation(turtle.transform.right, new_right);
                     break;
 
                 case '!':

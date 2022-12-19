@@ -45,6 +45,7 @@ public static class Helpers
 
         container.GetComponent<MeshFilter>().mesh.Clear();
         container.GetComponent<MeshFilter>().mesh = new Mesh();
+        container.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         container.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
         container.SetActive(true);
     }
