@@ -51,18 +51,21 @@ public class LSystem : MonoBehaviour
     void Start()
     {
         Init();
-        GeneratePattern();
-        Draw();
     }
 
     void OnValidate()
     {
-        Init();
+        //Init();
+    }
+
+    public void Init()
+    {
+        InititalizeAxiom();
         GeneratePattern();
         Draw();
     }
 
-    private void Init()
+    private void InititalizeAxiom()
     {
         // TRADUCE AXIOM
         axiom_instructions = GetInstructionsFrom(axiom);
@@ -150,6 +153,7 @@ public class LSystem : MonoBehaviour
             pattern = tmp_pattern;
             tmp_pattern = new List<Instruction>();
         }
+
     }
 
     private float GetInstructionValue(String value)
@@ -264,12 +268,18 @@ public class LSystem : MonoBehaviour
                     break;
             }
         }
+        //destroy turtle
+        Destroy(turtle.gameObject); //Why doesn't it work ???
+        //merge meshes
+
     }
 
     private void DestroyChildren()
     {
-        foreach (Transform child in transform) {
-            GameObject.Destroy(child.gameObject);
-        }
+        // foreach (Transform child in transform) {
+        //     GameObject.Destroy(child.gameObject);
+        // }
+        Resources.UnloadUnusedAssets();
+
     }
 }
