@@ -335,7 +335,7 @@ MonoBehaviour:
   turtle_mesh: {fileID: 8246579523791496141, guid: 35c829f36c3b88b45b2fd93fd6cb26a3, type: 3}
   branch_mesh: {fileID: 7588318906811468712, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
   iterations: 3
-  lsystem_base: {fileID: 11400000, guid: 98aeba2f567120e48a082a310d531c3e, type: 2}
+  lsystem_base: {fileID: 11400000, guid: b69a35d1cd5ef134a893fffe263cf58b, type: 2}
 --- !u!4 &1809634206
 Transform:
   m_ObjectHideFlags: 0
