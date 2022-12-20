@@ -44,11 +44,10 @@ public static class Helpers
 
 
         /* Update container mesh */
-        Mesh container_mesh = container.GetComponent<MeshFilter>().mesh;
-        container_mesh.Clear();
-        container_mesh = new Mesh();
-        container_mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-        container_mesh.CombineMeshes(combine);
+        container.GetComponent<MeshFilter>().mesh.Clear();
+        container.GetComponent<MeshFilter>().mesh = new Mesh();
+        container.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        container.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
         container.DestroyChildren();
     }
 }
