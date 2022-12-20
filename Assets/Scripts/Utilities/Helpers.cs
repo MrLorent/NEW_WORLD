@@ -14,21 +14,21 @@ public static class Helpers
     /// </summary>
     /// 
 
-    public static void Destroy(GameObject gameObject)
+    public static void Destroy(this Transform t)
     {
         if (Application.isPlaying)
         {
-            GameObject.Destroy(gameObject);
+            GameObject.Destroy(t.gameObject);
         }
         else
         {
-            GameObject.DestroyImmediate(gameObject);
+            GameObject.DestroyImmediate(t.gameObject);
         }
     }
 
     public static void DestroyChildren(this Transform t)
     {
-        foreach (Transform child in t) Destroy(child.gameObject);
+        foreach (Transform child in t) child.Destroy();
     }
 
     public static void MergeMeshes(GameObject container)
@@ -40,14 +40,17 @@ public static class Helpers
         {
             combine[i].mesh = mesh_filters[i].sharedMesh;
             combine[i].transform = mesh_filters[i].transform.localToWorldMatrix;
-            mesh_filters[i].gameObject.SetActive(false);
+            //mesh_filters[i].gameObject.SetActive(false);
         }
 
+        /* Prepare new merge Mesh */
+
+        /* Update container mesh */
         container.GetComponent<MeshFilter>().mesh.Clear();
         container.GetComponent<MeshFilter>().mesh = new Mesh();
         container.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         container.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
-        container.SetActive(true);
+        //container.SetActive(true);
     }
 }
 

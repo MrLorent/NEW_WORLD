@@ -18,15 +18,11 @@ public class LSystem : MonoBehaviour
     [Header("L-SYSTEM PARAMETERS")]
     [SerializeField]
     private int iterations = 1;
-    
+
     [SerializeField]
-    private float start_width = 1;
-    
-    [SerializeField]
-    private float start_length = 10;
+    private LSystemBase lsystem_base;
 
     /*====== PRIVATE ======*/
-    private LSystemBase lsystem_base;
     private List<Instruction> axiom_instructions;
     private Dictionary<char, List<Instruction>> rules;
     private Dictionary<String, float> constants;
@@ -35,7 +31,6 @@ public class LSystem : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        lsystem_base = LSystems.Instance.GetLSystemBase();
         InititalizeAxiom();
         Init();
     }
@@ -134,7 +129,7 @@ public class LSystem : MonoBehaviour
 
     private void Draw()
     {
-        Helpers.DestroyChildren(transform);
+        transform.DestroyChildren();
 
         GameObject turtle = Instantiate(
             turtle_mesh,
@@ -144,9 +139,8 @@ public class LSystem : MonoBehaviour
         );
 
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
-        float current_width = start_width;
-        float current_length = start_length;
-        Color color = new Color(1, 1, 1);
+        float current_width = lsystem_base.start_width;
+        float current_length = lsystem_base.start_length;
 
         foreach (Instruction i in pattern)
         {
@@ -164,17 +158,6 @@ public class LSystem : MonoBehaviour
                         transform
                     );
                     branch.transform.localScale = new Vector3(current_width, value * 0.5F, current_width);
-                    branch.GetComponentInChildren<MeshRenderer>().material.color = color;
-                    break;
-
-                case 'r':
-                    color = new Color(1, 0, 0);
-                    break;
-                case 'v':
-                    color = new Color(0, 1, 0);
-                    break;
-                case 'b':
-                    color = new Color(0, 0, 1);
                     break;
 
                 case 'A':
@@ -219,7 +202,6 @@ public class LSystem : MonoBehaviour
                     Quaternion delta = Quaternion.FromToRotation(turtle.transform.right, new_right);
                     delta.ToAngleAxis(out float angle, out Vector3 axis);
                     int direction = axis.y < 0 ? -1 : 1; 
-                    Debug.Log("\nAngle : " + angle + ", Vector3 : " + axis);
                     turtle.transform.Rotate(0.0F, angle * direction, 0.0F, Space.Self);
                     break;
 
@@ -257,10 +239,10 @@ public class LSystem : MonoBehaviour
             }
         }
 
-        Helpers.Destroy(turtle.gameObject);
+        turtle.transform.Destroy();
 
-       /* Helpers.MergeMeshes(this.gameObject);
+        Helpers.MergeMeshes(this.gameObject);
 
-        Helpers.DestroyChildren(transform);*/
+        transform.DestroyChildren();
     }
 }
