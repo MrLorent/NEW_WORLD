@@ -23,9 +23,9 @@ public class LSystems : MonoBehaviour
         _axiom = "F(l)[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A";
         _rules = new Dictionary<char, string>()
         {
-            {'A', "F(l)[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A"},
-            {'B', "F(l)[-(a2)$!(wr)\"(r2)C]!(wr)\"(r1)C"},
-            {'C', "F(l)[+(a2)$!(wr)\"(r2)B]!(wr)\"(r1)B"}
+            {'A', "rF(l)[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A"},
+            {'B', "vF(l)[+(15)>(a2)$!(wr)\"(r2)C]!(wr)\"(r1)C"},
+            {'C', "bF(l)[-(15)<(a2)$!(wr)\"(r2)B]!(wr)\"(r1)B"}
         };
         _constants = new Dictionary<string, float>()
         {

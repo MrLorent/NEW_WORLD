@@ -146,6 +146,7 @@ public class LSystem : MonoBehaviour
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
         float current_width = start_width;
         float current_length = start_length;
+        Color color = new Color(1, 1, 1);
 
         foreach (Instruction i in pattern)
         {
@@ -163,6 +164,17 @@ public class LSystem : MonoBehaviour
                         transform
                     );
                     branch.transform.localScale = new Vector3(current_width, value * 0.5F, current_width);
+                    branch.GetComponentInChildren<MeshRenderer>().material.color = color;
+                    break;
+
+                case 'r':
+                    color = new Color(1, 0, 0);
+                    break;
+                case 'v':
+                    color = new Color(0, 1, 0);
+                    break;
+                case 'b':
+                    color = new Color(0, 0, 1);
                     break;
 
                 case 'A':
@@ -203,8 +215,12 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case '$':
-                    Vector3 new_right = Vector3.Cross(Vector3.up, turtle.transform.forward) / Vector3.Cross(Vector3.up, turtle.transform.forward).magnitude;
-                    turtle.transform.rotation *= Quaternion.FromToRotation(turtle.transform.right, new_right);
+                    Vector3 new_right = Vector3.Cross(turtle.transform.up, Vector3.down);
+                    Quaternion delta = Quaternion.FromToRotation(turtle.transform.right, new_right);
+                    delta.ToAngleAxis(out float angle, out Vector3 axis);
+                    int direction = axis.y < 0 ? -1 : 1; 
+                    Debug.Log("\nAngle : " + angle + ", Vector3 : " + axis);
+                    turtle.transform.Rotate(0.0F, angle * direction, 0.0F, Space.Self);
                     break;
 
                 case '!':
@@ -243,8 +259,8 @@ public class LSystem : MonoBehaviour
 
         Helpers.Destroy(turtle.gameObject);
 
-        Helpers.MergeMeshes(this.gameObject);
+       /* Helpers.MergeMeshes(this.gameObject);
 
-        Helpers.DestroyChildren(transform);
+        Helpers.DestroyChildren(transform);*/
     }
 }
