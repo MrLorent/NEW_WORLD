@@ -334,19 +334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turtle_mesh: {fileID: 8246579523791496141, guid: 35c829f36c3b88b45b2fd93fd6cb26a3, type: 3}
   branch_mesh: {fileID: 7588318906811468712, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
-  axiom: F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A
-  rule_A: F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A
-  rule_B: F(l)[-(a2)$!(wr)_(r2)C]!(wr)_(r1)C
-  rule_C: F(l)[+(a2)$!(wr)_(r2)B]!(wr)_(r1)B
-  iterations: 1
-  start_width: 1
-  start_length: 10
-  r1: 0.9
-  r2: 0.7
-  wr: 0.707
-  a0: 45
-  a2: 45
-  d: 92.5
+  iterations: 3
+  lsystem_base: {fileID: 11400000, guid: b69a35d1cd5ef134a893fffe263cf58b, type: 2}
 --- !u!4 &1809634206
 Transform:
   m_ObjectHideFlags: 0

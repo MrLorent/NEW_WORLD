@@ -15,53 +15,12 @@ public class LSystem : MonoBehaviour
     [SerializeField]
     private GameObject branch_mesh;
 
-    [Header("L-SYSTEM BASE")]
-    [SerializeField]
-    private string axiom   = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
-    
-    [SerializeField]
-    private string rule_A  = "F(l)[&(a0)!(wr)_(r2)B]+(d)!(wr)_(r1)A";
-    
-    [SerializeField]
-    private string rule_B  = "F(l)[-(a2)$!(wr)_(r2)C]!(wr)_(r1)C";
-    
-    [SerializeField]
-    private string rule_C  = "F(l)[+(a2)$!(wr)_(r2)B]!(wr)_(r1)B";
-
     [Header("L-SYSTEM PARAMETERS")]
     [SerializeField]
     private int iterations = 1;
-    
-    [SerializeField]
-    private float start_width = 1;
-    
-    [SerializeField]
-    private float start_length = 10;
-    
-    [Range(0f, 1f)]
-    [SerializeField]
-    private float r1 = 0.9F;
 
-    [Range(0f, 1f)]
     [SerializeField]
-    private float r2 = 0.7F;
-
-    [Range(0f, 1f)]
-    [SerializeField]
-    private float wr = 0.707F;
-
-    [Range(0f, 360f)]
-    [SerializeField]
-    private float a0 = 45F;
-
-    [Range(0f, 360f)]
-    [SerializeField]
-    private float a2 = 45F;
-
-    [Range(0f, 360f)]
-    [SerializeField]
-    private float d = 92.5F;
-
+    private LSystemBase lsystem_base;
 
     /*====== PRIVATE ======*/
     private List<Instruction> axiom_instructions;
@@ -72,12 +31,12 @@ public class LSystem : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        InititalizeAxiom();
         Init();
     }
 
     public void Init()
     {
-        InititalizeAxiom();
         GeneratePattern();
         Draw();
     }
@@ -85,26 +44,17 @@ public class LSystem : MonoBehaviour
     private void InititalizeAxiom()
     {
         // TRADUCE AXIOM
-        axiom_instructions = GetInstructionsFrom(axiom);
+        axiom_instructions = GetInstructionsFrom(lsystem_base.axiom);
 
         // RULES
-        rules = new Dictionary<char, List<Instruction>>()
+        rules = new Dictionary<char, List<Instruction>>();
+        foreach(KeyValuePair<char, string> rule in lsystem_base.rules)
         {
-            {'A', GetInstructionsFrom(rule_A)},
-            {'B', GetInstructionsFrom(rule_B)},
-            {'C', GetInstructionsFrom(rule_C)}
-        };
+            rules.Add(rule.Key, GetInstructionsFrom(rule.Value));
+        }
 
         // CONSTANTS
-        constants = new Dictionary<String, float>()
-        {
-            {"r1", r1},
-            {"r2", r2},
-            {"a0", a0},
-            {"a2", a2},
-            {"d", d},
-            {"wr", wr},
-        };
+        constants = lsystem_base.constants;
     }
 
     private List<Instruction> GetInstructionsFrom(string expression)
@@ -158,7 +108,6 @@ public class LSystem : MonoBehaviour
             {
                 if(rules.ContainsKey(instruct._name)){
                     tmp_pattern.AddRange(rules[instruct._name]);
-                   
                 }else{
                     tmp_pattern.Add(instruct);
                 }
@@ -180,7 +129,7 @@ public class LSystem : MonoBehaviour
 
     private void Draw()
     {
-        Helpers.DestroyChildren(transform);
+        transform.DestroyChildren();
 
         GameObject turtle = Instantiate(
             turtle_mesh,
@@ -190,8 +139,8 @@ public class LSystem : MonoBehaviour
         );
 
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
-        float current_width = start_width;
-        float current_length = start_length;
+        float current_width = lsystem_base.start_width;
+        float current_length = lsystem_base.start_length; 
 
         foreach (Instruction i in pattern)
         {
@@ -200,7 +149,21 @@ public class LSystem : MonoBehaviour
                 case 'F':
                     float value = i._value == "l" ? current_length : GetInstructionValue(i._value);
                     Vector3 initial_position = turtle.transform.position;
+
+                    if (lsystem_base.tropism)
+                    {
+                        Vector3 tropism = new Vector3(constants["Tx"], constants["Ty"], constants["Tz"]);
+                        Vector3 rotation_axis = Vector3.Cross(turtle.transform.up, tropism);
+                        float stimulus_strenght = Vector3.Cross(turtle.transform.up, tropism).magnitude;
+                        float susceptability = 10.0F; // should be constants["e"]
+                        turtle.transform.Rotate(
+                            rotation_axis * (susceptability * stimulus_strenght),
+                            Space.World
+                        );
+                    }
+                    
                     turtle.transform.Translate(Vector3.up * value);
+                    
 
                     GameObject branch = Instantiate(
                         branch_mesh,
@@ -249,14 +212,18 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case '$':
-                    turtle.transform.rotation *= Quaternion.FromToRotation(turtle.transform.up, Vector3.up);
+                    Vector3 new_right = Vector3.Cross(turtle.transform.up, Vector3.down);
+                    Quaternion delta = Quaternion.FromToRotation(turtle.transform.right, new_right);
+                    delta.ToAngleAxis(out float angle, out Vector3 axis);
+                    int rotation_direction = axis.y < 0 ? -1 : 1; 
+                    turtle.transform.Rotate(0.0F, angle * rotation_direction, 0.0F, Space.Self);
                     break;
 
                 case '!':
                     current_width *= constants[i._value];
                     break;
                 
-                case '_':
+                case '"':
                     current_length *= constants[i._value];
                     break;
                     
@@ -286,10 +253,8 @@ public class LSystem : MonoBehaviour
             }
         }
 
-        Helpers.Destroy(turtle.gameObject);
+        turtle.transform.Destroy();
 
-        Helpers.MergeMeshes(this.gameObject);
-
-        Helpers.DestroyChildren(transform);
+        transform.MergeMeshes();
     }
 }
