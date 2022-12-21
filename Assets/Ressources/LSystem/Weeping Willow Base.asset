@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Weeping Willow Base
   m_EditorClassIdentifier: 
   axiom: F(l)+(45)A
-  start_width: 1
+  start_width: 5
   start_length: 10
+  tropism: 1

@@ -30,5 +30,8 @@ public class TortilisBase : LSystemBase
             {"a2",  50.0F   },
             {"wr",  0.707F  }
         };
+
+        /*====== OTHER ======*/
+        tropism = false;
     }
 }

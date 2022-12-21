@@ -32,5 +32,8 @@ public class PoplarBase : LSystemBase
             {"d",   137.5F  },
             {"wr",  0.707F  }
         };
+
+        /*====== OTHER ======*/
+        tropism = false;
     }
 }

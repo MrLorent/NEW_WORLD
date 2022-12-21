@@ -9,4 +9,5 @@ public abstract class LSystemBase : ScriptableObject
     public Dictionary<string, float> constants;
     public float start_width;
     public float start_length;
+    public bool tropism;
 }

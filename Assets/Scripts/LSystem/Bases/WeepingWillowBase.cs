@@ -28,7 +28,13 @@ public class WeepingWillowBase : LSystemBase
             {"a",   18.85F  },
             {"lr",  0.902F  },
             {"vr",  0.577F  },
+            {"Tx",  0.0F    },
+            {"Ty",  -1.0F   },
+            {"Tz",  0.0F    },
             {"e",   0.22F   },
         };
+
+        /*====== OTHER ======*/
+        tropism = true;
     }
 }

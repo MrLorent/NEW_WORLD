@@ -140,7 +140,7 @@ public class LSystem : MonoBehaviour
 
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
         float current_width = lsystem_base.start_width;
-        float current_length = lsystem_base.start_length;
+        float current_length = lsystem_base.start_length; 
 
         foreach (Instruction i in pattern)
         {
@@ -149,7 +149,21 @@ public class LSystem : MonoBehaviour
                 case 'F':
                     float value = i._value == "l" ? current_length : GetInstructionValue(i._value);
                     Vector3 initial_position = turtle.transform.position;
+
+                    if (lsystem_base.tropism)
+                    {
+                        Vector3 tropism = new Vector3(constants["Tx"], constants["Ty"], constants["Tz"]);
+                        Vector3 rotation_axis = Vector3.Cross(turtle.transform.up, tropism);
+                        float stimulus_strenght = Vector3.Cross(turtle.transform.up, tropism).magnitude;
+                        float susceptability = 10.0F; // should be constants["e"]
+                        turtle.transform.Rotate(
+                            rotation_axis * (susceptability * stimulus_strenght),
+                            Space.World
+                        );
+                    }
+                    
                     turtle.transform.Translate(Vector3.up * value);
+                    
 
                     GameObject branch = Instantiate(
                         branch_mesh,
@@ -201,8 +215,8 @@ public class LSystem : MonoBehaviour
                     Vector3 new_right = Vector3.Cross(turtle.transform.up, Vector3.down);
                     Quaternion delta = Quaternion.FromToRotation(turtle.transform.right, new_right);
                     delta.ToAngleAxis(out float angle, out Vector3 axis);
-                    int direction = axis.y < 0 ? -1 : 1; 
-                    turtle.transform.Rotate(0.0F, angle * direction, 0.0F, Space.Self);
+                    int rotation_direction = axis.y < 0 ? -1 : 1; 
+                    turtle.transform.Rotate(0.0F, angle * rotation_direction, 0.0F, Space.Self);
                     break;
 
                 case '!':
