@@ -5,6 +5,9 @@ using UnityEngine;
 public class Environment : MonoBehaviour
 {
     [SerializeField] private float colorTransitionTime = 5.0f;
+
+    [SerializeField] private int temperature = 20;
+    [SerializeField] private int humidity = 15;
     
     Material environmentMaterial;
 
