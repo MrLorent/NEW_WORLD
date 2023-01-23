@@ -4,7 +4,7 @@ using System.Globalization;
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+//[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class LSystem : MonoBehaviour
 {
     /*====== PUBLIC ======*/
@@ -14,6 +14,16 @@ public class LSystem : MonoBehaviour
     
     [SerializeField]
     private GameObject branch_mesh;
+    [SerializeField]
+    private GameObject fruit_mesh;
+
+    [Header("CONTAINERS")]
+    [SerializeField]
+    private GameObject trunk_container;
+    [SerializeField]
+    private GameObject foliage_container;
+    [SerializeField]
+    private GameObject fruits_container;
 
     [Header("L-SYSTEM PARAMETERS")]
     [SerializeField]
@@ -129,7 +139,9 @@ public class LSystem : MonoBehaviour
 
     private void Draw()
     {
-        transform.DestroyChildren();
+        trunk_container.transform.DestroyChildren();
+        foliage_container.transform.DestroyChildren();
+        fruits_container.transform.DestroyChildren();
 
         GameObject turtle = Instantiate(
             turtle_mesh,
@@ -140,11 +152,11 @@ public class LSystem : MonoBehaviour
 
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
         float current_width = lsystem_base.start_width;
-        float current_length = lsystem_base.start_length; 
+        float current_length = lsystem_base.start_length;
 
         foreach (Instruction i in pattern)
         {
-            switch(i._name)
+            switch (i._name)
             {
                 case 'F':
                     float value = i._value == "l" ? current_length : GetInstructionValue(i._value);
@@ -161,40 +173,58 @@ public class LSystem : MonoBehaviour
                             Space.World
                         );
                     }
-                    
+
                     turtle.transform.Translate(Vector3.up * value);
-                    
+
 
                     GameObject branch = Instantiate(
                         branch_mesh,
                         initial_position,
                         turtle.transform.rotation,
-                        transform
+                        trunk_container.transform
                     );
                     branch.transform.localScale = new Vector3(current_width, value * 0.5F, current_width);
                     break;
 
                 case 'A':
+                    Instantiate(
+                        fruit_mesh,
+                        turtle.transform.position,
+                        turtle.transform.rotation,
+                        fruits_container.transform
+                    );
                     break;
-                
+
                 case 'B':
+                    Instantiate(
+                        fruit_mesh,
+                        turtle.transform.position,
+                        turtle.transform.rotation,
+                        fruits_container.transform
+                    );
                     break;
-                
+
                 case 'C':
+                    Instantiate(
+                        fruit_mesh,
+                        turtle.transform.position,
+                        turtle.transform.rotation,
+                        fruits_container.transform
+                    );
                     break;
-                    
+
                 case '+':
                     turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.down);
                     break;
-                    
+
                 case '-':
                     turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.up);
                     break;
-                
+
                 case '&':
                     turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.right);
                     break;
-                    
+
                 case '^':
                     turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.left);
                     break;
@@ -202,7 +232,7 @@ public class LSystem : MonoBehaviour
                 case '>':
                     turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.forward);
                     break;
-                    
+
                 case '<':
                     turtle.transform.rotation *= Quaternion.AngleAxis(GetInstructionValue(i._value), Vector3.back);
                     break;
@@ -215,18 +245,18 @@ public class LSystem : MonoBehaviour
                     Vector3 new_right = Vector3.Cross(turtle.transform.up, Vector3.down);
                     Quaternion delta = Quaternion.FromToRotation(turtle.transform.right, new_right);
                     delta.ToAngleAxis(out float angle, out Vector3 axis);
-                    int rotation_direction = axis.y < 0 ? -1 : 1; 
+                    int rotation_direction = axis.y < 0 ? -1 : 1;
                     turtle.transform.Rotate(0.0F, angle * rotation_direction, 0.0F, Space.Self);
                     break;
 
                 case '!':
                     current_width *= constants[i._value];
                     break;
-                
+
                 case '"':
                     current_length *= constants[i._value];
                     break;
-                    
+
                 case '[':
                     // We save the current position
                     transform_history.Push(new TransformInfos()
@@ -237,7 +267,7 @@ public class LSystem : MonoBehaviour
                         width = current_width,
                     });
                     break;
-                    
+
                 case ']':
                     // We go back to the previous position saved
                     TransformInfos ti = transform_history.Pop();
@@ -246,7 +276,7 @@ public class LSystem : MonoBehaviour
                     current_length = ti.length;
                     current_width = ti.width;
                     break;
-                    
+
                 default:
                     Debug.Log("Invalid L-Tree operation");
                     break;
@@ -255,6 +285,6 @@ public class LSystem : MonoBehaviour
 
         turtle.transform.Destroy();
 
-        transform.MergeMeshes();
+        trunk_container.transform.MergeMeshes();
     }
 }
