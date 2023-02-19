@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boidPrefab: {fileID: 5280821814020100851, guid: 207d531ede98e4798a65feaeb69c23e0, type: 3}
-  spawnBoids: 5
+  spawnBoids: 500
 --- !u!4 &337460785
 Transform:
   m_ObjectHideFlags: 0
@@ -665,6 +665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 904867854}
   - component: {fileID: 904867855}
+  - component: {fileID: 904867856}
   m_Layer: 0
   m_Name: Terrains manager
   m_TagString: Untagged
@@ -708,6 +709,18 @@ MonoBehaviour:
   bot_right: {fileID: 1552292904}
   top_right: {fileID: 185019585}
   parent: {fileID: 163147980}
+--- !u!114 &904867856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904867853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ade93d3ad2b440486ea81a96d100fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
