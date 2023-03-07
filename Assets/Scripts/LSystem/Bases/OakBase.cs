@@ -25,7 +25,7 @@ public class OakBase : LSystemBase
         {
             {"a1",  30.0F   },
             {"a2",  120.0F  },
-            {"o1",  45.0F    },
+            {"o1",  45.0F   },
             {"r1",  0.75F   },
             {"q1",  0.5F    },
         };
