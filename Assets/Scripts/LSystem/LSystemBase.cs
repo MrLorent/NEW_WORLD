@@ -5,16 +5,22 @@ using UnityEngine;
 public abstract class LSystemBase : ScriptableObject
 {
     [Header("Start Parameters")]
-    public string _axiom;
+    [SerializeField]
+    public string axiom;
 
-    public Dictionary<char, string> _rules;
+    [SerializeField]
+    public Dictionary<char, string> rules;
 
-    public Dictionary<string, float> _constants;
+    [SerializeField]
+    public Dictionary<string, float> constants;
 
-    public float _start_width;
+    [SerializeField]
+    public float start_width;
 
-    public float _start_length;
+    [SerializeField]
+    public float start_length;
 
     [Header("Tropism parmeters")]
-    public bool _tropism;
+    [SerializeField]
+    public bool tropism;
 }

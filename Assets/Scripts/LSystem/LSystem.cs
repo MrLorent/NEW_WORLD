@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System;
 using UnityEngine;
 
 //[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -54,17 +54,17 @@ public class LSystem : MonoBehaviour
     private void InititalizeAxiom()
     {
         // TRADUCE AXIOM
-        axiom_instructions = GetInstructionsFrom(lsystem_base._axiom);
+        axiom_instructions = GetInstructionsFrom(lsystem_base.axiom);
 
         // RULES
         rules = new Dictionary<char, List<Instruction>>();
-        foreach(KeyValuePair<char, string> rule in lsystem_base._rules)
+        foreach(KeyValuePair<char, string> rule in lsystem_base.rules)
         {
             rules.Add(rule.Key, GetInstructionsFrom(rule.Value));
         }
 
         // CONSTANTS
-        constants = lsystem_base._constants;
+        constants = lsystem_base.constants;
     }
 
     private List<Instruction> GetInstructionsFrom(string expression)
@@ -114,14 +114,37 @@ public class LSystem : MonoBehaviour
             // For each character in our current string,
             // We check if there is an evolution rule we
             // need to apply 
-            foreach(Instruction instruct in pattern)
+            Debug.Log("ITERATION N°" + i + " :");
+            foreach (Instruction instruct in pattern)
             {
-                if(rules.ContainsKey(instruct._name)){
+                if (rules.ContainsKey(instruct._name))
+                {
                     tmp_pattern.AddRange(rules[instruct._name]);
-                }else{
-                    tmp_pattern.Add(instruct);
                 }
-                
+                else
+                {
+                    Instruction new_instruct = new Instruction(instruct);
+
+                    switch (instruct._name)
+                    {
+                        case 'F':
+                            if (instruct._value != "l")
+                            {
+                                new_instruct._value = (GetInstructionValue(instruct._value) * GetInstructionValue("lr")).ToString("F2", CultureInfo.InvariantCulture);
+                            }
+                            break;
+
+
+                        case '!':
+                            new_instruct._value = (GetInstructionValue(instruct._value) * GetInstructionValue("wr")).ToString("F2", CultureInfo.InvariantCulture);
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    tmp_pattern.Add(new_instruct);
+                }
             }
 
             // We store this need evolution iteration
@@ -129,7 +152,12 @@ public class LSystem : MonoBehaviour
             pattern = tmp_pattern;
             tmp_pattern = new List<Instruction>();
         }
-
+        string line = "";
+        foreach(Instruction i in pattern)
+        {
+            line += (i._name == '[' || i._name == ']') ? i._name : (i._name + "(" + i._value + ")");
+        }
+        Debug.Log(line);
     }
 
     private float GetInstructionValue(String value)
@@ -151,8 +179,8 @@ public class LSystem : MonoBehaviour
         );
 
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
-        float current_width = lsystem_base._start_width;
-        float current_length = lsystem_base._start_length;
+        float current_width = 0;
+        float current_length = 0;
 
         foreach (Instruction i in pattern)
         {
@@ -162,7 +190,7 @@ public class LSystem : MonoBehaviour
                     float value = i._value == "l" ? current_length : GetInstructionValue(i._value);
                     Vector3 initial_position = turtle.transform.position;
 
-                    if (lsystem_base._tropism)
+                    if (lsystem_base.tropism)
                     {
                         Vector3 tropism = new Vector3(constants["Tx"], constants["Ty"], constants["Tz"]);
                         Vector3 rotation_axis = Vector3.Cross(turtle.transform.up, tropism);
@@ -183,6 +211,7 @@ public class LSystem : MonoBehaviour
                         turtle.transform.rotation,
                         trunk_container.transform
                     );
+                    
                     branch.transform.localScale = new Vector3(current_width, value * 0.5F, current_width);
                     break;
 
@@ -250,11 +279,11 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case '!':
-                    current_width *= constants[i._value];
+                    if(i._value != "wr") current_width = float.Parse(i._value, CultureInfo.InvariantCulture);
                     break;
 
                 case '"':
-                    current_length *= constants[i._value];
+                    if (i._value != "lr") current_length = float.Parse(i._value, CultureInfo.InvariantCulture);
                     break;
 
                 case '[':
@@ -285,6 +314,6 @@ public class LSystem : MonoBehaviour
 
         turtle.transform.Destroy();
 
-        trunk_container.transform.MergeMeshes();
+        //trunk_container.transform.MergeMeshes();
     }
 }

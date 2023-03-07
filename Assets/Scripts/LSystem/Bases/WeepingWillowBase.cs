@@ -1,68 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Globalization;
 
 [CreateAssetMenu(menuName = "L-System/Base/Weeping Willow")]
 public class WeepingWillowBase : LSystemBase
 {
-    [SerializeField]
-    public string axiom => _axiom;
-
-    [SerializeField]
-    public float start_width => _start_width;
-
-    [SerializeField]
-    public float start_length => _start_length;
-
-    [SerializeField]
-    public bool tropism => _tropism;
-    [SerializeField]
-    public Vector3 tropism_direction = new Vector3(0.0F, -1.0F, 0.0F);
-    [SerializeField]
-    public float e = 0.22F;
-
-
-    [Header("Rules")]
-    [SerializeField]
-    public string A = "F(l)[&(a)!(vr)\"(lr)A]+(d1)[&(a)!(vr)\"(lr)A]+(d2)[&(a)!(vr)\"(lr)A]";
-
-    [Header("Constants")]
-    [SerializeField]
-    public float d1 = 94.74F;
-    
-    [SerializeField]
-    public float d2 = 132.63F;
-    
-    [SerializeField]
-    public float a = 18.85F;
-    
-    [SerializeField]
-    public float lr = 0.902F;
-    
-    [SerializeField]
-    public float vr = 0.577F;
-
-
     WeepingWillowBase()
     {
+        /*====== AXIOM ======*/
+        start_width = 0.3F;
+        start_length = 7.5F;
+        axiom = "!(" + start_width.ToString("F2", CultureInfo.InvariantCulture) + ")F(" + start_length.ToString("F2", CultureInfo.InvariantCulture) + ")A";
+
         /*====== RULES ======*/
-        _rules = new Dictionary<char, string>()
+        rules = new Dictionary<char, string>()
         {
-            {'A', A },
+            {'A', "!(" + start_width.ToString("F2", CultureInfo.InvariantCulture) + ")F(5)+(d1)[&(a)F(5)A]+(d2)[&(a)F(5)A]+(d2)[&(a)F(5)A]" },
         };
 
         /*==== CONSTANTS ====*/
-        _constants = new Dictionary<string, float>()
+        constants = new Dictionary<string, float>()
         {
-            {"d1",  d1  },
-            {"d2",  d2 },
-            {"a",   a  },
-            {"lr",  lr  },
-            {"vr",  vr  },
-            {"Tx",  tropism_direction.x    },
-            {"Ty",  tropism_direction.y   },
-            {"Tz",  tropism_direction.z    },
-            {"e",   e   },
+            {"d1",  30.0F  },
+            {"d2",  120.0F },
+            {"a",   25.85F  },
+            {"lr",  1.109F  },
+            {"wr",  1.35F  },
+            {"Tx",  0.0F    },
+            {"Ty",  -1.0F   },
+            {"Tz",  0.0F    },
+            {"e",   0.22F   },
         };
     }
 }

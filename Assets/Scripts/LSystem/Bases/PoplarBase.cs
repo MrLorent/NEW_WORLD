@@ -5,24 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "L-System/Base/Poplar")]
 public class PoplarBase : LSystemBase
 {
-    //[Header("Start Parameters")]
-    [SerializeField]
-    public string axiom => _axiom = "F(l)[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A";
-
-    [SerializeField]
-    public float start_width => _start_width = 1;
-
-    [SerializeField]
-    public float start_length => _start_length = 1;
-
-    // [Header("Tropism parmeters")]
-    [SerializeField]
-    public bool tropism => _tropism = false;
-
     PoplarBase()
     {
+        // _axiom = "F(l)[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A"
+
         /*====== RULES ======*/
-        _rules = new Dictionary<char, string>()
+        rules = new Dictionary<char, string>()
         {
             {'A', "F(l)[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A"},
             {'B', "F(l)[+(15)>(a2)$!(wr)\"(r2)C]!(wr)\"(r1)C"},
@@ -30,7 +18,7 @@ public class PoplarBase : LSystemBase
         };
 
         /*==== CONSTANTS ====*/
-        _constants = new Dictionary<string, float>()
+        constants = new Dictionary<string, float>()
         {
             {"r1",  0.9F    },
             {"r2",  0.8F    },
