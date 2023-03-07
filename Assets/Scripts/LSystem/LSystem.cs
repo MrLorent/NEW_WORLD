@@ -139,6 +139,10 @@ public class LSystem : MonoBehaviour
                             new_instruct._value = (GetInstructionValue(instruct._value) * GetInstructionValue("wr")).ToString("F2", CultureInfo.InvariantCulture);
                             break;
 
+                        case '"':
+                            new_instruct._value = (GetInstructionValue(instruct._value) * GetInstructionValue("lr")).ToString("F2", CultureInfo.InvariantCulture);
+                            break;
+
                         default:
                             break;
                     }
@@ -279,11 +283,11 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case '!':
-                    if(i._value != "wr") current_width = float.Parse(i._value, CultureInfo.InvariantCulture);
+                    current_width = float.Parse(i._value, CultureInfo.InvariantCulture);
                     break;
 
                 case '"':
-                    if (i._value != "lr") current_length = float.Parse(i._value, CultureInfo.InvariantCulture);
+                    current_length = float.Parse(i._value, CultureInfo.InvariantCulture);
                     break;
 
                 case '[':
@@ -314,6 +318,6 @@ public class LSystem : MonoBehaviour
 
         turtle.transform.Destroy();
 
-        //trunk_container.transform.MergeMeshes();
+        trunk_container.transform.MergeMeshes();
     }
 }
