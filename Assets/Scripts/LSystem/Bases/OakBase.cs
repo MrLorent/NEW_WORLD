@@ -12,12 +12,12 @@ public class OakBase : LSystemBase
 
         /*=== AXIOM PARAMS ===*/
         start_width = 1;
-        start_length = 10;
+        start_length = 1;
 
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {'A', "F(l)+(a1)[&(o1)\"(r1)!(q1)A]+(a2)[&(o2)\"(r2)!(q2)A]+(a2)[&(o2)\"(r2)!(q2)A]"},
+            {'A', "F(l)+(a1)[&(o1)\"(r1)!(q1)A][+(a2)&(o1)\"(r1)!(q1)A][-(a2)&(o1)\"(r1)!(q1)A]"},
         };
 
         /*==== CONSTANTS ====*/
@@ -26,12 +26,8 @@ public class OakBase : LSystemBase
             {"a1",  30.0F   },
             {"a2",  120.0F  },
             {"o1",  45.0F    },
-            {"o2",  45.0F    },
-            {"r1",  0.7F   },
-            {"r2",  0.7F   },
+            {"r1",  0.75F   },
             {"q1",  0.5F    },
-            {"q2",  0.5F    },
-            {"e",   0.4F    },
         };
 
         /*====== OTHER ======*/
