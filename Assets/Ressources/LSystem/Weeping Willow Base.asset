@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 730f87b1240af854eb238534e9210161, type: 3}
   m_Name: Weeping Willow Base
   m_EditorClassIdentifier: 
-  axiom: F(l)+(45)A
-  start_width: 1
-  start_length: 10
-  tropism: 1
+  _axiom: F(l)A
+  _start_width: 0
+  _start_length: 0
+  _tropism: 0
+  A: F(l)[&(a)!(vr)"(lr)A]+(d1)[&(a)!(vr)"(lr)A]+(d2)[&(a)!(vr)"(lr)A]
+  d1: 94.74
+  d2: 132.63
+  a: 18.85
+  lr: 0.902
+  vr: 0.577
+  tropism_direction: {x: 0, y: -1, z: 0}
+  e: 0.22

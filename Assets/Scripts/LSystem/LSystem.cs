@@ -54,17 +54,17 @@ public class LSystem : MonoBehaviour
     private void InititalizeAxiom()
     {
         // TRADUCE AXIOM
-        axiom_instructions = GetInstructionsFrom(lsystem_base.axiom);
+        axiom_instructions = GetInstructionsFrom(lsystem_base._axiom);
 
         // RULES
         rules = new Dictionary<char, List<Instruction>>();
-        foreach(KeyValuePair<char, string> rule in lsystem_base.rules)
+        foreach(KeyValuePair<char, string> rule in lsystem_base._rules)
         {
             rules.Add(rule.Key, GetInstructionsFrom(rule.Value));
         }
 
         // CONSTANTS
-        constants = lsystem_base.constants;
+        constants = lsystem_base._constants;
     }
 
     private List<Instruction> GetInstructionsFrom(string expression)
@@ -151,8 +151,8 @@ public class LSystem : MonoBehaviour
         );
 
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
-        float current_width = lsystem_base.start_width;
-        float current_length = lsystem_base.start_length;
+        float current_width = lsystem_base._start_width;
+        float current_length = lsystem_base._start_length;
 
         foreach (Instruction i in pattern)
         {
@@ -162,7 +162,7 @@ public class LSystem : MonoBehaviour
                     float value = i._value == "l" ? current_length : GetInstructionValue(i._value);
                     Vector3 initial_position = turtle.transform.position;
 
-                    if (lsystem_base.tropism)
+                    if (lsystem_base._tropism)
                     {
                         Vector3 tropism = new Vector3(constants["Tx"], constants["Ty"], constants["Tz"]);
                         Vector3 rotation_axis = Vector3.Cross(turtle.transform.up, tropism);

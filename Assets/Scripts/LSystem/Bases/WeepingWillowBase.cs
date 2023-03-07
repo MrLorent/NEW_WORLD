@@ -5,38 +5,54 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "L-System/Base/Weeping Willow")]
 public class WeepingWillowBase : LSystemBase
 {
-    [SerializeField] public Vector3 tropism_direction = new Vector3(0.0F, -1.0F, 0.0F);
-    [SerializeField] public float e = 0.22F;
+    [SerializeField]
+    public string axiom => _axiom;
+
+    [SerializeField]
+    public float start_width => _start_width;
+
+    [SerializeField]
+    public float start_length => _start_length;
+
+    [SerializeField]
+    public bool tropism => _tropism;
+    [SerializeField]
+    public Vector3 tropism_direction = new Vector3(0.0F, -1.0F, 0.0F);
+    [SerializeField]
+    public float e = 0.22F;
+
 
     [Header("Rules")]
     [SerializeField]
-    public string A = "F(l)F(l)[&(a)!(vr)\"(lr)A]+(d1)[&(a)!(vr)\"(lr)A]+(d2)[&(a)!(vr)\"(lr)A]";
+    public string A = "F(l)[&(a)!(vr)\"(lr)A]+(d1)[&(a)!(vr)\"(lr)A]+(d2)[&(a)!(vr)\"(lr)A]";
 
     [Header("Constants")]
-    [SerializeField] public float d1 = 94.74F;
-    [SerializeField] public float d2 = 132.63F;
-    [SerializeField] public float a = 18.85F;
-    [SerializeField] public float lr = 0.902F;
-    [SerializeField] public float vr = 0.577F;
+    [SerializeField]
+    public float d1 = 94.74F;
     
+    [SerializeField]
+    public float d2 = 132.63F;
+    
+    [SerializeField]
+    public float a = 18.85F;
+    
+    [SerializeField]
+    public float lr = 0.902F;
+    
+    [SerializeField]
+    public float vr = 0.577F;
+
 
     WeepingWillowBase()
     {
-        /*====== AXIOM ======*/
-        axiom = "F(l)+(45)A";
-
-        /*=== AXIOM PARAMS ===*/
-        start_width = 1;
-        start_length = 10;
-
         /*====== RULES ======*/
-        rules = new Dictionary<char, string>()
+        _rules = new Dictionary<char, string>()
         {
             {'A', A },
         };
 
         /*==== CONSTANTS ====*/
-        constants = new Dictionary<string, float>()
+        _constants = new Dictionary<string, float>()
         {
             {"d1",  d1  },
             {"d2",  d2 },
@@ -48,8 +64,5 @@ public class WeepingWillowBase : LSystemBase
             {"Tz",  tropism_direction.z    },
             {"e",   e   },
         };
-
-        /*====== OTHER ======*/
-        tropism = true;
     }
 }
