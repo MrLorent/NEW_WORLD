@@ -111,10 +111,12 @@ public class LSystem : MonoBehaviour
 
         for(int i = 0; i < iterations; ++i)
         {
+            Stack<Vector2> transform_history = new Stack<Vector2>();
+            float current_width = 0;
+            float current_length = 0;
             // For each character in our current string,
             // We check if there is an evolution rule we
-            // need to apply 
-            Debug.Log("ITERATION N°" + i + " :");
+            // need to apply
             foreach (Instruction instruct in pattern)
             {
                 if (rules.ContainsKey(instruct._name))
@@ -130,17 +132,51 @@ public class LSystem : MonoBehaviour
                         case 'F':
                             if (instruct._value != "l")
                             {
-                                new_instruct._value = (GetInstructionValue(instruct._value) * GetInstructionValue("lr")).ToString("F2", CultureInfo.InvariantCulture);
+                                current_length = GetInstructionValue(instruct._value) * GetInstructionValue("lg");
+                                new_instruct._value = Helpers.convert_float_to_string(current_length);
                             }
                             break;
 
 
                         case '!':
-                            new_instruct._value = (GetInstructionValue(instruct._value) * GetInstructionValue("wr")).ToString("F2", CultureInfo.InvariantCulture);
+                            if(constants.ContainsKey(instruct._value))
+                            {
+                                current_width *= constants[instruct._value];
+                                new_instruct._value = Helpers.convert_float_to_string(current_width);
+                            }
+                            else
+                            {
+                                current_width = GetInstructionValue(instruct._value) * GetInstructionValue("wg");
+                                new_instruct._value = Helpers.convert_float_to_string(current_width);
+                            }
                             break;
 
                         case '"':
-                            new_instruct._value = (GetInstructionValue(instruct._value) * GetInstructionValue("lr")).ToString("F2", CultureInfo.InvariantCulture);
+                            if (constants.ContainsKey(instruct._value))
+                            {
+                                current_length *= constants[instruct._value];
+                                new_instruct._value = Helpers.convert_float_to_string(current_length);
+                            }
+                            else
+                            {
+                                current_length = GetInstructionValue(instruct._value) * GetInstructionValue("lg");
+                                new_instruct._value = Helpers.convert_float_to_string(current_length);
+                            }
+                            break;
+
+                        case '[':
+                            // We save the current position
+                            transform_history.Push(new Vector2(
+                                current_width,
+                                current_length
+                            ));
+                            break;
+
+                        case ']':
+                            // We go back to the previous position saved
+                            Vector2 ti = transform_history.Pop();
+                            current_width = ti.x;
+                            current_length = ti.y;
                             break;
 
                         default:
@@ -166,6 +202,7 @@ public class LSystem : MonoBehaviour
 
     private float GetInstructionValue(String value)
     {
+        Debug.Log(value);
         return constants.ContainsKey(value) ? constants[value] : float.Parse(value, CultureInfo.InvariantCulture);
     }
 
@@ -283,11 +320,17 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case '!':
-                    current_width = float.Parse(i._value, CultureInfo.InvariantCulture);
+                    if (float.TryParse(i._value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float new_width))
+                    {
+                        current_width = new_width;
+                    }
                     break;
 
                 case '"':
-                    current_length = float.Parse(i._value, CultureInfo.InvariantCulture);
+                    if (float.TryParse(i._value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float new_length))
+                    {
+                        current_length = new_length;
+                    }
                     break;
 
                 case '[':

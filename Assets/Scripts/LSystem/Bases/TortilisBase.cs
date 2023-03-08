@@ -8,24 +8,27 @@ public class TortilisBase : LSystemBase
     TortilisBase()
     {
         /*====== AXIOM ======*/
-        start_width = 0.2F;
-        start_length = 7.5F;
-        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)\"(5.0)B]|[&(a2)\"(4.2)B]";
+        start_width = 1.0F;
+        start_length = 10F;
+        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]";
 
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {  'A', "!(" + Helpers.convert_float_to_string(start_width) + ")F(l)[&(a1)\"(5.0)B]|[&(a2)\"(4.2)B]"  },
-            {  'B', "!(" + Helpers.convert_float_to_string(start_width) + ")F(l)[<(a1)\"(5.0)$B][>(a2)\"(4.2)$B]" }
+            {  'A', "F(l)[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]"  },
+            {  'B', "F(l)[<(a1)!(wr)\"(r1)$B][>(a2)!(wr)\"(r2)$B]" }
         };
 
         /*==== CONSTANTS ====*/
         constants = new Dictionary<string, float>()
         {
+            {"r1",  0.9F    },
+            {"r2",  0.8F    },
             {"a1",  20.0F   },
             {"a2",  50.0F   },
-            {"lr",  1.115F  },
-            {"wr",  1.35F   },
+            {"lg",  1.115F  },
+            {"wg",  1.35F   },
+            {"wr",  0.707F  },
             {"Tx",  0.0F    },
             {"Ty",  -1.0F   },
             {"Tz",  0.0F    },
