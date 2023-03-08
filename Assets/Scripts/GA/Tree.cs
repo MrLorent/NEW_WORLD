@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour
 {
-    //--PRIVATE--
-    [HideInInspector] public Material material;
-
-    //--PUBLIC--
+    /*======== PUBLIC ========*/
+    public Material material;
     public float fitnessScore = 1.0f;
     public Color color = new Color(1.0f, 1.0f, 1.0f);
 
+    /*======== PRIVATE ========*/
+    [Header("GA ATTRIBUTS")]
+    [SerializeField]
+    private Trunk _trunk;
 
-    void Awake()
-    {
-        
-        //material = gameObject.GetComponent<Renderer>().material;
-    }
+    [SerializeField]
+    private Bark _bark;
 
     public void SetColor(Color color)
     {
         this.color = color;
-        //material.color = color;
     }
 }
