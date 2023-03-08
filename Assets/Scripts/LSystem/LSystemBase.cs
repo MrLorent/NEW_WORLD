@@ -17,4 +17,9 @@ public abstract class LSystemBase : ScriptableObject
 
     [Header("Tropism parmeters")]
     public bool tropism;
+
+    public virtual float elasticity(float width)
+    {
+        return 10.0F;
+    }
 }

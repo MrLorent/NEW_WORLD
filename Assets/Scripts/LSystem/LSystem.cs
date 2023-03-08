@@ -243,10 +243,10 @@ public class LSystem : MonoBehaviour
                     {
                         Vector3 tropism = new Vector3(constants["Tx"], constants["Ty"], constants["Tz"]);
                         Vector3 rotation_axis = Vector3.Cross(turtle.transform.up, tropism);
-                        float stimulus_strenght = Vector3.Cross(turtle.transform.up, tropism).magnitude;
-                        float susceptability = 10.0F; // should be constants["e"]
+                        float stimulus_strenght = rotation_axis.magnitude;
+                        float elasticity = lsystem_base.elasticity(current_width);// 50.0F / current_width * 10.0F; // should be constants["e"]
                         turtle.transform.Rotate(
-                            rotation_axis * (susceptability * stimulus_strenght),
+                            rotation_axis * (elasticity * stimulus_strenght),
                             Space.World
                         );
                     }
