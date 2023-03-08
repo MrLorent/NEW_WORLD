@@ -9,22 +9,22 @@ public class WeepingWillowBase : LSystemBase
     {
         /*====== AXIOM ======*/
         start_width = 0.2F;
-        start_length = 7.5F;
-        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)>(o1)\"(2.5)A][&(a2)>(o2)\"(2.8)A]";
+        start_length = 5.0F;
+        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)+(o1)\"(2.6)A][&(a2)+(o2)\"(4.9)A]";
 
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {  'A', "!(" + Helpers.convert_float_to_string(start_width) + ")F(l)[&(a1)>(o1)\"(2.5)A][&(a2)>(o2)\"(2.8)A]"  },
+            {  'A', "!(" + Helpers.convert_float_to_string(start_width) + ")F(l)[&(a1)+(o1)\"(2.6)A][&(a2)+(o2)\"(4.9)A]"  },
         };
 
         /*==== CONSTANTS ====*/
         constants = new Dictionary<string, float>()
         {
-            {"a1",  27.0F   },
-            {"a2",  -68.0F  },
-            {"o1",  0.0F    },
-            {"o2",  0.0F    },
+            {"a1",  -5.0F   },
+            {"a2",  30.0F  },
+            {"o1",  137.0F    },
+            {"o2",  137.0F    },
             {"lr",  1.2F  },
             {"wr",  1.35F   },
             {"Tx",  0.0F    },
