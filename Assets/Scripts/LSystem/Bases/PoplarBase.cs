@@ -8,7 +8,7 @@ public class PoplarBase : LSystemBase
     PoplarBase()
     {
         /*====== AXIOM ======*/
-        start_width = 0.8F;
+        start_width = 1F;
         start_length = 10.0F;
         axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A";
 
@@ -24,12 +24,12 @@ public class PoplarBase : LSystemBase
         constants = new Dictionary<string, float>()
         {
             {"r1",  0.9F    },
-            {"r2",  0.8F    },
+            {"r2",  0.6F    },
             {"a0",  45.0F   },
-            {"a2",  -45.0F  },
+            {"a2",  45.0F  },
             {"d",   137.5F  },
-            {"lg",  1.19F   },
-            {"wg",  1.35F   },
+            {"lg",  1.08F   },
+            {"wg",  1.109F   },
             {"wr",  0.707F  },
             {"min_w", 0.1F  },
             {"Tx",  0.0F    },

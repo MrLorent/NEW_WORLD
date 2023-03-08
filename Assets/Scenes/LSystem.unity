@@ -319,7 +319,7 @@ PrefabInstance:
     - target: {fileID: 4820196086397230163, guid: 6b539f274fe7140d0b6b1d5f342ce79d, type: 3}
       propertyPath: lsystem_base
       value: 
-      objectReference: {fileID: 11400000, guid: ec0f697802488c649ba57d58894584cb, type: 2}
+      objectReference: {fileID: 11400000, guid: 525cbf905285f8e4c84059e6697066d5, type: 2}
     - target: {fileID: 4820196086397230164, guid: 6b539f274fe7140d0b6b1d5f342ce79d, type: 3}
       propertyPath: m_RootOrder
       value: 2
