@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "L-System/Base/Oak Base")]
+[CreateAssetMenu(menuName = "L-System/Base/Oak")]
 public class OakBase : LSystemBase
 {
     OakBase()
