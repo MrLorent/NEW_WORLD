@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Globalization;
 
 [CreateAssetMenu(menuName = "L-System/Base/Oak Base")]
 public class OakBase : LSystemBase
@@ -11,12 +10,12 @@ public class OakBase : LSystemBase
         /*====== AXIOM ======*/
         start_width = 0.3F;
         start_length = 7.5F;
-        axiom = "!(" + start_width.ToString("F2", CultureInfo.InvariantCulture) + ")F(" + start_length.ToString("F2", CultureInfo.InvariantCulture) + ")A";
+        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")A";
 
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {'A', "!(" + start_width.ToString("F2", CultureInfo.InvariantCulture) + ")F(5)+(d1)[&(a)F(5)A]+(d2)[&(a)F(5)A]+(d2)[&(a)F(5)A]" },
+            {'A', "!(" + Helpers.convert_float_to_string(start_width) + ")F(5)+(d1)[&(a)F(5)A]+(d2)[&(a)F(5)A]+(d2)[&(a)F(5)A]" },
         };
 
         /*==== CONSTANTS ====*/
