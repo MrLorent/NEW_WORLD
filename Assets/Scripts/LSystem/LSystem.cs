@@ -34,6 +34,7 @@ public class LSystem : MonoBehaviour
 
     /*====== PRIVATE ======*/
     private List<Instruction> axiom_instructions;
+    private float min_width;
     private Dictionary<char, List<Instruction>> rules;
     private Dictionary<String, float> constants;
     private List<Instruction> pattern;
@@ -55,6 +56,9 @@ public class LSystem : MonoBehaviour
     {
         // TRADUCE AXIOM
         axiom_instructions = GetInstructionsFrom(lsystem_base.axiom);
+
+        // START PARAMETERS
+        min_width = lsystem_base.constants["min_w"];
 
         // RULES
         rules = new Dictionary<char, List<Instruction>>();
@@ -139,11 +143,14 @@ public class LSystem : MonoBehaviour
 
 
                         case '!':
+                            // SHRINK
                             if(constants.ContainsKey(instruct._value))
                             {
                                 current_width *= constants[instruct._value];
+                                current_width = current_width < min_width ? min_width : current_width;
                                 new_instruct._value = Helpers.convert_float_to_string(current_width);
                             }
+                            // GROW
                             else
                             {
                                 current_width = GetInstructionValue(instruct._value) * GetInstructionValue("wg");
@@ -152,11 +159,13 @@ public class LSystem : MonoBehaviour
                             break;
 
                         case '"':
+                            // SHRINK
                             if (constants.ContainsKey(instruct._value))
                             {
                                 current_length *= constants[instruct._value];
                                 new_instruct._value = Helpers.convert_float_to_string(current_length);
                             }
+                            // GROW
                             else
                             {
                                 current_length = GetInstructionValue(instruct._value) * GetInstructionValue("lg");
@@ -202,7 +211,6 @@ public class LSystem : MonoBehaviour
 
     private float GetInstructionValue(String value)
     {
-        Debug.Log(value);
         return constants.ContainsKey(value) ? constants[value] : float.Parse(value, CultureInfo.InvariantCulture);
     }
 

@@ -22,11 +22,12 @@ public class WeepingWillowBase : LSystemBase
         constants = new Dictionary<string, float>()
         {
             {"a1",  -5.0F   },
-            {"a2",  30.0F  },
-            {"o1",  137.0F    },
-            {"o2",  137.0F    },
-            {"lr",  1.2F  },
+            {"a2",  30.0F   },
+            {"o1",  137.0F  },
+            {"o2",  137.0F  },
+            {"lr",  1.2F    },
             {"wr",  1.35F   },
+            {"min_w",  0.1F },
             {"Tx",  0.0F    },
             {"Ty",  -1.0F   },
             {"Tz",  0.0F    },

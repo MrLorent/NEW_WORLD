@@ -8,7 +8,7 @@ public class PoplarBase : LSystemBase
     PoplarBase()
     {
         /*====== AXIOM ======*/
-        start_width = 1.0F;
+        start_width = 0.8F;
         start_length = 10.0F;
         axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A";
 
@@ -31,6 +31,7 @@ public class PoplarBase : LSystemBase
             {"lg",  1.19F   },
             {"wg",  1.35F   },
             {"wr",  0.707F  },
+            {"min_w",  0.1F   },
             {"Tx",  0.0F    },
             {"Ty",  -1.0F   },
             {"Tz",  0.0F    },
