@@ -31,7 +31,7 @@ public class PoplarBase : LSystemBase
             {"lg",  1.19F   },
             {"wg",  1.35F   },
             {"wr",  0.707F  },
-            {"min_w",  0.1F   },
+            {"min_w", 0.1F  },
             {"Tx",  0.0F    },
             {"Ty",  -1.0F   },
             {"Tz",  0.0F    },
