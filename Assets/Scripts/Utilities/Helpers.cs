@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Globalization;
 
 /// <summary>
 /// A static class for general helpful methods
@@ -49,6 +50,11 @@ public static class Helpers
         container.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         container.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
         container.DestroyChildren();
+    }
+
+    public static string convert_float_to_string(float number)
+    {
+        return number.ToString("F2", CultureInfo.InvariantCulture);
     }
 }
 

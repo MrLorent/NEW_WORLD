@@ -313,9 +313,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 4820196086397230163, guid: 6b539f274fe7140d0b6b1d5f342ce79d, type: 3}
+      propertyPath: iterations
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820196086397230163, guid: 6b539f274fe7140d0b6b1d5f342ce79d, type: 3}
       propertyPath: lsystem_base
       value: 
-      objectReference: {fileID: 11400000, guid: aebaa9db894a78647a8e3db5d39eb3e1, type: 2}
+      objectReference: {fileID: 11400000, guid: 5efac4654feb0bc42ad9a48d3fe7a371, type: 2}
     - target: {fileID: 4820196086397230164, guid: 6b539f274fe7140d0b6b1d5f342ce79d, type: 3}
       propertyPath: m_RootOrder
       value: 2

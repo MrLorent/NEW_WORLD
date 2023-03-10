@@ -8,17 +8,15 @@ public class TortilisBase : LSystemBase
     TortilisBase()
     {
         /*====== AXIOM ======*/
-        axiom = "F(l)[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]";
-
-        /*=== AXIOM PARAMS ===*/
-        start_width = 1;
-        start_length = 10;
+        start_width = 0.8F;
+        start_length = 10F;
+        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]";
 
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {'A', "F(l)[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]"},
-            {'B', "F(l)[<(a1)!(wr)\"(r1)$B][>(a2)!(wr)\"(r2)$B]"}
+            {  'A', "F(l)[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]"  },
+            {  'B', "F(l)[<(a1)!(wr)\"(r1)$B][>(a2)!(wr)\"(r2)$B]" }
         };
 
         /*==== CONSTANTS ====*/
@@ -28,10 +26,17 @@ public class TortilisBase : LSystemBase
             {"r2",  0.8F    },
             {"a1",  20.0F   },
             {"a2",  50.0F   },
-            {"wr",  0.707F  }
+            {"lg",  1.115F  },
+            {"wg",  1.109F   },
+            {"wr",  0.707F  },
+            {"min_w",  0.1F   },
+            {"Tx",  0.0F    },
+            {"Ty",  -1.0F   },
+            {"Tz",  0.0F    },
+            {"e",   0.22F   }
         };
 
-        /*====== OTHER ======*/
+        /*==== TROPISM ====*/
         tropism = false;
     }
 }

@@ -18,4 +18,10 @@ public class Instruction {
         _name = name;
         _value = value;
     }
+
+    public Instruction(Instruction i)
+    {
+        _name = i._name;
+        _value = i._value;
+    }
 }
