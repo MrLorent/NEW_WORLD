@@ -7,10 +7,6 @@ public class AppleTreeBase : LSystemBase
 {
     AppleTreeBase()
     {
-        /*====== ID ======*/
-        id = "apple_tree";
-        name = "Apple Tree";
-
         /*====== AXIOM ======*/
         start_width = 1.0F;
         start_length = 7.5F;

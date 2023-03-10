@@ -7,10 +7,6 @@ public class TortilisBase : LSystemBase
 {
     TortilisBase()
     {
-        /*====== ID ======*/
-        id = "tortilis";
-        name = "Tortilis";
-
         /*====== AXIOM ======*/
         start_width = 0.8F;
         start_length = 7.5F;

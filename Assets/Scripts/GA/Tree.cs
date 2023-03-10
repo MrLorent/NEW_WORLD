@@ -5,6 +5,10 @@ using UnityEngine;
 public class Tree : MonoBehaviour
 {
     /*======== PUBLIC ========*/
+    [Header("3D MODEL")]
+    [SerializeField] private Transform _trunk_container;
+    [SerializeField] private Transform _foliage_container;
+
     public Material material;
     public float fitnessScore = 1.0f;
     public Color color = new Color(1.0f, 1.0f, 1.0f);
@@ -17,19 +21,22 @@ public class Tree : MonoBehaviour
     private Trunk _trunk;
     private Bark _bark;
 
-    private void Start()
+    private void Awake()
     {
         _lsystem = GetComponent<LSystem>();
+    }
 
-        _trunk  =   GetComponent<Trunk>();
-        _bark   =   GetComponent<Bark>();
-
+    private void Start()
+    {
         init();
     }
 
     public void init()
     {
-        _trunk.set_randomly();
+        _trunk = GAManager.Instance.get_random_trunk();
+        _bark = GAManager.Instance.get_random_bark();
+
+        _trunk_container.GetComponent<MeshRenderer>().material = _bark.material;
         _lsystem.Init(_trunk.lsystem_base);
     }
 

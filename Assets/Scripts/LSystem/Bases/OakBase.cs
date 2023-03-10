@@ -7,10 +7,6 @@ public class OakBase : LSystemBase
 {
     OakBase()
     {
-        /*====== ID ======*/
-        id = "oak";
-        name = "oak";
-
         /*====== AXIOM ======*/
         start_width = 1.0F;
         start_length = 10.0F;

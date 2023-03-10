@@ -7,10 +7,6 @@ public class WeepingWillowBase : LSystemBase
 {
     WeepingWillowBase()
     {
-        /*====== ID ======*/
-        id = "weeping_willow";
-        name = "Weeping Willow";
-
         /*====== AXIOM ======*/
         start_width = 1.0F;
         start_length = 7.5F;
