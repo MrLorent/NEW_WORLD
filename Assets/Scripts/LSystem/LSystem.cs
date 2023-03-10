@@ -30,7 +30,7 @@ public class LSystem : MonoBehaviour
     private int iterations = 1;
 
     [SerializeField]
-    private LSystemBase lsystem_base;
+    private LSystemBase lsystem_base = null;
 
     /*====== PRIVATE ======*/
     private List<Instruction> axiom_instructions;
@@ -40,14 +40,17 @@ public class LSystem : MonoBehaviour
     private List<Instruction> pattern;
 
     // Start is called before the first frame update
-    private void Start()
-    {
-        InititalizeAxiom();
-        Init();
-    }
-
     public void Init()
     {
+        InititalizeAxiom();
+        GeneratePattern();
+        Draw();
+    }
+
+    public void Init(LSystemBase LS_base)
+    {
+        lsystem_base = LS_base;
+        InititalizeAxiom();
         GeneratePattern();
         Draw();
     }

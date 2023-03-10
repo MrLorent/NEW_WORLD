@@ -7,6 +7,10 @@ public class PoplarBase : LSystemBase
 {
     PoplarBase()
     {
+        /*====== ID ======*/
+        id = "poplar";
+        name = "Poplar";
+
         /*====== AXIOM ======*/
         start_width = 1F;
         start_length = 10.0F;

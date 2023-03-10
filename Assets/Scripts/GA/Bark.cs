@@ -9,8 +9,13 @@ public class Bark : Attribut
     [SerializeField]
     private Material _material;
 
-    protected override void Awake()
+    private void Awake()
     {
         _type = AttributType.BARK;
+    }
+
+    public override void set_randomly()
+    {
+
     }
 }

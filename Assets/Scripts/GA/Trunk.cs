@@ -7,16 +7,19 @@ using UnityEngine;
 public class Trunk : Attribut
 {
     [SerializeField]
-    private TrunksList _trunks_list;
+    static private TrunksList _trunks_list;
 
     [SerializeField]
-    private LSystemBase _LSystem_base;
+    public LSystemBase lsystem_base { get; private set; }
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        _trunks_list = AttributsLists.Instance.trunks_list;
         _type = AttributType.TRUNK;
+    }
 
-        _LSystem_base = _trunks_list.options[(int)(((_stats.temperature + _stats.humidity) / 2) * _trunks_list.options.Count / 100)];
+    public override void set_randomly()
+    {
+        lsystem_base = _trunks_list.options[UnityEngine.Random.Range(0, _trunks_list.options.Count - 1)];
     }
 }

@@ -7,6 +7,10 @@ public class WeepingWillowBase : LSystemBase
 {
     WeepingWillowBase()
     {
+        /*====== ID ======*/
+        id = "weeping_willow";
+        name = "Weeping Willow";
+
         /*====== AXIOM ======*/
         start_width = 1.0F;
         start_length = 7.5F;
@@ -27,7 +31,7 @@ public class WeepingWillowBase : LSystemBase
             {"d2",  -90.0F  },
             {"lg",  1.109F  },
             {"wg",  1.109F  },
-            {"wr",   0.8F   },
+            {"wr",   0.707F   },
             {"lr",   0.9F   },
             {"min_w",  0.1F },
             {"Tx",  -0.02F  },
@@ -42,6 +46,6 @@ public class WeepingWillowBase : LSystemBase
 
     public override float elasticity(float width)
     {
-        return 20.0F / width;
+        return 15.0F / width;
     }
 }

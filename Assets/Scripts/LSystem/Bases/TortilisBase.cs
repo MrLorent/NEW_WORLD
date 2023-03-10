@@ -7,9 +7,13 @@ public class TortilisBase : LSystemBase
 {
     TortilisBase()
     {
+        /*====== ID ======*/
+        id = "tortilis";
+        name = "Tortilis";
+
         /*====== AXIOM ======*/
         start_width = 0.8F;
-        start_length = 10F;
+        start_length = 7.5F;
         axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]";
 
         /*====== RULES ======*/

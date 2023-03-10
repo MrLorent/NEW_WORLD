@@ -4,6 +4,11 @@ using UnityEngine;
 
 public abstract class LSystemBase : ScriptableObject
 {
+    [Header("Name")]
+    protected string name;
+
+    protected string id; 
+
     [Header("Start Parameters")]
     public string axiom;
 

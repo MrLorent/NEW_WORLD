@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 730f87b1240af854eb238534e9210161, type: 3}
   m_Name: Oak Base
   m_EditorClassIdentifier: 
-  axiom: '!(0.30)F(7.50)A'
-  start_width: 0.3
-  start_length: 7.5
+  axiom: '!(1.00)F(10.00)A'
+  start_width: 1
+  start_length: 10
   tropism: 1
