@@ -1,34 +1,22 @@
 using UnityEngine;
 
-public class DiamondSquareTerrain : MonoBehaviour
+[ExecuteInEditMode]
+public class MapGenerator : MonoBehaviour
 {
-    public float smooth = 0.002f;
-    public float add_random = 0.02f;
-    public float[,] heights;
-    private Terrain terrain;
+    [Header("DIAMOND SQUARE PARAMETERS")]
+    [SerializeField] private float smooth = 0.002f;
+    [SerializeField] private float add_random = 0.02f;
 
-//We use this script to generate heightmap of our Terrain
-//we can change this heightmap by using Z
-//So we can run it until a map is good for us
-    void Update()
+    public void generate_map()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            generate_map();
-        }
-    }
-
-    void generate_map()
-    {
-        terrain = GetComponent<Terrain>();
-
-        Vector3 TS = terrain.terrainData.size;
+        Terrain terrain = GetComponent<Terrain>();
         terrain.transform.position = new Vector3(0, 0, 0);
+        Vector3 TS = terrain.terrainData.size;
 
         int res = terrain.terrainData.heightmapResolution;
         int max = res - 1;
 
-        heights = terrain.terrainData.GetHeights(0, 0, res, res);
+        float[,] heights = terrain.terrainData.GetHeights(0, 0, res, res);
 
         for (int i = 0; i < res; i++)
         {
