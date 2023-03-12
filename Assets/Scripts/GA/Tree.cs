@@ -21,6 +21,7 @@ public class Tree : MonoBehaviour
     private Trunk _trunk;
     private Bark _bark;
     private FoliageShape _foliage_shape;
+    private FoliageColor _foliage_color;
 
     private void Awake()
     {
@@ -37,8 +38,11 @@ public class Tree : MonoBehaviour
         _trunk = GAManager.Instance.get_random_trunk();
         _bark = GAManager.Instance.get_random_bark();
         _foliage_shape = GAManager.Instance.get_random_foliage_shape();
+        _foliage_color = GAManager.Instance.get_random_foliage_color();
 
         _trunk_container.GetComponent<MeshRenderer>().material = _bark.material;
+        _foliage_container.GetComponent<MeshRenderer>().material = _foliage_color.material;
+
         _lsystem.Init(_trunk.lsystem_base, _foliage_shape.foliage_prefab);
     }
 

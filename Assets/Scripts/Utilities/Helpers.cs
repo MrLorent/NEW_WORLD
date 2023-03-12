@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 
 /// <summary>
@@ -34,15 +36,18 @@ public static class Helpers
 
     public static void MergeMeshes(this Transform container)
     {
-        MeshFilter[] mesh_filters = container.GetComponentsInChildren<MeshFilter>();
-        CombineInstance[] combine = new CombineInstance[mesh_filters.Length];
+        List<MeshFilter> mesh_filters = new List<MeshFilter>(container.GetComponentsInChildren<MeshFilter>());
+        CombineInstance[] combine = new CombineInstance[mesh_filters.Count];
 
-        for (int i = 0; i < mesh_filters.Length; ++i)
+        for (int i = 0; i < mesh_filters.Count; ++i)
         {
+            if (mesh_filters[i].transform == container) continue;
+
+            combine[i].subMeshIndex = 0;
             combine[i].mesh = mesh_filters[i].sharedMesh;
             combine[i].transform = mesh_filters[i].transform.localToWorldMatrix;
+        
         }
-
 
         /* Update container mesh */
         container.GetComponent<MeshFilter>().mesh.Clear();

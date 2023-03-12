@@ -387,5 +387,6 @@ public class LSystem : MonoBehaviour
         turtle.transform.Destroy();
 
         trunk_container.MergeMeshes();
+        foliage_container.MergeMeshes();
     }
 }
