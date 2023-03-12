@@ -338,8 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26cf6deb0d469423ba55bd7b8266d899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boidPrefab: {fileID: 5280821814020100851, guid: 207d531ede98e4798a65feaeb69c23e0, type: 3}
-  spawnBoids: 500
 --- !u!4 &337460785
 Transform:
   m_ObjectHideFlags: 0
@@ -562,6 +560,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &745661973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 745661975}
+  - component: {fileID: 745661974}
+  m_Layer: 0
+  m_Name: Flower manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &745661974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745661973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40ef65b1758040248e0bf1b6b583d9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &745661975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745661973}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 366.51825, y: -150.18338, z: 526.3213}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &777953050
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,9 +760,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 904867853}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ade93d3ad2b440486ea81a96d100fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9366bb8307341435cae6c415ae584def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nbDecoupe: 100
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
