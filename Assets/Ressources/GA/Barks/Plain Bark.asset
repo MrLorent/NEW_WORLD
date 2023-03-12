@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 730f87b1240af854eb238534e9210161, type: 3}
-  m_Name: Oak Base
+  m_Script: {fileID: 11500000, guid: 47237313788b3ac4096d53deb8b9dee8, type: 3}
+  m_Name: Plain Bark
   m_EditorClassIdentifier: 
-  axiom: '!(1.00)F(10.00)A'
-  start_width: 1
-  start_length: 10
-  tropism: 1
+  id: plain_bark
+  attribut_type: 1
+  temperature: 0
+  humidity: 100
+  material: {fileID: 2100000, guid: fa521f07e2b57984287df10aa95eb18e, type: 2}

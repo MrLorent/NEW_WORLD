@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 730f87b1240af854eb238534e9210161, type: 3}
-  m_Name: Oak Base
+  m_Script: {fileID: 11500000, guid: 402c352001fe3ac428361e44cacb7cf3, type: 3}
+  m_Name: Tortilis Trunk
   m_EditorClassIdentifier: 
-  axiom: '!(1.00)F(10.00)A'
-  start_width: 1
-  start_length: 10
-  tropism: 1
+  id: tortilis
+  name: Tortilis
+  attribut_type: 0
+  temperature: 100
+  humidity: 0
+  lsystem_base: {fileID: 11400000, guid: aebaa9db894a78647a8e3db5d39eb3e1, type: 2}

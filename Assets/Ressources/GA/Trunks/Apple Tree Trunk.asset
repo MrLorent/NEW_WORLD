@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 730f87b1240af854eb238534e9210161, type: 3}
-  m_Name: Oak Base
+  m_Script: {fileID: 11500000, guid: 402c352001fe3ac428361e44cacb7cf3, type: 3}
+  m_Name: Apple Tree Trunk
   m_EditorClassIdentifier: 
-  axiom: '!(1.00)F(10.00)A'
-  start_width: 1
-  start_length: 10
-  tropism: 1
+  id: apple_tree
+  name: Apple Tree
+  attribut_type: 0
+  temperature: 0
+  humidity: 100
+  lsystem_base: {fileID: 11400000, guid: ec0f697802488c649ba57d58894584cb, type: 2}

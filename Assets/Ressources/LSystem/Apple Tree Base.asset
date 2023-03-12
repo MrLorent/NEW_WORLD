@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8aa5daa292047648b4716bb7984f6c8, type: 3}
   m_Name: Apple Tree Base
   m_EditorClassIdentifier: 
-  axiom: '!(0.20)F(5.00)[&(a1)+(o1)!(q2)"(r1)A][&(a2)+(o2)!(q2)"(r2)A]'
-  start_width: 0.2
-  start_length: 5
+  axiom: '!(1.00)F(7.50)[&(a1)+(o1)!(q2)"(r1)A][&(a2)+(o2)!(q2)"(r2)A]'
+  start_width: 1
+  start_length: 7.5
   tropism: 0
