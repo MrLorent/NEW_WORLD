@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Oak Trunk
   m_EditorClassIdentifier: 
   id: oak
-  name: Oak
   attribut_type: 0
   temperature: 0
   humidity: 100

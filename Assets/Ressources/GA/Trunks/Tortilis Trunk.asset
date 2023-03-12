@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Tortilis Trunk
   m_EditorClassIdentifier: 
   id: tortilis
-  name: Tortilis
   attribut_type: 0
   temperature: 100
   humidity: 0

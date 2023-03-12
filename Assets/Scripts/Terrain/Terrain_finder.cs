@@ -11,23 +11,7 @@ public class Terrain_finder : MonoBehaviour
     public Terrain parent;
 
     List<Terrain> terrains;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Vector3 mouse = Input.mousePosition;
-        // Ray castPoint = Camera.main.ScreenPointToRay(mouse);
-        // RaycastHit hit;
-        // if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
-        // {
-        //     Debug.Log(find_terrain(hit.point).name);
-        // }
-    }
+    
 
     public Terrain find_terrain(Vector3 coordinate)
     {
