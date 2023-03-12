@@ -15,7 +15,7 @@ public class LSystem : MonoBehaviour
     [SerializeField]
     private GameObject branch_mesh;
     [SerializeField]
-    private GameObject fruit_mesh;
+    private GameObject foliage_prefab;
 
     [Header("CONTAINERS")]
     [SerializeField]
@@ -40,7 +40,7 @@ public class LSystem : MonoBehaviour
 
     private void Start()
     {
-        if (lsystem_base != null) Init();
+        if (lsystem_base != null && foliage_prefab != null) Init();
     }
 
     public void Init()
@@ -50,9 +50,10 @@ public class LSystem : MonoBehaviour
         Draw();
     }
 
-    public void Init(LSystemBase LS_base)
+    public void Init(LSystemBase LS_base, GameObject foliage_shape)
     {
         lsystem_base = LS_base;
+        foliage_prefab = foliage_shape;
         InititalizeAxiom();
         GeneratePattern();
         Draw();
@@ -278,7 +279,7 @@ public class LSystem : MonoBehaviour
 
                 case 'X':
                     GameObject foliage_x = Instantiate(
-                        fruit_mesh,
+                        foliage_prefab,
                         turtle.transform.position,
                         Quaternion.identity,
                         foliage_container
@@ -289,7 +290,7 @@ public class LSystem : MonoBehaviour
 
                 case 'Y':
                     GameObject foliage_y = Instantiate(
-                        fruit_mesh,
+                        foliage_prefab,
                         turtle.transform.position,
                         Quaternion.identity,
                         foliage_container
@@ -300,7 +301,7 @@ public class LSystem : MonoBehaviour
 
                 case 'Z':
                     GameObject foliage_z = Instantiate(
-                        fruit_mesh,
+                        foliage_prefab,
                         turtle.transform.position,
                         Quaternion.identity,
                         foliage_container
@@ -385,6 +386,7 @@ public class LSystem : MonoBehaviour
 
         turtle.transform.Destroy();
 
-        trunk_container.MergeMeshes();
+        trunk_container.merge_children_meshes();
+        foliage_container.merge_children_meshes();
     }
 }

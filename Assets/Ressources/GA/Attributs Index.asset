@@ -13,12 +13,22 @@ MonoBehaviour:
   m_Name: Attributs Index
   m_EditorClassIdentifier: 
   trunks:
-  - {fileID: 11400000, guid: a1e11a7800de847498fe101562459cea, type: 2}
-  - {fileID: 11400000, guid: d4867385fd876fb4bbb41e500c26b7eb, type: 2}
-  - {fileID: 11400000, guid: 2f3edfb32dbcfbc46a8d8082e96d7f67, type: 2}
   - {fileID: 11400000, guid: ce92daa5d5ba6794aa1732a2ef81f841, type: 2}
+  - {fileID: 11400000, guid: d4867385fd876fb4bbb41e500c26b7eb, type: 2}
+  - {fileID: 11400000, guid: a1e11a7800de847498fe101562459cea, type: 2}
+  - {fileID: 11400000, guid: 2f3edfb32dbcfbc46a8d8082e96d7f67, type: 2}
   barks:
   - {fileID: 11400000, guid: f9c42aafe9363ae4cb8d037612f69d13, type: 2}
   - {fileID: 11400000, guid: 6f17864a1b2250c40a43dacdf0606bfa, type: 2}
   - {fileID: 11400000, guid: 9ce44910dba970544a89dd5e0fca516f, type: 2}
   - {fileID: 11400000, guid: 03d35db9920a78b41b5224dd2959238d, type: 2}
+  foliage_shapes:
+  - {fileID: 11400000, guid: 426237783b1a996458e8cb455915ee7e, type: 2}
+  - {fileID: 11400000, guid: 66552d7568656d64faf10033137bdc54, type: 2}
+  - {fileID: 11400000, guid: fc91f6dc0c7d398458b4c1415dd08014, type: 2}
+  - {fileID: 11400000, guid: 53542b08f8672fa4bb67afefb1959279, type: 2}
+  foliage_colors:
+  - {fileID: 11400000, guid: e1d1379ba58b7284e9acb2ee2349865f, type: 2}
+  - {fileID: 11400000, guid: d13bd3142b468184dbe981d1059bbf1a, type: 2}
+  - {fileID: 11400000, guid: 60f6e3043a0e18440b4c1c776a33828a, type: 2}
+  - {fileID: 11400000, guid: 0b98e977a2bc93a43a9be239d28263c1, type: 2}

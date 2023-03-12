@@ -16,4 +16,14 @@ public class GAManager : Singleton<GAManager>
     {
         return attributs_index.barks[Random.Range(0, attributs_index.barks.Count)];
     }
+
+    public FoliageShape get_random_foliage_shape()
+    {
+        return attributs_index.foliage_shapes[Random.Range(0, attributs_index.foliage_shapes.Count)];
+    }
+
+    public FoliageColor get_random_foliage_color()
+    {
+        return attributs_index.foliage_colors[Random.Range(0, attributs_index.foliage_colors.Count)];
+    }
 }

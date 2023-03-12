@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6e34839e06a9e46a4a9f4777c74e5f, type: 3}
+  m_Name: Mountain Foliage Shape
+  m_EditorClassIdentifier: 
+  id: mountain_foliage_shape
+  attribut_type: 2
+  temperature: 0
+  humidity: 0
+  foliage_prefab: {fileID: 669752575027983814, guid: 7a694949d831f5d4d9cef053349b8c79, type: 3}

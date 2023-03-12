@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 
 /// <summary>
@@ -7,14 +9,13 @@ using System.Globalization;
 public static class Helpers
 {
     /// <summary>
-    /// Destroy all child objects of this transform (Unintentionally evil sounding).
+    /// Destroy the gameObject linked to this transform.
     /// Use it like so:
     /// <code>
-    /// transform.DestroyChildren();
+    /// transform.Destroy();
     /// </code>
     /// </summary>
-    /// 
-
+    ///
     public static void Destroy(this Transform t)
     {
         if (Application.isPlaying)
@@ -27,22 +28,41 @@ public static class Helpers
         }
     }
 
+    /// <summary>
+    /// Destroy all child objects of this transform (Unintentionally evil sounding).
+    /// Use it like so:
+    /// <code>
+    /// transform.DestroyChildren();
+    /// </code>
+    /// </summary>
+    ///
     public static void DestroyChildren(this Transform t)
     {
         foreach (Transform child in t) child.Destroy();
     }
 
-    public static void MergeMeshes(this Transform container)
+    /// <summary>
+    /// Destroy all child objects of this transform (Unintentionally evil sounding).
+    /// Use it like so:
+    /// <code>
+    /// transform.merge_children_meshes();
+    /// </code>
+    /// </summary>
+    ///
+    public static void merge_children_meshes(this Transform container)
     {
-        MeshFilter[] mesh_filters = container.GetComponentsInChildren<MeshFilter>();
-        CombineInstance[] combine = new CombineInstance[mesh_filters.Length];
+        List<MeshFilter> mesh_filters = new List<MeshFilter>(container.GetComponentsInChildren<MeshFilter>());
+        CombineInstance[] combine = new CombineInstance[mesh_filters.Count];
 
-        for (int i = 0; i < mesh_filters.Length; ++i)
+        for (int i = 0; i < mesh_filters.Count; ++i)
         {
+            if (mesh_filters[i].transform == container) continue;
+
+            combine[i].subMeshIndex = 0;
             combine[i].mesh = mesh_filters[i].sharedMesh;
             combine[i].transform = mesh_filters[i].transform.localToWorldMatrix;
+        
         }
-
 
         /* Update container mesh */
         container.GetComponent<MeshFilter>().mesh.Clear();
