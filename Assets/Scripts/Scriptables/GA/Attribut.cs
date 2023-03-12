@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
 
 public enum AttributType
 {
     TRUNK,
     BARK,
-    FLOWER_SHAPE,
-    FLOWER_COLOR
+    FOLIAGE_SHAPE,
+    FOLIAGE_COLOR
 }
 
 public abstract class Attribut : ScriptableObject

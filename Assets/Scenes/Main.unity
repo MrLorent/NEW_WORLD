@@ -951,7 +951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turtle_mesh: {fileID: 8246579523791496141, guid: 35c829f36c3b88b45b2fd93fd6cb26a3, type: 3}
   branch_mesh: {fileID: 7588318906811468712, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
-  fruit_mesh: {fileID: 7427862148037841264, guid: 7a694949d831f5d4d9cef053349b8c79, type: 3}
+  foliage_prefab: {fileID: 0}
   trunk_container: {fileID: 2594579284935702810}
   foliage_container: {fileID: 2067498167019141906}
   iterations: 5
