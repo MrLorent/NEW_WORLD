@@ -15,7 +15,9 @@ public class OakBase : LSystemBase
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {'A', "F(l)+(d1)[&(a)!(wr)\"(lr)A]+(d2)[&(a)!(wr)\"(lr)A]+(d2)[&(a)!(wr)\"(lr)A]" },
+            {'A', "F(l)+(d1)[&(a)!(wr)\"(lr)A]+(d2)[&(a)!(wr)\"(lr)A]+(d2)[&(a)!(wr)\"(lr)A]Z" },
+            {'Y', "" },
+            {'Z', "Y" }
         };
 
         /*==== CONSTANTS ====*/

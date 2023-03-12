@@ -15,7 +15,9 @@ public class WeepingWillowBase : LSystemBase
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {'A', "F(l)[&(a1)+(d1)!(wr)\"(lr)A][&(a2)+(d2)!(wr)\"(lr)A]" },
+            {'A', "F(l)[&(a1)+(d1)!(wr)\"(lr)A][&(a2)+(d2)!(wr)\"(lr)A]Z" },
+            {'Y', "" },
+            {'Z', "Y" }
         };
 
         /*==== CONSTANTS ====*/
@@ -42,6 +44,6 @@ public class WeepingWillowBase : LSystemBase
 
     public override float elasticity(float width)
     {
-        return 15.0F / width;
+        return 10.0F / width;
     }
 }

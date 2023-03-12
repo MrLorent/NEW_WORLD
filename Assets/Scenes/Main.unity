@@ -692,7 +692,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981493409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -15}
+  m_LocalPosition: {x: 0, y: 25, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -951,7 +951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turtle_mesh: {fileID: 8246579523791496141, guid: 35c829f36c3b88b45b2fd93fd6cb26a3, type: 3}
   branch_mesh: {fileID: 7588318906811468712, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
-  fruit_mesh: {fileID: 6422860074577344294, guid: 7a694949d831f5d4d9cef053349b8c79, type: 3}
+  fruit_mesh: {fileID: 7427862148037841264, guid: 7a694949d831f5d4d9cef053349b8c79, type: 3}
   trunk_container: {fileID: 2594579284935702810}
   foliage_container: {fileID: 2067498167019141906}
   iterations: 5
@@ -968,8 +968,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aad7807934bd4f5896c04096e0a930e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trunk_container: {fileID: 2594579284935702810}
-  foliage_container: {fileID: 2067498167019141906}
+  _trunk_container: {fileID: 2594579284935702810}
+  _foliage_container: {fileID: 2067498167019141906}
   material: {fileID: 0}
   fitnessScore: 1
   color: {r: 1, g: 1, b: 1, a: 1}

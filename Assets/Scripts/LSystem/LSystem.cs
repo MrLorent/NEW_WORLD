@@ -37,6 +37,12 @@ public class LSystem : MonoBehaviour
     private Dictionary<String, float> constants;
     private List<Instruction> pattern;
 
+
+    private void Start()
+    {
+        if (lsystem_base != null) Init();
+    }
+
     public void Init()
     {
         InititalizeAxiom();
@@ -201,8 +207,12 @@ public class LSystem : MonoBehaviour
             pattern = tmp_pattern;
             tmp_pattern = new List<Instruction>();
         }
+    }
+
+    private void print_pattern()
+    {
         string line = "";
-        foreach(Instruction i in pattern)
+        foreach (Instruction i in pattern)
         {
             line += (i._name == '[' || i._name == ']') ? i._name : (i._name + "(" + i._value + ")");
         }
@@ -245,7 +255,7 @@ public class LSystem : MonoBehaviour
                         float stimulus_strenght = rotation_axis.magnitude;
                         float elasticity = lsystem_base.elasticity(current_width);// 50.0F / current_width * 10.0F; // should be constants["e"]
                         turtle.transform.Rotate(
-                            rotation_axis * (elasticity * stimulus_strenght),
+                            rotation_axis.normalized * (elasticity * stimulus_strenght),
                             Space.World
                         );
                     }
@@ -264,28 +274,35 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case 'A':
-                    Instantiate(
-                        fruit_mesh,
-                        turtle.transform.position,
-                        turtle.transform.rotation,
-                        foliage_container
-                    );
                     break;
 
-                case 'B':
-                    Instantiate(
+                case 'X':
+                    GameObject foliage_x = Instantiate(
                         fruit_mesh,
                         turtle.transform.position,
-                        turtle.transform.rotation,
+                        Quaternion.identity,
                         foliage_container
                     );
+
+                    foliage_x.transform.localScale = new Vector3(iterations * 0.5F, iterations * 0.5F, iterations * 0.5F);
                     break;
 
-                case 'C':
-                    Instantiate(
+                case 'Y':
+                    GameObject foliage_y = Instantiate(
                         fruit_mesh,
                         turtle.transform.position,
-                        turtle.transform.rotation,
+                        Quaternion.identity,
+                        foliage_container
+                    );
+
+                    foliage_y.transform.localScale = new Vector3(iterations * 0.25F, iterations * 0.25F, iterations * 0.25F);
+                    break;
+
+                case 'Z':
+                    GameObject foliage_z = Instantiate(
+                        fruit_mesh,
+                        turtle.transform.position,
+                        Quaternion.identity,
                         foliage_container
                     );
                     break;
@@ -361,7 +378,7 @@ public class LSystem : MonoBehaviour
                     break;
 
                 default:
-                    Debug.Log("Invalid L-Tree operation");
+                    Debug.Log("Invalid L-System transform : " + i._name);
                     break;
             }
         }

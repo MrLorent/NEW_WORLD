@@ -15,7 +15,9 @@ public class AppleTreeBase : LSystemBase
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
-            {  'A', "F(l)[&(a1)+(o1)!(q2)\"(r1)A][&(a2)+(o2)!(q2)\"(r2)A]"  },
+            {  'A', "F(l)[&(a1)+(o1)!(q2)\"(r1)A][&(a2)+(o2)!(q2)\"(r2)A]Z"  },
+            {'Y', "" },
+            {'Z', "Y" }
         };
 
         /*==== CONSTANTS ====*/
