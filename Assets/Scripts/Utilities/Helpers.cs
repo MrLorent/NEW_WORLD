@@ -9,14 +9,13 @@ using System.Globalization;
 public static class Helpers
 {
     /// <summary>
-    /// Destroy all child objects of this transform (Unintentionally evil sounding).
+    /// Destroy the gameObject linked to this transform.
     /// Use it like so:
     /// <code>
-    /// transform.DestroyChildren();
+    /// transform.Destroy();
     /// </code>
     /// </summary>
-    /// 
-
+    ///
     public static void Destroy(this Transform t)
     {
         if (Application.isPlaying)
@@ -29,12 +28,28 @@ public static class Helpers
         }
     }
 
+    /// <summary>
+    /// Destroy all child objects of this transform (Unintentionally evil sounding).
+    /// Use it like so:
+    /// <code>
+    /// transform.DestroyChildren();
+    /// </code>
+    /// </summary>
+    ///
     public static void DestroyChildren(this Transform t)
     {
         foreach (Transform child in t) child.Destroy();
     }
 
-    public static void MergeMeshes(this Transform container)
+    /// <summary>
+    /// Destroy all child objects of this transform (Unintentionally evil sounding).
+    /// Use it like so:
+    /// <code>
+    /// transform.merge_children_meshes();
+    /// </code>
+    /// </summary>
+    ///
+    public static void merge_children_meshes(this Transform container)
     {
         List<MeshFilter> mesh_filters = new List<MeshFilter>(container.GetComponentsInChildren<MeshFilter>());
         CombineInstance[] combine = new CombineInstance[mesh_filters.Count];

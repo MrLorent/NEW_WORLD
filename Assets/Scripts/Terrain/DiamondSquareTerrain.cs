@@ -23,7 +23,7 @@ public class DiamondSquareTerrain : MonoBehaviour
         terrain = GetComponent<Terrain>();
 
         Vector3 TS = terrain.terrainData.size;
-        terrain.transform.position = new Vector3(-TS.x/2, 0, -TS.z/2);
+        terrain.transform.position = new Vector3(0, 0, 0);
 
         int res = terrain.terrainData.heightmapResolution;
         int max = res - 1;
