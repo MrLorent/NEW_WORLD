@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a7ca9b093957a489c9dc7ee3b6fd7c, type: 3}
   m_Name: Fir Base
   m_EditorClassIdentifier: 
-  axiom: '!(1.00)F(10.00)[&(a0)!(wr)"(r2)C]+(d1)[&(a0)!(wr)"(r2)C]+(d2)[&(a0)!(wr)"(r2)C]+(d3)!(wr)"(r1)B'
-  start_width: 1
-  start_length: 10
+  axiom: '!(0.10)F(1.00)[&(a0)!(wr)"(r2)C]+(d1)[&(a0)!(wr)"(r2)C]+(d2)[&(a0)!(wr)"(r2)C]+(d3)!(wr)"(r1)B'
+  start_width: 0.1
+  start_length: 1
   tropism: 0

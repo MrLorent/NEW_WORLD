@@ -28,11 +28,6 @@ public class Tree : MonoBehaviour
         _lsystem = GetComponent<LSystem>();
     }
 
-    private void Start()
-    {
-        init();
-    }
-
     public void init()
     {
         _trunk = GAManager.Instance.get_random_trunk();

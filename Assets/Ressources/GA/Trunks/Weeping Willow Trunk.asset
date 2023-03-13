@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Weeping Willow Trunk
   m_EditorClassIdentifier: 
   id: weeping_willow
-  name: Weeping Willow
   attribut_type: 0
   temperature: 100
   humidity: 100
