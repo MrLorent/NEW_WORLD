@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum CellState {NOTHING, FLOWER, TREE};
+public enum CellState {NOTHING, FLOWER};
 
 public struct Cell{
     public bool isAlive;
     public Vector3 position;
     public Vector2 size;
     public CellState state;
+    public GameObject primitive;
 
     public Cell(bool isAlive, Vector3 position, Vector2 size, CellState state) {
         this.isAlive = isAlive;
         this.position = position;
         this.size = size;
         this.state = state;
+        this.primitive = null;
+    }
+
+    public Cell(Cell cell) {
+        this.isAlive = cell.isAlive;
+        this.position = cell.position;
+        this.size = cell.size;
+        this.state = cell.state;
+        this.primitive = cell.primitive;
     }
 };
 

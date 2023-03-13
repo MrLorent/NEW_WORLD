@@ -2,23 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Flower{
-        
-        public GameObject primitive;
-        public Vector2 indexes;
-
-        public Flower(GameObject primitive, Vector2 indexes) {
-            this.primitive = primitive;
-            this.indexes = indexes;
-        }
-    };
 
 
 public class GameOfLife : MonoBehaviour
 {
 
     private  List<List<Cell>> future_cells = new List<List<Cell>>();
-    private List<Flower> flowers= new List<Flower>();
 
     void Awake()
     {
@@ -28,9 +17,11 @@ public class GameOfLife : MonoBehaviour
 
      void run()
     {     
-        DrawFlowers();
         ComputeNextGeneration();
+        DrawFlowers();
         Clear();
+        TerrainManager.Instance.cells = future_cells;
+        future_cells=new List<List<Cell>>();
     }
 
     private void ComputeNextGeneration()
@@ -44,35 +35,36 @@ public class GameOfLife : MonoBehaviour
                 int nb_of_neighbors = CountNeighbors(i, j);
 
                 Cell cell = TerrainManager.Instance.cells[i][j];
-
                 if(cell.isAlive)
                 {
                     if(nb_of_neighbors == 2 || nb_of_neighbors == 3)
                     {
-                        future_column.Add(new Cell(true, cell.position, cell.size, CellState.FLOWER));
+                        future_column.Add(cell);
                     }
                     else
                     {
-                        future_column.Add(new Cell(false, cell.position, cell.size, CellState.NOTHING));
+                        cell.isAlive = false;
+                        cell.state = CellState.NOTHING;
+                        future_column.Add(cell);
                     }
                 }
                 else
                 {
                     if(nb_of_neighbors == 3)
                     {
-                        future_column.Add(new Cell(true, cell.position, cell.size, CellState.FLOWER));
+                        cell.isAlive = true;
+                        cell.state = CellState.FLOWER;
+                        future_column.Add(cell);
                     }
                     else
                     {
-                        future_column.Add(new Cell(false, cell.position, cell.size, CellState.NOTHING));
+                        future_column.Add(cell);
                     }
                 }
-
+                
             }
             future_cells.Add(future_column);
         }
-        TerrainManager.Instance.cells = future_cells;
-        future_cells=new List<List<Cell>>();
     }
 
     private int CountNeighbors(int x, int y)
@@ -108,18 +100,21 @@ public class GameOfLife : MonoBehaviour
         {
             for(int j=0; j< TerrainManager.Instance.nbDecoupe; j++)
             {
-                Cell cell = TerrainManager.Instance.cells[i][j];
-                if(cell.isAlive && cell.state == CellState.FLOWER){
+                Cell previous_cell = TerrainManager.Instance.cells[i][j];
+                Cell future_cell = future_cells[i][j];
+
+                if(future_cell.isAlive && future_cell.state != previous_cell.state){
 
                     //==== CAPSULE IS TO BE REPLACED BY A FLOWER/TREE====
                     GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                    capsule.transform.position = new Vector3(cell.position.x, cell.position.y, cell.position.z);
+                    capsule.transform.position = new Vector3(future_cell.position.x, future_cell.position.y, future_cell.position.z);
                     capsule.transform.SetParent(transform);
                     Renderer r = capsule.GetComponent<Renderer>();
                     r.material.color = new Color(1,0,0,1);
                     //=============================================
 
-                    flowers.Add(new Flower(capsule, new Vector2(i, j)));
+                    future_cell.primitive = capsule;
+                    future_cells[i][j] = future_cell;
                 }
             }
         }
@@ -127,16 +122,22 @@ public class GameOfLife : MonoBehaviour
 
     private void Clear()
     {
-        if(flowers.Count != 0)
+         for(int i=0; i< TerrainManager.Instance.nbDecoupe; i++)
         {
-            for(int i=0; i< flowers.Count; i++)
+            for(int j=0; j< TerrainManager.Instance.nbDecoupe; j++)
             {
-                
-                GameObject flower = flowers[0].primitive;
-                flowers.RemoveAt(0);
-                flower.transform.Destroy();
-           
+                Cell previous_cell = TerrainManager.Instance.cells[i][j];
+                Cell future_cell = future_cells[i][j];
+                if(!future_cell.isAlive && future_cell.state != previous_cell.state){
+                    if(future_cell.primitive != null)
+                    {
+                        future_cell.primitive.transform.Destroy();
+                    }
+                    future_cell.primitive = null;
+                    future_cells[i][j] = future_cell;
+                }
             }
         }
+
     }
 }
