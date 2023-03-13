@@ -51,22 +51,22 @@ public class GameOfLife : MonoBehaviour
                 {
                     if(nb_of_neighbors == 2 || nb_of_neighbors == 3)
                     {
-                        future_column.Add(new Cell(true, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size));
+                        future_column.Add(new Cell(true, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.FLOWER));
                     }
                     else
                     {
-                        future_column.Add(new Cell(false, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size));
+                        future_column.Add(new Cell(false, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.NOTHING));
                     }
                 }
                 else
                 {
                     if(nb_of_neighbors == 3)
                     {
-                        future_column.Add(new Cell(true, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size));
+                        future_column.Add(new Cell(true, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.FLOWER));
                     }
                     else
                     {
-                        future_column.Add(new Cell(false, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size));
+                        future_column.Add(new Cell(false, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.NOTHING));
                     }
                 }
 
@@ -110,7 +110,7 @@ public class GameOfLife : MonoBehaviour
         {
             for(int j=0; j< Grid.Instance.nbDecoupe; j++)
             {
-                if(Grid.Instance.cells[i][j].isAlive && Grid.Instance.cells[i][j].state == state.FLOWER){
+                if(Grid.Instance.cells[i][j].isAlive && Grid.Instance.cells[i][j].state == State.FLOWER){
 
                     //==== CAPSULE IS TO BE REPLACED BY A FLOWER/TREE====
                     GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);

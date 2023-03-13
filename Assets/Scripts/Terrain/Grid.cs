@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum state {NOTHING, FLOWER, TREE};
+public enum State {NOTHING, FLOWER, TREE};
 
  public struct Cell{
         public bool isAlive;
         public Vector3 position;
         public Vector2 size;
-        public state state;
+        public State state;
 
-        public Cell(bool isAlive, Vector3 position, Vector2 size) {
+        public Cell(bool isAlive, Vector3 position, Vector2 size, State state) {
             this.isAlive = isAlive;
             this.position = position;
             this.size = size;
-            this.state = isAlive ? state.FLOWER : state.NOTHING;
+            this.state = state;
         }
     };
 
@@ -23,11 +23,13 @@ public class Grid : Singleton<Grid>
 {
 
     public int nbDecoupe = 100;
-    public List<List<Cell>> cells = new List<List<Cell>>();
+    private Terrain terrain;
+
+   [HideInInspector] public List<List<Cell>> cells = new List<List<Cell>>();
 
     void Start()
     {
-        Terrain[] terrains = GetComponentsInChildren<Terrain>();
+        terrain = GetComponent<Terrain>();
         float minCoordX = float.MaxValue;
         float minCoordZ = float.MaxValue;
 
@@ -35,17 +37,14 @@ public class Grid : Singleton<Grid>
         float maxCoordZ = float.MinValue;
 
         //We look for the minimals and maximals coordinate
-        foreach(Terrain terrain in terrains)
-        {
-           Vector3 terrainMin = terrain.transform.position;
-           Vector3 terrainMax = terrainMin + terrain.terrainData.size;
+        Vector3 terrainMin = terrain.transform.position;
+        Vector3 terrainMax = terrainMin + terrain.terrainData.size;
 
-           minCoordX = Mathf.Min(minCoordX, terrainMin.x);
-           minCoordZ = Mathf.Min(minCoordZ, terrainMin.z);
+        minCoordX = terrainMin.x;
+        minCoordZ = terrainMin.z;
 
-           maxCoordX = Mathf.Max(maxCoordX, terrainMax.x);
-           maxCoordZ = Mathf.Max(maxCoordZ, terrainMax.z);
-        }
+        maxCoordX = terrainMax.x;
+        maxCoordZ = terrainMax.z;
 
         //We define the size of a cell in the grid
         float cellSizeX= (maxCoordX - minCoordX) / nbDecoupe;
@@ -66,16 +65,6 @@ public class Grid : Singleton<Grid>
                
 
                 //On recupere le terrain sur lequel est la cell pour pouvoirrecuperer la hauteur plus tard
-                Terrain terrain;
-                if(positionX < maxCoordX/2)
-                {
-                    terrain = (positionZ < maxCoordZ/2) ? terrains[0] : terrains[1];
-                }
-                else
-                {
-                    terrain = (positionZ < maxCoordZ/2) ? terrains[2] : terrains[3];
-
-                }
 
                 float hauteur = terrain.SampleHeight(new Vector3(positionX, 0, positionZ));
 
@@ -83,12 +72,12 @@ public class Grid : Singleton<Grid>
                 int random = Random.Range(0, 100);
 
                 if(random < 20 ){
-                    column.Add(new Cell(true, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ)));
+                    column.Add(new Cell(true, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), State.FLOWER));
 
                 }
                 else
                 {
-                    column.Add(new Cell(false, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ)));
+                    column.Add(new Cell(false, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), State.NOTHING));
                 }
 
 
