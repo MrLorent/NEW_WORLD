@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 493bf437bf8382b468bf2ec96d0d1401, type: 3}
   m_Name: Tortilis Base
   m_EditorClassIdentifier: 
-  axiom: F(l)[&(a1)!(wr)"(r1)B]|[&(a2)!(wr)"(r2)B]
-  start_width: 1
-  start_length: 10
+  axiom: '!(0.80)F(7.50)[&(a1)!(wr)"(r1)B]|[&(a2)!(wr)"(r2)B]'
+  start_width: 0.8
+  start_length: 7.5
   tropism: 0

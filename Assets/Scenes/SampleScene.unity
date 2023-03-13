@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &163147978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,50 +309,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   temperature: 20
   humidity: 15
---- !u!1 &337460783
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 337460785}
-  - component: {fileID: 337460784}
-  m_Layer: 0
-  m_Name: Boids manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &337460784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337460783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26cf6deb0d469423ba55bd7b8266d899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &337460785
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337460783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 500, y: 0, z: 500}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &634089093
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,50 +516,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &745661973
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 745661975}
-  - component: {fileID: 745661974}
-  m_Layer: 0
-  m_Name: Flower manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &745661974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745661973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a40ef65b1758040248e0bf1b6b583d9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &745661975
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745661973}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 366.51825, y: -150.18338, z: 526.3213}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &777953050
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,14 +619,13 @@ GameObject:
   m_Component:
   - component: {fileID: 904867854}
   - component: {fileID: 904867855}
-  - component: {fileID: 904867856}
   m_Layer: 0
   m_Name: Terrains manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &904867854
 Transform:
   m_ObjectHideFlags: 0
@@ -746,24 +657,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34517e0a4e6a4102a1b648460bd67a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bot_left: {fileID: 1604565586}
-  top_left: {fileID: 777953053}
-  bot_right: {fileID: 1552292904}
-  top_right: {fileID: 185019585}
-  parent: {fileID: 163147980}
---- !u!114 &904867856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 904867853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9366bb8307341435cae6c415ae584def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nbDecoupe: 100
+  bot_left: {fileID: 0}
+  top_left: {fileID: 0}
+  bot_right: {fileID: 0}
+  top_right: {fileID: 0}
+  parent: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +712,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 1500
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -840,14 +738,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.33043194, y: 0, z: 0, w: 0.94382983}
-  m_LocalPosition: {x: 0, y: 48.8, z: -95.3}
+  m_LocalRotation: {x: 0.47355026, y: 0, z: 0, w: 0.8807668}
+  m_LocalPosition: {x: 500, y: 600, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 38.59, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 56.53, y: 0, z: 0}
 --- !u!1 &1552292901
 GameObject:
   m_ObjectHideFlags: 0

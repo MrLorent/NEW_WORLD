@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System;
 using UnityEngine;
 
 //[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -15,38 +15,46 @@ public class LSystem : MonoBehaviour
     [SerializeField]
     private GameObject branch_mesh;
     [SerializeField]
-    private GameObject fruit_mesh;
+    private GameObject foliage_prefab;
 
     [Header("CONTAINERS")]
     [SerializeField]
-    private GameObject trunk_container;
+    private Transform trunk_container;
     [SerializeField]
-    private GameObject foliage_container;
-    [SerializeField]
-    private GameObject fruits_container;
+    private Transform foliage_container;
 
     [Header("L-SYSTEM PARAMETERS")]
     [SerializeField]
     private int iterations = 1;
 
     [SerializeField]
-    private LSystemBase lsystem_base;
+    private LSystemBase lsystem_base = null;
 
     /*====== PRIVATE ======*/
     private List<Instruction> axiom_instructions;
+    private float min_width;
     private Dictionary<char, List<Instruction>> rules;
     private Dictionary<String, float> constants;
     private List<Instruction> pattern;
 
-    // Start is called before the first frame update
+
     private void Start()
     {
-        InititalizeAxiom();
-        Init();
+        if (lsystem_base != null && foliage_prefab != null) Init();
     }
 
     public void Init()
     {
+        InititalizeAxiom();
+        GeneratePattern();
+        Draw();
+    }
+
+    public void Init(LSystemBase LS_base, GameObject foliage_shape)
+    {
+        lsystem_base = LS_base;
+        foliage_prefab = foliage_shape;
+        InititalizeAxiom();
         GeneratePattern();
         Draw();
     }
@@ -55,6 +63,9 @@ public class LSystem : MonoBehaviour
     {
         // TRADUCE AXIOM
         axiom_instructions = GetInstructionsFrom(lsystem_base.axiom);
+
+        // START PARAMETERS
+        min_width = lsystem_base.constants["min_w"];
 
         // RULES
         rules = new Dictionary<char, List<Instruction>>();
@@ -111,17 +122,85 @@ public class LSystem : MonoBehaviour
 
         for(int i = 0; i < iterations; ++i)
         {
+            Stack<Vector2> transform_history = new Stack<Vector2>();
+            float current_width = 0;
+            float current_length = 0;
             // For each character in our current string,
             // We check if there is an evolution rule we
-            // need to apply 
-            foreach(Instruction instruct in pattern)
+            // need to apply
+            foreach (Instruction instruct in pattern)
             {
-                if(rules.ContainsKey(instruct._name)){
+                if (rules.ContainsKey(instruct._name))
+                {
                     tmp_pattern.AddRange(rules[instruct._name]);
-                }else{
-                    tmp_pattern.Add(instruct);
                 }
-                
+                else
+                {
+                    Instruction new_instruct = new Instruction(instruct);
+
+                    switch (instruct._name)
+                    {
+                        case 'F':
+                            if (instruct._value != "l")
+                            {
+                                current_length = GetInstructionValue(instruct._value) * GetInstructionValue("lg");
+                                new_instruct._value = Helpers.convert_float_to_string(current_length);
+                            }
+                            break;
+
+
+                        case '!':
+                            // SHRINK
+                            if(constants.ContainsKey(instruct._value))
+                            {
+                                current_width *= constants[instruct._value];
+                                current_width = current_width < min_width ? min_width : current_width;
+                                new_instruct._value = Helpers.convert_float_to_string(current_width);
+                            }
+                            // GROW
+                            else
+                            {
+                                current_width = GetInstructionValue(instruct._value) * GetInstructionValue("wg");
+                                new_instruct._value = Helpers.convert_float_to_string(current_width);
+                            }
+                            break;
+
+                        case '"':
+                            // SHRINK
+                            if (constants.ContainsKey(instruct._value))
+                            {
+                                current_length *= constants[instruct._value];
+                                new_instruct._value = Helpers.convert_float_to_string(current_length);
+                            }
+                            // GROW
+                            else
+                            {
+                                current_length = GetInstructionValue(instruct._value) * GetInstructionValue("lg");
+                                new_instruct._value = Helpers.convert_float_to_string(current_length);
+                            }
+                            break;
+
+                        case '[':
+                            // We save the current position
+                            transform_history.Push(new Vector2(
+                                current_width,
+                                current_length
+                            ));
+                            break;
+
+                        case ']':
+                            // We go back to the previous position saved
+                            Vector2 ti = transform_history.Pop();
+                            current_width = ti.x;
+                            current_length = ti.y;
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    tmp_pattern.Add(new_instruct);
+                }
             }
 
             // We store this need evolution iteration
@@ -129,7 +208,16 @@ public class LSystem : MonoBehaviour
             pattern = tmp_pattern;
             tmp_pattern = new List<Instruction>();
         }
+    }
 
+    private void print_pattern()
+    {
+        string line = "";
+        foreach (Instruction i in pattern)
+        {
+            line += (i._name == '[' || i._name == ']') ? i._name : (i._name + "(" + i._value + ")");
+        }
+        Debug.Log(line);
     }
 
     private float GetInstructionValue(String value)
@@ -139,10 +227,9 @@ public class LSystem : MonoBehaviour
 
     private void Draw()
     {
-        trunk_container.transform.DestroyChildren();
-        foliage_container.transform.DestroyChildren();
-        fruits_container.transform.DestroyChildren();
-
+        trunk_container.DestroyChildren();
+        foliage_container.DestroyChildren();
+        
         GameObject turtle = Instantiate(
             turtle_mesh,
             Vector3.zero,
@@ -151,8 +238,8 @@ public class LSystem : MonoBehaviour
         );
 
         Stack<TransformInfos> transform_history = new Stack<TransformInfos>();
-        float current_width = lsystem_base.start_width;
-        float current_length = lsystem_base.start_length;
+        float current_width = 0;
+        float current_length = 0;
 
         foreach (Instruction i in pattern)
         {
@@ -166,10 +253,10 @@ public class LSystem : MonoBehaviour
                     {
                         Vector3 tropism = new Vector3(constants["Tx"], constants["Ty"], constants["Tz"]);
                         Vector3 rotation_axis = Vector3.Cross(turtle.transform.up, tropism);
-                        float stimulus_strenght = Vector3.Cross(turtle.transform.up, tropism).magnitude;
-                        float susceptability = 10.0F; // should be constants["e"]
+                        float stimulus_strenght = rotation_axis.magnitude;
+                        float elasticity = lsystem_base.elasticity(current_width);// 50.0F / current_width * 10.0F; // should be constants["e"]
                         turtle.transform.Rotate(
-                            rotation_axis * (susceptability * stimulus_strenght),
+                            rotation_axis.normalized * (elasticity * stimulus_strenght),
                             Space.World
                         );
                     }
@@ -181,35 +268,43 @@ public class LSystem : MonoBehaviour
                         branch_mesh,
                         initial_position,
                         turtle.transform.rotation,
-                        trunk_container.transform
+                        trunk_container
                     );
+                    
                     branch.transform.localScale = new Vector3(current_width, value * 0.5F, current_width);
                     break;
 
                 case 'A':
-                    Instantiate(
-                        fruit_mesh,
-                        turtle.transform.position,
-                        turtle.transform.rotation,
-                        fruits_container.transform
-                    );
                     break;
 
-                case 'B':
-                    Instantiate(
-                        fruit_mesh,
+                case 'X':
+                    GameObject foliage_x = Instantiate(
+                        foliage_prefab,
                         turtle.transform.position,
-                        turtle.transform.rotation,
-                        fruits_container.transform
+                        Quaternion.identity,
+                        foliage_container
                     );
+
+                    foliage_x.transform.localScale = new Vector3(iterations * 0.5F, iterations * 0.5F, iterations * 0.5F);
                     break;
 
-                case 'C':
-                    Instantiate(
-                        fruit_mesh,
+                case 'Y':
+                    GameObject foliage_y = Instantiate(
+                        foliage_prefab,
                         turtle.transform.position,
-                        turtle.transform.rotation,
-                        fruits_container.transform
+                        Quaternion.identity,
+                        foliage_container
+                    );
+
+                    foliage_y.transform.localScale = new Vector3(iterations * 0.25F, iterations * 0.25F, iterations * 0.25F);
+                    break;
+
+                case 'Z':
+                    GameObject foliage_z = Instantiate(
+                        foliage_prefab,
+                        turtle.transform.position,
+                        Quaternion.identity,
+                        foliage_container
                     );
                     break;
 
@@ -250,11 +345,17 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case '!':
-                    current_width *= constants[i._value];
+                    if (float.TryParse(i._value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float new_width))
+                    {
+                        current_width = new_width;
+                    }
                     break;
 
                 case '"':
-                    current_length *= constants[i._value];
+                    if (float.TryParse(i._value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float new_length))
+                    {
+                        current_length = new_length;
+                    }
                     break;
 
                 case '[':
@@ -278,13 +379,14 @@ public class LSystem : MonoBehaviour
                     break;
 
                 default:
-                    Debug.Log("Invalid L-Tree operation");
+                    Debug.Log("Invalid L-System transform : " + i._name);
                     break;
             }
         }
 
         turtle.transform.Destroy();
 
-        trunk_container.transform.MergeMeshes();
+        trunk_container.merge_children_meshes();
+        foliage_container.merge_children_meshes();
     }
 }

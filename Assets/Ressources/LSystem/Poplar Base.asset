@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8745d0eda107f1742bcc74e020399ebc, type: 3}
   m_Name: Poplar Base
   m_EditorClassIdentifier: 
-  axiom: F(l)[&(a0)!(wr)"(r2)B]+(d)!(wr)"(r1)A
+  axiom: '!(1.00)F(10.00)[&(a0)!(wr)"(r2)B]+(d)!(wr)"(r1)A'
   start_width: 1
   start_length: 10
   tropism: 0
