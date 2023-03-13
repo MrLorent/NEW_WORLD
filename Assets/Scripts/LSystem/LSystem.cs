@@ -277,6 +277,15 @@ public class LSystem : MonoBehaviour
                 case 'A':
                     break;
 
+                case 'B':
+                    break;
+
+                case 'C':
+                    break;
+
+                case 'D':
+                    break;
+
                 case 'X':
                     GameObject foliage_x = Instantiate(
                         foliage_prefab,

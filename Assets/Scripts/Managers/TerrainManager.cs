@@ -84,9 +84,6 @@ public class TerrainManager : Singleton<TerrainManager>
                 {
                     column.Add(new Cell(false, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), CellState.NOTHING));
                 }
-
-
-               
             }
             cells.Add(column);
     
