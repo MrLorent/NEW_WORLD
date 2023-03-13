@@ -33,9 +33,9 @@ public class TerrainManager : Singleton<TerrainManager>
     {
         Vector3 random_position = Vector3.zero;
 
-        random_position.x = Random.Range(0, _terrain.terrainData.size.x);
-        random_position.z = Random.Range(0, _terrain.terrainData.size.z);
-        random_position.y = _terrain.SampleHeight(random_position);
+        random_position.x = _terrain.transform.position.x + Random.Range(0, _terrain.terrainData.size.x);
+        random_position.z = _terrain.transform.position.z + Random.Range(0, _terrain.terrainData.size.z);
+        random_position.y = _terrain.transform.position.y + _terrain.SampleHeight(random_position);
 
         return random_position;
     }
@@ -46,21 +46,15 @@ public class TerrainManager : Singleton<TerrainManager>
 
     private void GenerateGrid()
     {
-        float minCoordX = float.MaxValue;
-        float minCoordZ = float.MaxValue;
-
-        float maxCoordX = float.MinValue;
-        float maxCoordZ = float.MinValue;
-
         //We look for the minimals and maximals coordinate
         Vector3 terrainMin = _terrain.transform.position;
         Vector3 terrainMax = terrainMin + _terrain.terrainData.size;
 
-        minCoordX = terrainMin.x;
-        minCoordZ = terrainMin.z;
+        float minCoordX = terrainMin.x;
+        float minCoordZ = terrainMin.z;
 
-        maxCoordX = terrainMax.x;
-        maxCoordZ = terrainMax.z;
+        float maxCoordX = terrainMax.x;
+        float maxCoordZ = terrainMax.z;
 
         //We define the size of a cell in the grid
         float cellSizeX= (maxCoordX - minCoordX) / nbDecoupe;
@@ -75,9 +69,9 @@ public class TerrainManager : Singleton<TerrainManager>
             for(int j=0; j<nbDecoupe; j++)
             {
 
-                float positionX = i*cellSizeX + halfCellSizeX;
-                float positionZ = j*cellSizeZ+halfCellSizeZ;
-                float hauteur = _terrain.SampleHeight(new Vector3(positionX, 0, positionZ));
+                float positionX = _terrain.transform.position.x + i * cellSizeX + halfCellSizeX;
+                float positionZ = _terrain.transform.position.z +j * cellSizeZ+halfCellSizeZ;
+                float hauteur = _terrain.transform.position.y + _terrain.SampleHeight(new Vector3(positionX, 0, positionZ));
 
                  //Using Random.range with int is exclusive
                 int random = Random.Range(0, 100);
