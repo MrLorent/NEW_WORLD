@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class MapGenerator : MonoBehaviour
+public class DiamondSquareGenerator : MonoBehaviour
 {
     [Header("DIAMOND SQUARE PARAMETERS")]
     [SerializeField] private float smooth = 0.002f;
@@ -10,7 +10,7 @@ public class MapGenerator : MonoBehaviour
     public void generate_map()
     {
         Terrain terrain = GetComponent<Terrain>();
-        terrain.transform.position = new Vector3(0, 0, 0);
+        terrain.transform.position = new Vector3(0, 20, 0);
         Vector3 TS = terrain.terrainData.size;
 
         int res = terrain.terrainData.heightmapResolution;
