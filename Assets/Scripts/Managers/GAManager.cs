@@ -7,6 +7,40 @@ public class GAManager : Singleton<GAManager>
     [SerializeField]
     private AttributsIndex attributs_index;
 
+    [SerializeField]
+    private GameObject _tree_prefab;
+
+    [SerializeField]
+    private uint _nb_trees = 10;
+
+    [SerializeField]
+    private Transform _tree_container;
+
+    private List<Tree> _trees;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _trees = new List<Tree>();
+    }
+
+    private void Start()
+    {
+        for(uint i = 0; i < _nb_trees; i++)
+        {
+            Tree new_tree = Instantiate(
+                _tree_prefab,
+                TerrainManager.Instance.get_random_position(),
+                Quaternion.identity,
+                _tree_container
+            ).GetComponent<Tree>();
+
+            new_tree.init();
+
+            _trees.Add(new_tree);
+        }
+    }
+
     public Trunk get_random_trunk()
     {
         return attributs_index.trunks[Random.Range(0, attributs_index.trunks.Count)];

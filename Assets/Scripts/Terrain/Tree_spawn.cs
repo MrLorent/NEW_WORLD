@@ -25,10 +25,4 @@ public class Tree_spawn : MonoBehaviour
 
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
