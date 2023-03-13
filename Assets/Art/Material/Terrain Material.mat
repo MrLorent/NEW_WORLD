@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Swamp Tree Bark
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: Terrain Material
+  m_Shader: {fileID: 4800000, guid: c69e7c9536b79f544a2589e54bee6c21, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -21,10 +21,6 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Cube:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -67,21 +63,28 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.25
+    - _Glossines: 0.25
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Shininess: 0.067
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.08235294, g: 0.09803922, b: 0.14901961, a: 1}
+    - _Color: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
+    - _Default_Color: {r: 0.84705883, g: 0.29411766, b: 0.36862746, a: 1}
+    - _Desert_Color: {r: 0.90588236, g: 0.8, b: 0.5529412, a: 1}
+    - _Desert_Position: {r: 800, g: 20, b: 593, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
-    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Mountain_Color: {r: 0.6039216, g: 0.8980392, b: 1, a: 1}
+    - _Position: {r: 250, g: 0, b: 760, a: 1}
+    - _Snow_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Swam_Position: {r: 800, g: 0, b: 790, a: 1}
+    - _Swamp_Color: {r: 0.14509805, g: 0.14509805, b: 0.3254902, a: 1}
+    - _Swamp_Position: {r: 250, g: 20, b: 701, a: 1}
   m_BuildTextureStacks: []
