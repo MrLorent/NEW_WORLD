@@ -25,10 +25,6 @@ public class GameOfLife : MonoBehaviour
         InvokeRepeating("run", 0f, 0.5f);
     }
 
-    void Update()
-    {
-    }
-
 
      void run()
     {     
@@ -39,41 +35,43 @@ public class GameOfLife : MonoBehaviour
 
     private void ComputeNextGeneration()
     {
-        for(int i=0; i < Grid.Instance.nbDecoupe; i++)
+        for(int i=0; i < TerrainManager.Instance.nbDecoupe; i++)
         {
             List<Cell> future_column = new List<Cell>();
 
-            for(int j=0; j< Grid.Instance.nbDecoupe; j++)
+            for(int j=0; j< TerrainManager.Instance.nbDecoupe; j++)
             {
                 int nb_of_neighbors = CountNeighbors(i, j);
 
-                if(Grid.Instance.cells[i][j].isAlive)
+                Cell cell = TerrainManager.Instance.cells[i][j];
+
+                if(cell.isAlive)
                 {
                     if(nb_of_neighbors == 2 || nb_of_neighbors == 3)
                     {
-                        future_column.Add(new Cell(true, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.FLOWER));
+                        future_column.Add(new Cell(true, cell.position, cell.size, CellState.FLOWER));
                     }
                     else
                     {
-                        future_column.Add(new Cell(false, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.NOTHING));
+                        future_column.Add(new Cell(false, cell.position, cell.size, CellState.NOTHING));
                     }
                 }
                 else
                 {
                     if(nb_of_neighbors == 3)
                     {
-                        future_column.Add(new Cell(true, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.FLOWER));
+                        future_column.Add(new Cell(true, cell.position, cell.size, CellState.FLOWER));
                     }
                     else
                     {
-                        future_column.Add(new Cell(false, Grid.Instance.cells[i][j].position, Grid.Instance.cells[i][j].size, State.NOTHING));
+                        future_column.Add(new Cell(false, cell.position, cell.size, CellState.NOTHING));
                     }
                 }
 
             }
             future_cells.Add(future_column);
         }
-        Grid.Instance.cells = future_cells;
+        TerrainManager.Instance.cells = future_cells;
         future_cells=new List<List<Cell>>();
     }
 
@@ -84,15 +82,15 @@ public class GameOfLife : MonoBehaviour
         {
             for(int j=-1; j<2; j++)
             {
-                int tmp_x=(x+i+Grid.Instance.nbDecoupe)%Grid.Instance.nbDecoupe;
-                int tmp_y=(y+j+Grid.Instance.nbDecoupe)%Grid.Instance.nbDecoupe;
-                if(Grid.Instance.cells[tmp_x][tmp_y].isAlive)
+                int tmp_x=(x+i+TerrainManager.Instance.nbDecoupe)%TerrainManager.Instance.nbDecoupe;
+                int tmp_y=(y+j+TerrainManager.Instance.nbDecoupe)%TerrainManager.Instance.nbDecoupe;
+                if(TerrainManager.Instance.cells[tmp_x][tmp_y].isAlive)
                 {
                     sum++;
                 }
             }
         }
-        if(Grid.Instance.cells[x][y].isAlive)
+        if(TerrainManager.Instance.cells[x][y].isAlive)
         {
             sum--;
         }
@@ -106,15 +104,16 @@ public class GameOfLife : MonoBehaviour
     private void DrawFlowers()
     {
 
-         for(int i=0; i< Grid.Instance.nbDecoupe; i++)
+         for(int i=0; i< TerrainManager.Instance.nbDecoupe; i++)
         {
-            for(int j=0; j< Grid.Instance.nbDecoupe; j++)
+            for(int j=0; j< TerrainManager.Instance.nbDecoupe; j++)
             {
-                if(Grid.Instance.cells[i][j].isAlive && Grid.Instance.cells[i][j].state == State.FLOWER){
+                Cell cell = TerrainManager.Instance.cells[i][j];
+                if(cell.isAlive && cell.state == CellState.FLOWER){
 
                     //==== CAPSULE IS TO BE REPLACED BY A FLOWER/TREE====
                     GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                    capsule.transform.position = new Vector3(Grid.Instance.cells[i][j].position.x, Grid.Instance.cells[i][j].position.y, Grid.Instance.cells[i][j].position.z);
+                    capsule.transform.position = new Vector3(cell.position.x, cell.position.y, cell.position.z);
                     capsule.transform.SetParent(transform);
                     Renderer r = capsule.GetComponent<Renderer>();
                     r.material.color = new Color(1,0,0,1);
@@ -130,7 +129,6 @@ public class GameOfLife : MonoBehaviour
     {
         if(flowers.Count != 0)
         {
-            Debug.Log(flowers.Count);
             for(int i=0; i< flowers.Count; i++)
             {
                 
