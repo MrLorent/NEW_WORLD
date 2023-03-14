@@ -77,7 +77,7 @@ Shader "Custom/TerrainShader"
             fixed4 color_1;
 
             
-            if (desert_dist < mountain_dist)
+            if ((desert_dist - mountain_dist) < 0.005)
             {
                 dist_0 = desert_dist;
                 color_0 = _Desert_Color;
@@ -88,7 +88,7 @@ Shader "Custom/TerrainShader"
                 color_0 = _Mountain_Color;
             }
 
-            if (plain_dist < swamp_dist)
+            if ((plain_dist - swamp_dist) < 0.005)
             {
                 dist_1 = plain_dist;
                 color_1 = _Plain_Color;
@@ -98,36 +98,6 @@ Shader "Custom/TerrainShader"
                 dist_1 = swamp_dist;
                 color_1 = _Swamp_Color;
             }
-
-            fixed4 base_color = dist_0 < dist_1 ? color_0 : color_1;
-
-            // if(all(base_color == _Desert_Color))
-            // {
-            //     if(length(desert_dist - mountain_dist) < 2.5F)
-            //     {
-            //         float3 z = float3(0,1,0);
-            //         float3 middle_position = _Desert_Position + position * 0.5;
-            //         float2 xz_middle = float2(middle_position.x, middle_position.z);
-            //         float3 normal = cross(z, middle_position);
-            //         float2 zx_normal = float2(normal.x, normal.z);
-            //         zx_normal = normalize(zx_normal);
-            //         float alpha = acos(dot(zx_normal, middle_position));
-            //         float frag_to_middle_axe = length(xz_position - xz_middle) * sin(alpha);
-                    
-            //         float linear_middle = lerp(0, 1, 1 - frag_to_middle_axe);
-            //         base_color += lerp(_Desert_Color, _Mountain_Color, linear_middle);
-            //     }
-
-            //     if(length(desert_dist - xz_plain) < 2.5F)
-            //     {
-                    
-            //     }
-
-            //     if(length(desert_dist - xz_swamp) < 2.5F)
-            //     {
-                    
-            //     }
-            // }
             
             return base_color;
         }
