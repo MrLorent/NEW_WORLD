@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvironmentManager : MonoBehaviour
+public class EnvironmentManager : Singleton<EnvironmentManager>
 {
     public Color plain_color = new Color(0.8470588F, 0.2941176F, 0.3686274F, 1F);
     public Color desert_color = new Color(0.9058824F, 0.8F, 0.5529411F, 1F);
@@ -18,16 +18,26 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField]
     private Transform _desert_position;
     [SerializeField]
+    private Transform _mountain_position;
+    [SerializeField]
+    private Transform _plain_position;
+    [SerializeField]
     private Transform _swamp_position;
 
     
-    private void Start()
+    public void update_shader()
     {
         // Pass the biom colors to the shader
-        _terrain_material.SetColor("_Default_Color", plain_color);
+        _terrain_material.SetColor("_Plain_Color", plain_color);
+        _terrain_material.SetColor("_Desert_Color", desert_color);
+        _terrain_material.SetColor("_Mountain_Color", mountain_color);
+        _terrain_material.SetColor("_Snow_Color", snow_color);
+        _terrain_material.SetColor("_Sawmp_Color", swamp_color);
 
         // Pass the bioms position to the shader
         _terrain_material.SetVector("_Desert_Position", new Vector4(_desert_position.position.x, _desert_position.position.y, _desert_position.position.z, 1));
+        _terrain_material.SetVector("_Mountain_Position", new Vector4(_mountain_position.position.x, _mountain_position.position.y, _mountain_position.position.z, 1));
+        _terrain_material.SetVector("_Plain_Position", new Vector4(_plain_position.position.x, _plain_position.position.y, _plain_position.position.z, 1));
         _terrain_material.SetVector("_Swamp_Position", new Vector4(_swamp_position.position.x, _swamp_position.position.y, _swamp_position.position.z, 1));
     }
 }
