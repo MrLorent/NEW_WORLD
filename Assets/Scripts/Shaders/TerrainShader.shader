@@ -10,11 +10,6 @@ Shader "Custom/TerrainShader"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.25
         _Metallic ("Metallic", Range(0,1)) = 0.0
-
-        _Desert_Position ("Desert position", Vector) = (800, 0, 790, 1)
-        _Mountain_Position ("Desert position", Vector) = (0, 0, 0, 1)
-        _Plain_Position ("Desert position", Vector) = (0, 0, 0, 1)
-        _Swamp_Position ("Swamp position", Vector) = (250, 0, 760, 1)
     }
     SubShader
     {
@@ -36,16 +31,22 @@ Shader "Custom/TerrainShader"
             float3 worldPos;
         };
 
-        fixed4 _Plain_Color;
+        fixed3 _Desert_Position;
+        float _Desert_Radius;
         fixed4 _Desert_Color;
+
+        fixed3 _Mountain_Position;
+        float _Mountain_Radius;
         fixed4 _Mountain_Color;
         fixed4 _Snow_Color;
-        fixed4 _Swamp_Color;
 
-        fixed3 _Desert_Position;
-        fixed3 _Mountain_Position;
         fixed3 _Plain_Position;
+        float _Plain_Radius;
+        fixed4 _Plain_Color;
+
         fixed3 _Swamp_Position;
+        float _Swamp_Radius;
+        fixed4 _Swamp_Color;
 
         half _Glossiness;
         half _Metallic;
@@ -60,46 +61,30 @@ Shader "Custom/TerrainShader"
 
         fixed4 get_base_color(float3 position)
         {
-            float2 xz_position = float2(position.x, position.z);
-            float2 xz_desert = float2(_Desert_Position.x, _Desert_Position.z);
-            float2 xz_mountain = float2(_Mountain_Position.x, _Mountain_Position.z);
-            float2 xz_plain = float2(_Plain_Position.x, _Plain_Position.z);
-            float2 xz_swamp = float2(_Swamp_Position.x, _Swamp_Position.z);
-
-            float desert_dist = length(xz_desert - xz_position);
-            float mountain_dist = length(xz_mountain- xz_position);
-            float plain_dist = length(xz_plain - xz_position);
-            float swamp_dist = length(xz_swamp - xz_position);
+            float desert_dist = length(_Desert_Position - position);
+            float mountain_dist = length(_Mountain_Position - position);
+            float plain_dist = length(_Plain_Position - position);
+            float swamp_dist = length(_Swamp_Position - position);
+            fixed4 color = fixed4(1,1,1,1);
             
-            float dist_0;
-            fixed4 color_0;
-            float dist_1;
-            fixed4 color_1;
-
-            
-            if ((desert_dist - mountain_dist) < 0.005)
+            if (desert_dist < _Desert_Radius)
             {
-                dist_0 = desert_dist;
-                color_0 = _Desert_Color;
+                color = _Desert_Color;
             }
-            else
+            else if (mountain_dist < _Mountain_Radius)
             {
-                dist_0 = mountain_dist;
-                color_0 = _Mountain_Color;
+                color = _Mountain_Color;
             }
-
-            if ((plain_dist - swamp_dist) < 0.005)
+            else if (plain_dist < _Plain_Radius)
             {
-                dist_1 = plain_dist;
-                color_1 = _Plain_Color;
+                color = _Plain_Color;
             }
-            else
+            else if (swamp_dist < _Swamp_Radius)
             {
-                dist_1 = swamp_dist;
-                color_1 = _Swamp_Color;
+                color = _Swamp_Color;
             }
             
-            return base_color;
+            return color;
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
