@@ -10,14 +10,16 @@ public struct Cell{
     public Vector3 position;
     public Vector2 size;
     public CellState state;
-    public GameObject primitive;
+    public List<GameObject> primitive;
+    public int biome;
 
-    public Cell(bool isAlive, Vector3 position, Vector2 size, CellState state) {
+    public Cell(bool isAlive, Vector3 position, Vector2 size, CellState state, int biome) {
         this.isAlive = isAlive;
         this.position = position;
         this.size = size;
         this.state = state;
-        this.primitive = null;
+        this.primitive = new List<GameObject>();
+        this.biome = biome;
     }
 
     public Cell(Cell cell) {
@@ -26,6 +28,7 @@ public struct Cell{
         this.size = cell.size;
         this.state = cell.state;
         this.primitive = cell.primitive;
+        this.biome = cell.biome;
     }
 };
 
@@ -92,13 +95,16 @@ public class TerrainManager : Singleton<TerrainManager>
                  //Using Random.range with int is exclusive
                 int random = Random.Range(0, 100);
 
+                //HERE CALL THE FUNCTION TO GET THE BIOME
+
+
                 if(random < 20 ){
-                    column.Add(new Cell(true, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), CellState.FLOWER));
+                    column.Add(new Cell(true, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), CellState.FLOWER, 1));
 
                 }
                 else
                 {
-                    column.Add(new Cell(false, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), CellState.NOTHING));
+                    column.Add(new Cell(false, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), CellState.NOTHING, 1));
                 }
 
 

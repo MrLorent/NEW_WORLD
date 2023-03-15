@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GameOfLife : MonoBehaviour
 {
+    [SerializeField]
+    private List<GameObject> prefab;
 
     private  List<List<Cell>> future_cells = new List<List<Cell>>();
 
@@ -105,15 +107,17 @@ public class GameOfLife : MonoBehaviour
 
                 if(future_cell.isAlive && future_cell.state != previous_cell.state){
 
-                    //==== CAPSULE IS TO BE REPLACED BY A FLOWER/TREE====
-                    GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                    capsule.transform.position = new Vector3(future_cell.position.x, future_cell.position.y, future_cell.position.z);
-                    capsule.transform.SetParent(transform);
-                    Renderer r = capsule.GetComponent<Renderer>();
-                    r.material.color = new Color(1,0,0,1);
-                    //=============================================
 
-                    future_cell.primitive = capsule;
+                    for(int flowers_per_cell=0; flowers_per_cell< 3; flowers_per_cell++)
+                    {
+                        int random = Random.Range(2*future_cell.biome, 2*future_cell.biome+2);
+                        float random_position_x = Random.Range(future_cell.position.x - future_cell.size.x/2, future_cell.position.x + future_cell.size.x/2);
+                        float random_position_z = Random.Range(future_cell.position.z - future_cell.size.y/2, future_cell.position.z + future_cell.size.y/2);
+                        Vector3 random_position = new Vector3(random_position_x, future_cell.position.y, random_position_z);
+                        GameObject flower =Instantiate(prefab[random], random_position, Quaternion.identity, transform );
+
+                        future_cell.primitive.Add(flower);
+                    }
                     future_cells[i][j] = future_cell;
                 }
             }
@@ -129,11 +133,11 @@ public class GameOfLife : MonoBehaviour
                 Cell previous_cell = TerrainManager.Instance.cells[i][j];
                 Cell future_cell = future_cells[i][j];
                 if(!future_cell.isAlive && future_cell.state != previous_cell.state){
-                    if(future_cell.primitive != null)
+                    foreach (GameObject primitive in future_cell.primitive)
                     {
-                        future_cell.primitive.transform.Destroy();
+                        primitive.transform.Destroy();
                     }
-                    future_cell.primitive = null;
+                    future_cell.primitive = new List<GameObject>();
                     future_cells[i][j] = future_cell;
                 }
             }
