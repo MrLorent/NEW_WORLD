@@ -106,7 +106,8 @@ Shader "Custom/TerrainShader"
                 {
                     float2 start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
                     float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
-                    float linear_factor = smoothstep(start.y, end.y - start.y, xy_position.y - start.y);
+                    float linear_factor = (xy_position.y - start.y) / (end.y - start.y);
+                    linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
                     return lerp(_Mountain_Color, _Swamp_Color, linear_factor);
                 }
             }
@@ -124,7 +125,8 @@ Shader "Custom/TerrainShader"
                 {
                     float2 start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
                     float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
-                    float linear_factor = smoothstep(start.y, end.y - start.y, xy_position.y - start.y);
+                    float linear_factor = (xy_position.y - start.y) / (end.y - start.y);
+                    linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
                     return lerp(_Plain_Color, _Desert_Color, linear_factor);
                 }
             }
@@ -134,29 +136,33 @@ Shader "Custom/TerrainShader"
                 {
                     float2 start = get_intersection(BOTTOM_LEFT, TOP_LEFT, position, position + float2(-1,0));
                     float2 end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
-                    float linear_factor = smoothstep(start.x, end.x - start.x, xy_position.x - start.x);
+                    float linear_factor = (xy_position.x - start.x) / (end.x - start.x);
+                    linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
                     return lerp(_Mountain_Color, _Plain_Color, linear_factor);
                 }
                 else if(is_left(TOP_LEFT, TOP_RIGHT, xy_position))
                 {
                     float2 start = get_intersection(BOTTOM_LEFT, TOP_LEFT, position, position + float2(-1,0));
                     float2 end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
-                    float linear_factor = smoothstep(start.x, end.x - start.x, xy_position.x - start.x);
+                    float linear_factor = (xy_position.x - start.x) / (end.x - start.x);
+                    linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
                     return lerp(_Swamp_Color, _Desert_Color, linear_factor);
                 }
                 else
                 {
-                    float2 start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
-                    float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
-                    float linear_factor = smoothstep(start.y, end.y - start.y, xy_position.y - start.y);
+                    float2 start = get_intersection(BOTTOM_LEFT, TOP_LEFT, position, position + float2(-1,0));
+                    float2 end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
+                    float linear_factor = (xy_position.x - start.x) / (end.x - start.x);
+                    linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
                     
-                    fixed4 LEFT_COLOR = lerp(_Mountain_Color, _Swamp_Color, linear_factor);
-                    fixed4 RIGHT_COLOR = lerp(_Plain_Color, _Desert_Color, linear_factor);
+                    fixed4 BOTTOM_COLOR = lerp(_Mountain_Color, _Plain_Color, linear_factor);
+                    fixed4 TOP_COLOR = lerp(_Swamp_Color, _Desert_Color, linear_factor);
                     
-                    start = get_intersection(BOTTOM_LEFT, TOP_LEFT, position, position + float2(-1,0));
-                    end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
-                    linear_factor = smoothstep(start.x, end.x - start.x, xy_position.x - start.x);
-                    return lerp(LEFT_COLOR, RIGHT_COLOR, linear_factor);
+                    start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
+                    end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
+                    linear_factor = (xy_position.y - start.y) / (end.y - start.y);
+                    linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
+                    return lerp(BOTTOM_COLOR, TOP_COLOR, linear_factor);
                 }
             }
             
