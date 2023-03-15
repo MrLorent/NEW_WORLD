@@ -68,28 +68,28 @@ Shader "Custom/TerrainShader"
             
             fixed4 color = fixed4(1,1,1,1);
 
-            if(position.x < _Swamp_Position.x)
+            if(cross(position - _Mountain_Position, _Swamp_Position - _Mountain_Position).y > 0)
             {
-                if(position.z < _Mountain_Position.z)
+                if(cross(position - _Plain_Position, _Mountain_Position - _Plain_Position).y > 0)
                 {
                     return _Mountain_Color;
                 }
-                else if( position.z > _Swamp_Position.z)
+                else if(cross(position - _Swamp_Position, _Desert_Position - _Swamp_Position).y > 0)
                 {
                     return _Swamp_Color;
                 }
                 else
                 {
-                    return lerp(_Mountain_Color, _Swamp_Color, (position.z - _Mountain_Position.z) / (_Swamp_Position.z - _Mountain_Position.z));
+                    return lerp(_Mountain_Color, _Swamp_Color, clamp(position.z - _Mountain_Position.z, 0, _Swamp_Position.z -_Mountain_Position.z ) / (_Swamp_Position.z - _Mountain_Position.z));
                 }
             }
-            else if(position.x > _Plain_Position.x)
+            else if(cross(position - _Desert_Position, _Plain_Position - _Desert_Position).y > 0)
             {
-                if(position.z < _Plain_Position.z)
+                if(cross(position - _Plain_Position, _Mountain_Position - _Plain_Position).y > 0)
                 {
                     return _Plain_Color;
                 }
-                else if( position.z > _Desert_Position.z)
+                else if(cross(position - _Swamp_Position, _Desert_Position - _Swamp_Position).y > 0)
                 {
                     return _Desert_Color;
                 }
@@ -100,11 +100,11 @@ Shader "Custom/TerrainShader"
             }
             else
             {
-                if(position.z < (_Mountain_Position.z + _Plain_Position.z) * 0.5)
+                if(cross(position - _Plain_Position, _Mountain_Position - _Plain_Position).y > 0)
                 {
                     return lerp(_Mountain_Color, _Plain_Color, (position.x - _Mountain_Position.x) / (_Plain_Position.x - _Mountain_Position.x));
                 }
-                else if(position.z > _Swamp_Position.z)
+                else if(cross(position - _Swamp_Position, _Desert_Position - _Swamp_Position).y > 0)
                 {
                     return lerp(_Swamp_Color, _Desert_Color, (position.x - _Swamp_Position.x) / (_Desert_Position.x - _Swamp_Position.x));
                 }

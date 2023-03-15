@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 10650036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 236, y: -0, z: 760}
+  m_LocalPosition: {x: 246, y: -0, z: 775}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -181,7 +181,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 275
+  m_Radius: 250
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &10650040
 Rigidbody:
@@ -425,14 +425,14 @@ MonoBehaviour:
   _plain_radius: 250
   _plain_ground_color: {r: 0.8470588, g: 0.2941176, b: 0.3686274, a: 1}
   _desert_position: {fileID: 1022774164}
-  _desert_radius: 275
+  _desert_radius: 250
   _desert_ground_color: {r: 0.9058824, g: 0.8, b: 0.5529411, a: 1}
   _mountain_position: {fileID: 963725057}
-  _mountain_radius: 300
+  _mountain_radius: 250
   _mountain_ground_color: {r: 0.6039216, g: 0.8980392, b: 1, a: 1}
   _snow_color: {r: 1, g: 1, b: 1, a: 1}
   _swamp_position: {fileID: 10650037}
-  _swamp_radius: 275
+  _swamp_radius: 250
   _swamp_ground_color: {r: 0.145098, g: 0.145098, b: 0.3254901, a: 1}
   _terrain_material: {fileID: 2100000, guid: 23ad38f24373c5342886055f59dbe2c6, type: 2}
 --- !u!1 &467925946
@@ -695,7 +695,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 300
+  m_Radius: 250
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &963725060
 Rigidbody:
@@ -771,7 +771,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022774163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 791, y: 0, z: 744}
+  m_LocalPosition: {x: 807, y: 0, z: 744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -802,7 +802,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 275
+  m_Radius: 250
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1022774167
 Rigidbody:
