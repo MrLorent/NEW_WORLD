@@ -8,8 +8,6 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [SerializeField]
     private Transform _plain_position;
     [SerializeField]
-    private Transform _plain_born;
-    [SerializeField]
     private float _plain_radius = 200.0F;
     [SerializeField]
     private Color _plain_ground_color = new Color(0.8470588F, 0.2941176F, 0.3686274F, 1F);
@@ -20,8 +18,6 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [SerializeField]
     private Transform _desert_position;
     [SerializeField]
-    private Transform _desert_born;
-    [SerializeField]
     private float _desert_radius = 200.0F;
     [SerializeField]
     private Color _desert_ground_color = new Color(0.9058824F, 0.8F, 0.5529411F, 1F);
@@ -31,8 +27,6 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [Header("MOUNTAINS BIOM")]
     [SerializeField]
     private Transform _mountain_position;
-    [SerializeField]
-    private Transform _mountain_born;
     [SerializeField]
     private float _mountain_radius = 200.0F;
     [SerializeField]
@@ -45,8 +39,6 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [Header("SWAMP BIOM")]
     [SerializeField]
     private Transform _swamp_position;
-    [SerializeField]
-    private Transform _swamp_born;
     [SerializeField]
     private float _swamp_radius = 200.0F;
     [SerializeField]
