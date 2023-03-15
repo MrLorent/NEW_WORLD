@@ -68,51 +68,68 @@ Shader "Custom/TerrainShader"
             
             fixed4 color = fixed4(1,1,1,1);
 
-            if(cross(position - _Mountain_Position, _Swamp_Position - _Mountain_Position).y > 0)
+            float3 TOP_LEFT = _Swamp_Position;
+            float TL_RADIUS = _Swamp_Radius;
+
+            float3 TOP_RIGHT = _Desert_Position;
+            float TR_RADIUS = _Desert_Radius;
+
+            float3 BOTTOM_RIGHT = _Plain_Position;
+            float BR_RADIUS = _Plain_Radius;
+
+            float3 BOTTOM_LEFT = _Mountain_Position;
+            float BL_RADIUS = _Mountain_Radius;
+
+            float3 TL_TR = _Desert_Position - _Swamp_Position;
+            float3 TR_BR = _Plain_Position - _Desert_Position;
+            float3 BR_BL = _Mountain_Position - _Plain_Position;
+            float3 BL_TL = _Swamp_Position - _Mountain_Position;
+
+            if(cross(position - BOTTOM_LEFT, BL_TL).y > 0) // position is on BL_TL left ?
             {
-                if(cross(position - _Plain_Position, _Mountain_Position - _Plain_Position).y > 0)
+                if(cross(position - BOTTOM_RIGHT, BR_BL).y > 0)
                 {
                     return _Mountain_Color;
                 }
-                else if(cross(position - _Swamp_Position, _Desert_Position - _Swamp_Position).y > 0)
+                else if(cross(position - TOP_LEFT, TL_TR).y > 0)
                 {
                     return _Swamp_Color;
                 }
                 else
                 {
-                    return lerp(_Mountain_Color, _Swamp_Color, clamp(position.z - _Mountain_Position.z, 0, _Swamp_Position.z -_Mountain_Position.z ) / (_Swamp_Position.z - _Mountain_Position.z));
+                    return lerp(_Mountain_Color, _Swamp_Color, clamp(position.z - BOTTOM_LEFT.z, 0, TOP_LEFT.z - BOTTOM_LEFT.z ) / (TOP_LEFT.z - BOTTOM_LEFT.z));
                 }
             }
-            else if(cross(position - _Desert_Position, _Plain_Position - _Desert_Position).y > 0)
+            else if(cross(position - TOP_RIGHT, TR_BR).y > 0)
             {
-                if(cross(position - _Plain_Position, _Mountain_Position - _Plain_Position).y > 0)
+                if(cross(position - BOTTOM_RIGHT, BR_BL).y > 0)
                 {
                     return _Plain_Color;
                 }
-                else if(cross(position - _Swamp_Position, _Desert_Position - _Swamp_Position).y > 0)
+                else if(cross(position - TOP_LEFT, TL_TR).y > 0)
                 {
                     return _Desert_Color;
                 }
                 else
                 {
-                    return lerp(_Plain_Color, _Desert_Color, (position.z - _Plain_Position.z) / (_Desert_Position.z - _Plain_Position.z));
+                    return lerp(_Plain_Color, _Desert_Color, (position.z - BOTTOM_RIGHT.z) / (TOP_RIGHT.z - BOTTOM_RIGHT.z));
                 }
             }
             else
             {
-                if(cross(position - _Plain_Position, _Mountain_Position - _Plain_Position).y > 0)
+                if(cross(position - BOTTOM_RIGHT, BR_BL).y > 0)
                 {
-                    return lerp(_Mountain_Color, _Plain_Color, (position.x - _Mountain_Position.x) / (_Plain_Position.x - _Mountain_Position.x));
+                    return lerp(_Mountain_Color, _Plain_Color, (position.x - BOTTOM_LEFT.x) / (BOTTOM_RIGHT.x - BOTTOM_LEFT.x));
                 }
-                else if(cross(position - _Swamp_Position, _Desert_Position - _Swamp_Position).y > 0)
+                else if(cross(position - TOP_LEFT, TL_TR).y > 0)
                 {
-                    return lerp(_Swamp_Color, _Desert_Color, (position.x - _Swamp_Position.x) / (_Desert_Position.x - _Swamp_Position.x));
+                    return lerp(_Swamp_Color, _Desert_Color, (position.x - TOP_LEFT.x) / (TOP_RIGHT.x - TOP_LEFT.x));
                 }
                 else
                 {
-                    fixed4 TOP_HORIZONTAL_COLOR = lerp(_Swamp_Color, _Desert_Color, (position.x - _Swamp_Position.x) / (_Desert_Position.x - _Swamp_Position.x));
-                    fixed4 BOT_HORIZONTAL_COLOR = lerp(_Mountain_Color, _Plain_Color, (position.x - _Mountain_Position.x) / (_Plain_Position.x - _Mountain_Position.x));
-                    return lerp(BOT_HORIZONTAL_COLOR, TOP_HORIZONTAL_COLOR, (position.z - _Mountain_Position.z) / (_Swamp_Position.z - _Mountain_Position.z));
+                    fixed4 TOP_HORIZONTAL_COLOR = lerp(_Swamp_Color, _Desert_Color, (position.x - TOP_LEFT.x) / (TOP_RIGHT.x - TOP_LEFT.x));
+                    fixed4 BOT_HORIZONTAL_COLOR = lerp(_Mountain_Color, _Plain_Color, (position.x - BOTTOM_LEFT.x) / (BOTTOM_RIGHT.x - BOTTOM_LEFT.x));
+                    return lerp(BOT_HORIZONTAL_COLOR, TOP_HORIZONTAL_COLOR, (position.z - BOTTOM_LEFT.z) / (TOP_LEFT.z - BOTTOM_LEFT.z));
                 }
             }
 
