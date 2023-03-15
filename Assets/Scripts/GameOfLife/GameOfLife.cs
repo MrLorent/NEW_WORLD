@@ -111,10 +111,12 @@ public class GameOfLife : MonoBehaviour
                     for(int flowers_per_cell=0; flowers_per_cell< 3; flowers_per_cell++)
                     {
                         int random = Random.Range(2*future_cell.biome, 2*future_cell.biome+2);
-                        float random_position_x = Random.Range(future_cell.position.x - future_cell.size.x/2, future_cell.position.x + future_cell.size.x/2);
-                        float random_position_z = Random.Range(future_cell.position.z - future_cell.size.y/2, future_cell.position.z + future_cell.size.y/2);
-                        Vector3 random_position = new Vector3(random_position_x, future_cell.position.y, random_position_z);
-                        GameObject flower =Instantiate(prefab[random], random_position, Quaternion.identity, transform );
+                        Vector3 random_position = Vector3.zero;
+                        random_position.x = Random.Range(future_cell.position.x - future_cell.size.x/2, future_cell.position.x + future_cell.size.x/2);
+                        random_position.z = Random.Range(future_cell.position.z - future_cell.size.y/2, future_cell.position.z + future_cell.size.y/2);
+                        random_position.y = TerrainManager.Instance._terrain.SampleHeight(random_position);
+
+                        GameObject flower =Instantiate(prefab[random], random_position, Quaternion.identity, transform);
 
                         future_cell.primitive.Add(flower);
                     }

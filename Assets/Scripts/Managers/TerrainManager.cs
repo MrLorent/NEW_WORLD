@@ -35,8 +35,8 @@ public struct Cell{
 
 public class TerrainManager : Singleton<TerrainManager>
 {
-    [SerializeField]
-    private Terrain _terrain;
+   
+    public Terrain _terrain;
 
     public int nbDecoupe = 100;
     [HideInInspector] public List<List<Cell>> cells = new List<List<Cell>>();
