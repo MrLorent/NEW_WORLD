@@ -80,14 +80,14 @@ Shader "Custom/TerrainShader"
             float3 BOTTOM_LEFT = _Mountain_Position;
             float BL_RADIUS = _Mountain_Radius;
 
-            float3 TL_TR = _Desert_Position - _Swamp_Position;
-            float3 TR_BR = _Plain_Position - _Desert_Position;
-            float3 BR_BL = _Mountain_Position - _Plain_Position;
-            float3 BL_TL = _Swamp_Position - _Mountain_Position;
+            float3 TL_TR = TOP_RIGHT - TOP_LEFT;
+            float3 TR_BR = BOTTOM_RIGHT - TOP_RIGHT;
+            float3 BR_BL = BOTTOM_LEFT - BOTTOM_RIGHT;
+            float3 BL_TL = TOP_LEFT - BOTTOM_LEFT;
 
             if(cross(position - BOTTOM_LEFT, BL_TL).y > 0) // position is on BL_TL left ?
             {
-                if(cross(position - BOTTOM_RIGHT, BR_BL).y > 0)
+                if(cross(position - BOTTOM_LEFT, BR_BL).y > 0)
                 {
                     return _Mountain_Color;
                 }
@@ -97,7 +97,7 @@ Shader "Custom/TerrainShader"
                 }
                 else
                 {
-                    return lerp(_Mountain_Color, _Swamp_Color, clamp(position.z - BOTTOM_LEFT.z, 0, TOP_LEFT.z - BOTTOM_LEFT.z ) / (TOP_LEFT.z - BOTTOM_LEFT.z));
+                    return lerp(_Mountain_Color, _Swamp_Color, (position.z - BOTTOM_LEFT.z) / (TOP_LEFT.z - BOTTOM_LEFT.z));
                 }
             }
             else if(cross(position - TOP_RIGHT, TR_BR).y > 0)
