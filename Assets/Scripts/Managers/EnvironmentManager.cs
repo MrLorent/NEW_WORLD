@@ -58,7 +58,7 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
         _terrain_material.SetColor("_Desert_Color", _desert_ground_color);
         _terrain_material.SetColor("_Mountain_Color", _mountain_ground_color);
         _terrain_material.SetColor("_Snow_Color", _snow_color);
-        _terrain_material.SetColor("_Sawmp_Color", _swamp_ground_color);
+        _terrain_material.SetColor("_Swamp_Color", _swamp_ground_color);
 
         // Pass the bioms position to the shader
         _terrain_material.SetVector("_Desert_Position", new Vector4(_desert_position.position.x, _desert_position.position.y, _desert_position.position.z, 1));

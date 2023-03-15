@@ -59,140 +59,106 @@ Shader "Custom/TerrainShader"
             // put more per-instance properties here
         UNITY_INSTANCING_BUFFER_END(Props)
 
-        fixed4 get_base_color(float3 position)
+        bool is_left(float2 a, float2 b, float2 c){
+            return ((b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x)) > 0;
+        }
+
+        float2 get_intersection(float2 A1, float2 A2, float2 B1, float2 B2)
         {
-            float desert_dist = length(_Desert_Position - position);
-            float mountain_dist = length(_Mountain_Position - position);
-            float plain_dist = length(_Plain_Position - position);
-            float swamp_dist = length(_Swamp_Position - position);
-            
+            float tmp = (B2.x - B1.x) * (A2.y - A1.y) - (B2.y - B1.y) * (A2.x - A1.x);
+            float mu = ((A1.x - B1.x) * (A2.y - A1.y) - (A1.y - B1.y) * (A2.x - A1.x)) / tmp;
+        
+            return float2(
+                B1.x + (B2.x - B1.x) * mu,
+                B1.y + (B2.y - B1.y) * mu
+            );
+        }
+
+        fixed4 get_base_color(float3 position)
+        {   
             fixed4 color = fixed4(1,1,1,1);
 
-            float3 TOP_LEFT = _Swamp_Position;
+            float2 xy_position = float2(position.x, position.z);
+
+            float2 TOP_LEFT = float2(_Swamp_Position.x, _Swamp_Position.z);
             float TL_RADIUS = _Swamp_Radius;
 
-            float3 TOP_RIGHT = _Desert_Position;
+            float2 TOP_RIGHT = float2(_Desert_Position.x, _Desert_Position.z);
             float TR_RADIUS = _Desert_Radius;
 
-            float3 BOTTOM_RIGHT = _Plain_Position;
+            float2 BOTTOM_RIGHT = float2(_Plain_Position.x, _Plain_Position.z);
             float BR_RADIUS = _Plain_Radius;
 
-            float3 BOTTOM_LEFT = _Mountain_Position;
+            float2 BOTTOM_LEFT = float2(_Mountain_Position.x, _Mountain_Position.z);
             float BL_RADIUS = _Mountain_Radius;
 
-            float3 TL_TR = TOP_RIGHT - TOP_LEFT;
-            float3 TR_BR = BOTTOM_RIGHT - TOP_RIGHT;
-            float3 BR_BL = BOTTOM_LEFT - BOTTOM_RIGHT;
-            float3 BL_TL = TOP_LEFT - BOTTOM_LEFT;
-
-            if(cross(position - BOTTOM_LEFT, BL_TL).y > 0) // position is on BL_TL left ?
+            if(is_left(BOTTOM_LEFT, TOP_LEFT, xy_position)) // xy_position is on BL_TL left ?
             {
-                if(cross(position - BOTTOM_LEFT, BR_BL).y > 0)
+                if(is_left(BOTTOM_RIGHT, BOTTOM_LEFT, xy_position))
                 {
                     return _Mountain_Color;
                 }
-                else if(cross(position - TOP_LEFT, TL_TR).y > 0)
+                else if(is_left(TOP_LEFT, TOP_RIGHT, xy_position))
                 {
                     return _Swamp_Color;
                 }
                 else
                 {
-                    float linear_factor = smoothstep(BOTTOM_LEFT.z, TOP_LEFT.z - BOTTOM_LEFT.z, position.z - BOTTOM_LEFT.z);
+                    float2 start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
+                    float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
+                    float linear_factor = smoothstep(start.y, end.y - start.y, xy_position.y - start.y);
                     return lerp(_Mountain_Color, _Swamp_Color, linear_factor);
                 }
             }
-            else if(cross(position - TOP_RIGHT, TR_BR).y > 0)
+            else if(is_left(TOP_RIGHT, BOTTOM_RIGHT, xy_position))
             {
-                if(cross(position - BOTTOM_RIGHT, BR_BL).y > 0)
+                if(is_left(BOTTOM_RIGHT, BOTTOM_LEFT, xy_position))
                 {
                     return _Plain_Color;
                 }
-                else if(cross(position - TOP_LEFT, TL_TR).y > 0)
+                else if(is_left(TOP_LEFT, TOP_RIGHT, xy_position))
                 {
                     return _Desert_Color;
                 }
                 else
                 {
-                    float linear_factor = smoothstep(BOTTOM_RIGHT.z, TOP_RIGHT.z - BOTTOM_RIGHT.z, position.z - BOTTOM_RIGHT.z);
+                    float2 start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
+                    float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
+                    float linear_factor = smoothstep(start.y, end.y - start.y, xy_position.y - start.y);
                     return lerp(_Plain_Color, _Desert_Color, linear_factor);
                 }
             }
             else
             {
-                if(cross(position - BOTTOM_RIGHT, BR_BL).y > 0)
+                if(is_left(BOTTOM_RIGHT, BOTTOM_LEFT, xy_position))
                 {
-                    float linear_factor = smoothstep(BOTTOM_LEFT.x, BOTTOM_RIGHT.x - BOTTOM_LEFT.x, position.x - BOTTOM_LEFT.x);
+                    float2 start = get_intersection(BOTTOM_LEFT, TOP_LEFT, position, position + float2(-1,0));
+                    float2 end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
+                    float linear_factor = smoothstep(start.x, end.x - start.x, xy_position.x - start.x);
                     return lerp(_Mountain_Color, _Plain_Color, linear_factor);
                 }
-                else if(cross(position - TOP_LEFT, TL_TR).y > 0)
+                else if(is_left(TOP_LEFT, TOP_RIGHT, xy_position))
                 {
-                    float linear_factor = smoothstep(TOP_LEFT.x, TOP_RIGHT.x - TOP_LEFT.x, position.x - TOP_LEFT.x);
+                    float2 start = get_intersection(BOTTOM_LEFT, TOP_LEFT, position, position + float2(-1,0));
+                    float2 end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
+                    float linear_factor = smoothstep(start.x, end.x - start.x, xy_position.x - start.x);
                     return lerp(_Swamp_Color, _Desert_Color, linear_factor);
                 }
                 else
                 {
-                    float linear_factor = smoothstep(TOP_LEFT.x, TOP_RIGHT.x - TOP_LEFT.x, position.x - TOP_LEFT.x);
-                    fixed4 TOP_HORIZONTAL_COLOR = lerp(_Swamp_Color, _Desert_Color, linear_factor);
-
-                    linear_factor = smoothstep(BOTTOM_LEFT.x, BOTTOM_RIGHT.x - BOTTOM_LEFT.x, position.x - BOTTOM_LEFT.x);
-                    fixed4 BOT_HORIZONTAL_COLOR = lerp(_Mountain_Color, _Plain_Color, linear_factor);
+                    float2 start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
+                    float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
+                    float linear_factor = smoothstep(start.y, end.y - start.y, xy_position.y - start.y);
                     
-                    linear_factor = smoothstep(BOTTOM_LEFT.z, TOP_LEFT.z - BOTTOM_LEFT.z, position.z - BOTTOM_LEFT.z);
-                    return lerp(BOT_HORIZONTAL_COLOR, TOP_HORIZONTAL_COLOR, linear_factor);
+                    fixed4 LEFT_COLOR = lerp(_Mountain_Color, _Swamp_Color, linear_factor);
+                    fixed4 RIGHT_COLOR = lerp(_Plain_Color, _Desert_Color, linear_factor);
+                    
+                    start = get_intersection(BOTTOM_LEFT, TOP_LEFT, position, position + float2(-1,0));
+                    end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
+                    linear_factor = smoothstep(start.x, end.x - start.x, xy_position.x - start.x);
+                    return lerp(LEFT_COLOR, RIGHT_COLOR, linear_factor);
                 }
             }
-
-            // if (desert_dist < _Desert_Radius)
-            // {
-            //     return _Desert_Color;
-            // }
-
-            // if (mountain_dist < _Mountain_Radius)
-            // {
-            //     return _Mountain_Color;
-            // }
-
-            // if (plain_dist < _Plain_Radius)
-            // {
-            //     return _Plain_Color;
-            // }
-
-            // if (swamp_dist < _Swamp_Radius)
-            // {
-            //     return _Swamp_Color;
-            // }
-
-            // float dist_0;
-            // fixed4 color_0;
-            // float dist_1;
-            // fixed4 color_1;
-
-            // if (desert_dist < mountain_dist)
-            // {
-            //     dist_0 = desert_dist;
-            //     color_0 = _Desert_Color;
-            // }
-            // else
-            // {
-            //     dist_0 = mountain_dist;
-            //     color_0 = _Mountain_Color;
-            // }
-
-            // if (plain_dist < swamp_dist)
-            // {
-            //     dist_1 = plain_dist;
-            //     color_1 = _Plain_Color;
-            // }
-            // else
-            // {
-            //     dist_1 = swamp_dist;
-            //     color_1 = _Swamp_Color;
-            // }
-
-            // if((dist_1 - dist_0 * 1.5F) > 0 || (dist_0 - dist_1 * 1.5F) > 0)
-            // {
-            //     return dist_0 < dist_1 ? color_0 : color_1;
-            // }
             
             return color;
         }
