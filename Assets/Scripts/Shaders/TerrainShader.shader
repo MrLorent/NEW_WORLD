@@ -97,7 +97,8 @@ Shader "Custom/TerrainShader"
                 }
                 else
                 {
-                    return lerp(_Mountain_Color, _Swamp_Color, (position.z - BOTTOM_LEFT.z) / (TOP_LEFT.z - BOTTOM_LEFT.z));
+                    float linear_factor = smoothstep(BOTTOM_LEFT.z, TOP_LEFT.z - BOTTOM_LEFT.z, position.z - BOTTOM_LEFT.z);
+                    return lerp(_Mountain_Color, _Swamp_Color, linear_factor);
                 }
             }
             else if(cross(position - TOP_RIGHT, TR_BR).y > 0)
@@ -112,24 +113,32 @@ Shader "Custom/TerrainShader"
                 }
                 else
                 {
-                    return lerp(_Plain_Color, _Desert_Color, (position.z - BOTTOM_RIGHT.z) / (TOP_RIGHT.z - BOTTOM_RIGHT.z));
+                    float linear_factor = smoothstep(BOTTOM_RIGHT.z, TOP_RIGHT.z - BOTTOM_RIGHT.z, position.z - BOTTOM_RIGHT.z);
+                    return lerp(_Plain_Color, _Desert_Color, linear_factor);
                 }
             }
             else
             {
                 if(cross(position - BOTTOM_RIGHT, BR_BL).y > 0)
                 {
-                    return lerp(_Mountain_Color, _Plain_Color, (position.x - BOTTOM_LEFT.x) / (BOTTOM_RIGHT.x - BOTTOM_LEFT.x));
+                    float linear_factor = smoothstep(BOTTOM_LEFT.x, BOTTOM_RIGHT.x - BOTTOM_LEFT.x, position.x - BOTTOM_LEFT.x);
+                    return lerp(_Mountain_Color, _Plain_Color, linear_factor);
                 }
                 else if(cross(position - TOP_LEFT, TL_TR).y > 0)
                 {
-                    return lerp(_Swamp_Color, _Desert_Color, (position.x - TOP_LEFT.x) / (TOP_RIGHT.x - TOP_LEFT.x));
+                    float linear_factor = smoothstep(TOP_LEFT.x, TOP_RIGHT.x - TOP_LEFT.x, position.x - TOP_LEFT.x);
+                    return lerp(_Swamp_Color, _Desert_Color, linear_factor);
                 }
                 else
                 {
-                    fixed4 TOP_HORIZONTAL_COLOR = lerp(_Swamp_Color, _Desert_Color, (position.x - TOP_LEFT.x) / (TOP_RIGHT.x - TOP_LEFT.x));
-                    fixed4 BOT_HORIZONTAL_COLOR = lerp(_Mountain_Color, _Plain_Color, (position.x - BOTTOM_LEFT.x) / (BOTTOM_RIGHT.x - BOTTOM_LEFT.x));
-                    return lerp(BOT_HORIZONTAL_COLOR, TOP_HORIZONTAL_COLOR, (position.z - BOTTOM_LEFT.z) / (TOP_LEFT.z - BOTTOM_LEFT.z));
+                    float linear_factor = smoothstep(TOP_LEFT.x, TOP_RIGHT.x - TOP_LEFT.x, position.x - TOP_LEFT.x);
+                    fixed4 TOP_HORIZONTAL_COLOR = lerp(_Swamp_Color, _Desert_Color, linear_factor);
+
+                    linear_factor = smoothstep(BOTTOM_LEFT.x, BOTTOM_RIGHT.x - BOTTOM_LEFT.x, position.x - BOTTOM_LEFT.x);
+                    fixed4 BOT_HORIZONTAL_COLOR = lerp(_Mountain_Color, _Plain_Color, linear_factor);
+                    
+                    linear_factor = smoothstep(BOTTOM_LEFT.z, TOP_LEFT.z - BOTTOM_LEFT.z, position.z - BOTTOM_LEFT.z);
+                    return lerp(BOT_HORIZONTAL_COLOR, TOP_HORIZONTAL_COLOR, linear_factor);
                 }
             }
 
