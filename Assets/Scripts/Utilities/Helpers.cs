@@ -65,10 +65,12 @@ public static class Helpers
         }
 
         /* Update container mesh */
-        container.GetComponent<MeshFilter>().mesh.Clear();
-        container.GetComponent<MeshFilter>().mesh = new Mesh();
-        container.GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-        container.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+        Mesh new_mesh = new Mesh();
+        new_mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        new_mesh.CombineMeshes(combine);
+
+        container.GetComponent<MeshFilter>().sharedMesh.Clear();
+        container.GetComponent<MeshFilter>().sharedMesh = new_mesh;
         container.DestroyChildren();
     }
 

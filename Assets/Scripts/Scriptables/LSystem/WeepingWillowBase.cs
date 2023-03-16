@@ -44,6 +44,6 @@ public class WeepingWillowBase : LSystemBase
 
     public override float elasticity(float width)
     {
-        return 10.0F / width;
+        return 1.0F / width;
     }
 }
