@@ -17,13 +17,13 @@ public class GameOfLife : MonoBehaviour
     }
 
 
-     void run()
+    void run()
     {     
         ComputeNextGeneration();
         DrawFlowers();
         Clear();
         TerrainManager.Instance.cells = future_cells;
-        future_cells=new List<List<Cell>>();
+        future_cells = new List<List<Cell>>();
     }
 
     private void ComputeNextGeneration()
@@ -37,33 +37,36 @@ public class GameOfLife : MonoBehaviour
                 int nb_of_neighbors = CountNeighbors(i, j);
 
                 Cell cell = TerrainManager.Instance.cells[i][j];
-                if(cell.isAlive)
+
+                switch(cell.state)
                 {
-                    if(nb_of_neighbors == 2 || nb_of_neighbors == 3)
-                    {
-                        future_column.Add(cell);
-                    }
-                    else
-                    {
-                        cell.isAlive = false;
-                        cell.state = CellState.NOTHING;
-                        future_column.Add(cell);
-                    }
+                    case GolState.DEAD:
+                        if (nb_of_neighbors == 3)
+                        {
+                            cell.state = GolState.ALIVE;
+                            future_column.Add(cell);
+                        }
+                        else
+                        {
+                            future_column.Add(cell);
+                        }
+                        break;
+
+                    case GolState.ALIVE:
+                        if (nb_of_neighbors == 2 || nb_of_neighbors == 3)
+                        {
+                            future_column.Add(cell);
+                        }
+                        else
+                        {
+                            cell.state = GolState.DEAD;
+                            future_column.Add(cell);
+                        }
+                        break;
+                    default:
+                        Debug.Log("Invalid GolState passed : " + cell.state);
+                        break;
                 }
-                else
-                {
-                    if(nb_of_neighbors == 3)
-                    {
-                        cell.isAlive = true;
-                        cell.state = CellState.FLOWER;
-                        future_column.Add(cell);
-                    }
-                    else
-                    {
-                        future_column.Add(cell);
-                    }
-                }
-                
             }
             future_cells.Add(future_column);
         }
@@ -72,19 +75,22 @@ public class GameOfLife : MonoBehaviour
     private int CountNeighbors(int x, int y)
     {
         int sum = 0;
+
         for(int i=-1; i<2; i++)
         {
             for(int j=-1; j<2; j++)
             {
                 int tmp_x=(x+i+TerrainManager.Instance.nbDecoupe)%TerrainManager.Instance.nbDecoupe;
                 int tmp_y=(y+j+TerrainManager.Instance.nbDecoupe)%TerrainManager.Instance.nbDecoupe;
-                if(TerrainManager.Instance.cells[tmp_x][tmp_y].isAlive)
+                
+                if(TerrainManager.Instance.cells[tmp_x][tmp_y].state == GolState.ALIVE)
                 {
                     sum++;
                 }
             }
         }
-        if(TerrainManager.Instance.cells[x][y].isAlive)
+
+        if(TerrainManager.Instance.cells[x][y].state == GolState.ALIVE)
         {
             sum--;
         }
@@ -98,16 +104,15 @@ public class GameOfLife : MonoBehaviour
     private void DrawFlowers()
     {
 
-         for(int i=0; i< TerrainManager.Instance.nbDecoupe; i++)
+         for(int i=0; i < TerrainManager.Instance.nbDecoupe; i++)
         {
-            for(int j=0; j< TerrainManager.Instance.nbDecoupe; j++)
+            for(int j=0; j < TerrainManager.Instance.nbDecoupe; j++)
             {
                 Cell previous_cell = TerrainManager.Instance.cells[i][j];
                 Cell future_cell = future_cells[i][j];
 
-                if(future_cell.isAlive && future_cell.state != previous_cell.state){
-
-
+                if(future_cell.state == GolState.ALIVE && future_cell.state != previous_cell.state)
+                {
                     for(int flowers_per_cell=0; flowers_per_cell< 3; flowers_per_cell++)
                     {
                         int random = Random.Range(2*future_cell.biome, 2*future_cell.biome+2);
@@ -116,7 +121,7 @@ public class GameOfLife : MonoBehaviour
                         random_position.z = Random.Range(future_cell.position.z - future_cell.size.y/2, future_cell.position.z + future_cell.size.y/2);
                         random_position.y = TerrainManager.Instance._terrain.SampleHeight(random_position);
 
-                        GameObject flower =Instantiate(prefab[random], random_position, Quaternion.identity, transform);
+                        GameObject flower = Instantiate(prefab[random], random_position, Quaternion.identity, transform);
 
                         future_cell.primitive.Add(flower);
                     }
@@ -134,7 +139,8 @@ public class GameOfLife : MonoBehaviour
             {
                 Cell previous_cell = TerrainManager.Instance.cells[i][j];
                 Cell future_cell = future_cells[i][j];
-                if(!future_cell.isAlive && future_cell.state != previous_cell.state){
+
+                if(future_cell.state == GolState.DEAD && future_cell.state != previous_cell.state){
                     foreach (GameObject primitive in future_cell.primitive)
                     {
                         primitive.transform.Destroy();

@@ -69,7 +69,7 @@ public static class Helpers
         new_mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         new_mesh.CombineMeshes(combine);
 
-        container.GetComponent<MeshFilter>().sharedMesh.Clear();
+        if(container.GetComponent<MeshFilter>().sharedMesh != null) container.GetComponent<MeshFilter>().sharedMesh.Clear();
         container.GetComponent<MeshFilter>().sharedMesh = new_mesh;
         container.DestroyChildren();
     }

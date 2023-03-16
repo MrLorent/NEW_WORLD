@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum CellState {NOTHING, FLOWER};
+public enum GolState {
+    DEAD,
+    GROWING,
+    ALIVE,
+    DYING
+};
 
-public struct Cell{
-    public bool isAlive;
+public struct Cell
+{
+    // Space parameters
     public Vector3 position;
     public Vector2 size;
-    public CellState state;
+
+    // Game of life parameters
+    public GolState state;
     public List<GameObject> primitive;
+
+    // Genetic Algoritm parameters
     public int biome;
 
-    public Cell(bool isAlive, Vector3 position, Vector2 size, CellState state, int biome) {
-        this.isAlive = isAlive;
+    // CONSTRUCTORS
+    public Cell(Vector3 position, Vector2 size, GolState state, int biome) {
         this.position = position;
         this.size = size;
         this.state = state;
@@ -23,7 +33,6 @@ public struct Cell{
     }
 
     public Cell(Cell cell) {
-        this.isAlive = cell.isAlive;
         this.position = cell.position;
         this.size = cell.size;
         this.state = cell.state;
@@ -35,7 +44,6 @@ public struct Cell{
 
 public class TerrainManager : Singleton<TerrainManager>
 {
-   
     public Terrain _terrain;
 
     public int nbDecoupe = 100;
@@ -93,16 +101,24 @@ public class TerrainManager : Singleton<TerrainManager>
 
 
                 if(random < 20 ){
-                    column.Add(new Cell(true, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), CellState.FLOWER, 1));
-
+                    column.Add(new Cell(
+                        new Vector3(positionX, hauteur, positionZ),
+                        new Vector2(cellSizeX, cellSizeZ),
+                        GolState.ALIVE,
+                        1
+                    ));
                 }
                 else
                 {
-                    column.Add(new Cell(false, new Vector3(positionX, hauteur, positionZ), new Vector2(cellSizeX, cellSizeZ), CellState.NOTHING, 1));
+                    column.Add(new Cell(
+                        new Vector3(positionX, hauteur, positionZ),
+                        new Vector2(cellSizeX, cellSizeZ),
+                        GolState.DEAD,
+                        1
+                    ));
                 }
             }
             cells.Add(column);
-    
         }
     }
 }
