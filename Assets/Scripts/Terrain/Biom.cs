@@ -11,7 +11,7 @@ public class Biom : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Biom other_biom))
         {
             Debug.Log( name + " Biom is colliding with " + other_biom.name);
-            //UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
         }
     }
 }
