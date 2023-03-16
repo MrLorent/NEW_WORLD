@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class GameOfLife : MonoBehaviour
+public enum GOLState
 {
+    DEAD,
+    GROWING,
+    ALIVE,
+    DYING
+};
+
+public class GOLManager : Singleton<GOLManager>
+{
+    [SerializeField]
+    private Transform _flower_container;
+
     [SerializeField]
     private List<GameObject> prefab;
 
@@ -40,10 +49,10 @@ public class GameOfLife : MonoBehaviour
 
                 switch(cell.state)
                 {
-                    case GolState.DEAD:
+                    case GOLState.DEAD:
                         if (nb_of_neighbors == 3)
                         {
-                            cell.state = GolState.ALIVE;
+                            cell.state = GOLState.ALIVE;
                             future_column.Add(cell);
                         }
                         else
@@ -52,19 +61,19 @@ public class GameOfLife : MonoBehaviour
                         }
                         break;
 
-                    case GolState.ALIVE:
+                    case GOLState.ALIVE:
                         if (nb_of_neighbors == 2 || nb_of_neighbors == 3)
                         {
                             future_column.Add(cell);
                         }
                         else
                         {
-                            cell.state = GolState.DEAD;
+                            cell.state = GOLState.DEAD;
                             future_column.Add(cell);
                         }
                         break;
                     default:
-                        Debug.Log("Invalid GolState passed : " + cell.state);
+                        Debug.Log("Invalid GOLState passed : " + cell.state);
                         break;
                 }
             }
@@ -83,14 +92,14 @@ public class GameOfLife : MonoBehaviour
                 int tmp_x=(x+i+TerrainManager.Instance.nbDecoupe)%TerrainManager.Instance.nbDecoupe;
                 int tmp_y=(y+j+TerrainManager.Instance.nbDecoupe)%TerrainManager.Instance.nbDecoupe;
                 
-                if(TerrainManager.Instance.cells[tmp_x][tmp_y].state == GolState.ALIVE)
+                if(TerrainManager.Instance.cells[tmp_x][tmp_y].state == GOLState.ALIVE)
                 {
                     sum++;
                 }
             }
         }
 
-        if(TerrainManager.Instance.cells[x][y].state == GolState.ALIVE)
+        if(TerrainManager.Instance.cells[x][y].state == GOLState.ALIVE)
         {
             sum--;
         }
@@ -111,7 +120,7 @@ public class GameOfLife : MonoBehaviour
                 Cell previous_cell = TerrainManager.Instance.cells[i][j];
                 Cell future_cell = future_cells[i][j];
 
-                if(future_cell.state == GolState.ALIVE && future_cell.state != previous_cell.state)
+                if(future_cell.state == GOLState.ALIVE && future_cell.state != previous_cell.state)
                 {
                     for(int flowers_per_cell=0; flowers_per_cell< 3; flowers_per_cell++)
                     {
@@ -121,7 +130,7 @@ public class GameOfLife : MonoBehaviour
                         random_position.z = Random.Range(future_cell.position.z - future_cell.size.y/2, future_cell.position.z + future_cell.size.y/2);
                         random_position.y = TerrainManager.Instance._terrain.SampleHeight(random_position);
 
-                        GameObject flower = Instantiate(prefab[random], random_position, Quaternion.identity, transform);
+                        GameObject flower = Instantiate(prefab[random], random_position, Quaternion.identity, _flower_container);
 
                         future_cell.primitive.Add(flower);
                     }
@@ -140,7 +149,7 @@ public class GameOfLife : MonoBehaviour
                 Cell previous_cell = TerrainManager.Instance.cells[i][j];
                 Cell future_cell = future_cells[i][j];
 
-                if(future_cell.state == GolState.DEAD && future_cell.state != previous_cell.state){
+                if(future_cell.state == GOLState.DEAD && future_cell.state != previous_cell.state){
                     foreach (GameObject primitive in future_cell.primitive)
                     {
                         primitive.transform.Destroy();

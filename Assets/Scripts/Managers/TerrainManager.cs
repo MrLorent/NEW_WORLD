@@ -2,14 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public enum GolState {
-    DEAD,
-    GROWING,
-    ALIVE,
-    DYING
-};
-
 public struct Cell
 {
     // Space parameters
@@ -17,14 +9,14 @@ public struct Cell
     public Vector2 size;
 
     // Game of life parameters
-    public GolState state;
+    public GOLState state;
     public List<GameObject> primitive;
 
     // Genetic Algoritm parameters
     public int biome;
 
     // CONSTRUCTORS
-    public Cell(Vector3 position, Vector2 size, GolState state, int biome) {
+    public Cell(Vector3 position, Vector2 size, GOLState state, int biome) {
         this.position = position;
         this.size = size;
         this.state = state;
@@ -104,7 +96,7 @@ public class TerrainManager : Singleton<TerrainManager>
                     column.Add(new Cell(
                         new Vector3(positionX, hauteur, positionZ),
                         new Vector2(cellSizeX, cellSizeZ),
-                        GolState.ALIVE,
+                        GOLState.ALIVE,
                         1
                     ));
                 }
@@ -113,7 +105,7 @@ public class TerrainManager : Singleton<TerrainManager>
                     column.Add(new Cell(
                         new Vector3(positionX, hauteur, positionZ),
                         new Vector2(cellSizeX, cellSizeZ),
-                        GolState.DEAD,
+                        GOLState.DEAD,
                         1
                     ));
                 }
