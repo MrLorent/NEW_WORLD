@@ -6,31 +6,29 @@ using UnityEngine;
 public struct Cell
 {
     // Space parameters
+    public static Vector2 dimensions;
     public Vector3 position;
-    public Vector2 size;
 
     // Game of life parameters
-    public GOLState state;
+    public GOLState GOL_state;
     public List<GameObject> primitive;
 
     // Genetic Algoritm parameters
-    public int biome;
+    public int biom;
 
     // CONSTRUCTORS
-    public Cell(Vector3 position, Vector2 size, GOLState state, int biome) {
+    public Cell(Vector3 position, GOLState state, int biom) {
         this.position = position;
-        this.size = size;
-        this.state = state;
+        this.GOL_state = state;
         this.primitive = new List<GameObject>();
-        this.biome = biome;
+        this.biom = biom;
     }
 
     public Cell(Cell cell) {
         this.position = cell.position;
-        this.size = cell.size;
-        this.state = cell.state;
+        this.GOL_state = cell.GOL_state;
         this.primitive = cell.primitive;
-        this.biome = cell.biome;
+        this.biom = cell.biom;
     }
 };
 
@@ -56,9 +54,30 @@ public class TerrainManager : Singleton<TerrainManager>
         MAX_X = terrain.transform.position.x + terrain.terrainData.bounds.max.x;
         MAX_Z = terrain.transform.position.z + terrain.terrainData.bounds.max.z;
 
-        Debug.Log("MAX_X : " + TerrainManager.Instance.MAX_X);
-
         grid = new List<List<Cell>>();
+
+        //We define the size of a cell in the grid
+        Cell.dimensions = new Vector2((MAX_X - MIN_X) / (float)NB_CELL_X, (MAX_Z - MIN_Z) / (float)NB_CELL_Z);
+
+        for (int x = 0; x < NB_CELL_X; x++)
+        {
+            TerrainManager.Instance.grid.Add(new List<Cell>());
+
+            for (int z = 0; z < NB_CELL_Z; z++)
+            {
+                float cell_x = terrain.transform.position.x + x * Cell.dimensions.x + Cell.dimensions.x * 0.5F;
+                float cell_z = terrain.transform.position.z + z * Cell.dimensions.y + Cell.dimensions.y * 0.5F;
+                float cell_y = terrain.transform.position.y + TerrainManager.Instance.terrain.SampleHeight(new Vector3(cell_x, 0, cell_z));
+
+
+                //HERE CALL THE FUNCTION TO GET THE BIOME
+                TerrainManager.Instance.grid[x].Add(new Cell(
+                    new Vector3(cell_x, cell_y, cell_z),
+                    GOLManager.Instance.get_random_GOL_state(),
+                    1
+                ));
+            }
+        }
 
         GOLManager.Instance.init();
     }

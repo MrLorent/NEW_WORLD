@@ -2,6 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BiomState
+{
+    DESERT,
+    MOUNTAIN,
+    PLAIN,
+    SWAMP
+};
+
+public struct Environnment
+{
+    public BiomState State;
+    public float temperature;
+    public float humidity;
+}
+
 public class EnvironmentManager : Singleton<EnvironmentManager>
 {
     [Header("PLAINS BIOM")]
@@ -50,7 +65,11 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [SerializeField]
     private Material _terrain_material;
 
-    
+    public Environnment get_environment(Vector3 position)
+    {
+        return new Environnment();
+    }
+
     public void update_shader()
     {
         // Pass the biom colors to the shader
