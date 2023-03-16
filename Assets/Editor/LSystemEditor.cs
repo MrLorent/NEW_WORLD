@@ -8,11 +8,11 @@ public class LSystemEditor : Editor
     {
         base.OnInspectorGUI();
 
-        LSystem tree = (LSystem)target;
+        LSystem lsystem = (LSystem)target;
 
         if(GUILayout.Button("Compute L-System"))
         {
-            tree.Init();
+            lsystem.Init();
         }
     }
 }

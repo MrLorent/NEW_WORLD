@@ -11,33 +11,33 @@ public class GAManager : Singleton<GAManager>
     private GameObject _tree_prefab;
 
     [SerializeField]
-    private uint _nb_trees = 10;
+    private uint _trees_population_size = 10;
 
     [SerializeField]
-    private Transform _tree_container;
+    private Transform _trees_container;
 
-    private List<Tree> _trees;
+    private List<Tree> _trees_population;
 
     protected override void Awake()
     {
         base.Awake();
-        _trees = new List<Tree>();
+        _trees_population = new List<Tree>();
     }
 
     private void Start()
     {
-        for(uint i = 0; i < _nb_trees; i++)
+        for(uint i = 0; i < _trees_population_size; i++)
         {
             Tree new_tree = Instantiate(
                 _tree_prefab,
                 TerrainManager.Instance.get_random_position(),
                 Quaternion.identity,
-                _tree_container
+                _trees_container
             ).GetComponent<Tree>();
 
             new_tree.init();
 
-            _trees.Add(new_tree);
+            _trees_population.Add(new_tree);
         }
     }
 
