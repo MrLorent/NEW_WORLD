@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4932153740331618756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6324616775013480921}
+  - component: {fileID: 1001262984252208063}
+  m_Layer: 3
+  m_Name: Base
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6324616775013480921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932153740331618756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7128397108312836059}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &1001262984252208063
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932153740331618756}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7128397108312836057
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +59,7 @@ GameObject:
   - component: {fileID: 7128397108312836059}
   - component: {fileID: 7128397108312836051}
   - component: {fileID: 7128397108312836060}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +80,7 @@ Transform:
   m_Children:
   - {fileID: 6478666098354735777}
   - {fileID: 7014407828845840553}
+  - {fileID: 6324616775013480921}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -69,7 +118,7 @@ MonoBehaviour:
   foliage_prefab: {fileID: 0}
   trunk_container: {fileID: 6478666098354735777}
   foliage_container: {fileID: 7014407828845840553}
-  iterations: 5
+  iterations: 1
   lsystem_base: {fileID: 0}
 --- !u!1 &7305032128094674758
 GameObject:
@@ -82,7 +131,7 @@ GameObject:
   - component: {fileID: 7014407828845840553}
   - component: {fileID: 1310147377848752626}
   - component: {fileID: 9002657525070002000}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Foliage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +214,7 @@ GameObject:
   - component: {fileID: 6478666098354735777}
   - component: {fileID: 3832146040249825078}
   - component: {fileID: 8740291529444622132}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

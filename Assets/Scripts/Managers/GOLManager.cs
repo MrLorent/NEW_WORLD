@@ -40,7 +40,7 @@ public class GOLManager : Singleton<GOLManager>
         }
     }
 
-    void run()
+    private void run()
     {     
         ComputeNextGeneration();
         DrawFlowers();
@@ -143,7 +143,7 @@ public class GOLManager : Singleton<GOLManager>
 
                         GameObject flower = Instantiate(prefab[random], random_position, Quaternion.identity, _flower_container);
 
-                        future_cell.primitive.Add(flower);
+                        future_cell.flowers.Add(flower);
                     }
                     future_grid[x][z] = future_cell;
                 }
@@ -161,11 +161,11 @@ public class GOLManager : Singleton<GOLManager>
                 Cell future_cell = future_grid[x][z];
 
                 if(future_cell.GOL_state == GOLState.DEAD && future_cell.GOL_state != previous_cell.GOL_state){
-                    foreach (GameObject primitive in future_cell.primitive)
+                    foreach (GameObject flowers in future_cell.flowers)
                     {
-                        primitive.transform.Destroy();
+                        flowers.transform.Destroy();
                     }
-                    future_cell.primitive = new List<GameObject>();
+                    future_cell.flowers = new List<GameObject>();
                     future_grid[x][z] = future_cell;
                 }
             }

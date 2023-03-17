@@ -11,7 +11,7 @@ public struct Cell
 
     // Game of life parameters
     public GOLState GOL_state;
-    public List<GameObject> primitive;
+    public List<GameObject> flowers;
 
     // Genetic Algoritm parameters
     public BiomType biom;
@@ -22,7 +22,7 @@ public struct Cell
     public Cell(Vector3 position, GOLState state, BiomType biom, float temperature, float humidity_rate) {
         this.position = position;
         this.GOL_state = state;
-        this.primitive = new List<GameObject>();
+        this.flowers = new List<GameObject>();
         this.biom = biom;
         this.temperature = temperature;
         this.humidity_rate = humidity_rate;
@@ -32,7 +32,7 @@ public struct Cell
     public Cell(Cell cell) {
         this.position = cell.position;
         this.GOL_state = cell.GOL_state;
-        this.primitive = cell.primitive;
+        this.flowers = cell.flowers;
         this.biom = cell.biom;
         this.temperature = cell.temperature;
         this.humidity_rate = cell.humidity_rate;
@@ -89,20 +89,6 @@ public class TerrainManager : Singleton<TerrainManager>
                 ));
             }
         }
-
-        for (int z = NB_CELL_Z-1; z >= 0; z--)
-        {
-            string line = "";
-
-            for (int x = 0; x < NB_CELL_Z; x++)
-            {
-                line += (int)grid[z][x].biom + " ";
-            }
-
-            Debug.Log(line);
-        }
-
-        
 
         GOLManager.Instance.init();
     }

@@ -25,7 +25,7 @@ public class LSystem : MonoBehaviour
 
     [Header("L-SYSTEM PARAMETERS")]
     [SerializeField]
-    private int iterations = 1;
+    public int iterations = 1;
 
     [SerializeField]
     private LSystemBase lsystem_base = null;
@@ -46,7 +46,6 @@ public class LSystem : MonoBehaviour
     public void Init()
     {
         InititalizeAxiom();
-        GeneratePattern();
         Draw();
     }
 
@@ -55,7 +54,6 @@ public class LSystem : MonoBehaviour
         lsystem_base = LS_base;
         foliage_prefab = foliage_shape;
         InititalizeAxiom();
-        GeneratePattern();
         Draw();
     }
 
@@ -225,8 +223,10 @@ public class LSystem : MonoBehaviour
         return constants.ContainsKey(value) ? constants[value] : float.Parse(value, CultureInfo.InvariantCulture);
     }
 
-    private void Draw()
+    public void Draw()
     {
+        GeneratePattern();
+
         trunk_container.DestroyChildren();
         foliage_container.DestroyChildren();
         
