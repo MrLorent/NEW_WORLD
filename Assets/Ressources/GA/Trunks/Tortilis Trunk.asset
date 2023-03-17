@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402c352001fe3ac428361e44cacb7cf3, type: 3}
   m_Name: Tortilis Trunk
   m_EditorClassIdentifier: 
-  id: tortilis
   attribut_type: 0
-  temperature: 100
-  humidity: 0
+  temperature: 45
+  humidity_rate: 0
   lsystem_base: {fileID: 11400000, guid: aebaa9db894a78647a8e3db5d39eb3e1, type: 2}

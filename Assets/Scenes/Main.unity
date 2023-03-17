@@ -152,7 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 173883167}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &173883166
 GameObject:
@@ -184,8 +184,8 @@ Transform:
   m_Children:
   - {fileID: 1799149670}
   - {fileID: 1853455082}
-  - {fileID: 1088823915}
   - {fileID: 57113702}
+  - {fileID: 342955578}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -255,6 +255,7 @@ Transform:
   - {fileID: 467925947}
   - {fileID: 582457868}
   - {fileID: 308851621}
+  - {fileID: 1088823915}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -304,7 +305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Plain
+  biom_type: 2
+  temperature: 5
+  humidity_rate: 40
 --- !u!135 &286405802
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -392,6 +395,37 @@ MonoBehaviour:
   _swamp_radius: 200
   _swamp_ground_color: {r: 0.20314167, g: 0.20314167, b: 0.5188679, a: 1}
   _terrain_material: {fileID: 2100000, guid: 23ad38f24373c5342886055f59dbe2c6, type: 2}
+--- !u!1 &342955577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342955578}
+  m_Layer: 0
+  m_Name: Flowers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &342955578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342955577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 173883167}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &467925946
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,8 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b046aa65dc3444fbd4cd679b808a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _terrain: {fileID: 1853455085}
-  nbDecoupe: 100
+  terrain: {fileID: 1853455085}
 --- !u!1 &518453218
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Mountain
+  biom_type: 1
+  temperature: -30
+  humidity_rate: 10
 --- !u!135 &963725059
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -797,7 +832,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Desert
+  biom_type: 0
+  temperature: 45
+  humidity_rate: 0
 --- !u!135 &1022774166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -938,7 +975,7 @@ GameObject:
   - component: {fileID: 1088823915}
   - component: {fileID: 1088823916}
   m_Layer: 0
-  m_Name: Flowers
+  m_Name: GOLManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -951,13 +988,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088823914}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 173883167}
-  m_RootOrder: 2
+  m_Father: {fileID: 259546284}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1088823916
 MonoBehaviour:
@@ -971,6 +1008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40ef65b1758040248e0bf1b6b583d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flower_container: {fileID: 342955578}
   prefab:
   - {fileID: 6799716409087563353, guid: 0d11c01ccbc1c454299d1547601110b6, type: 3}
   - {fileID: 7305774944793065711, guid: 8281f04b94bfe460ea0387b28dc6f8c9, type: 3}
@@ -1294,7 +1332,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Swamp
+  biom_type: 3
+  temperature: 40
+  humidity_rate: 60
 --- !u!135 &1975275991
 SphereCollider:
   m_ObjectHideFlags: 0

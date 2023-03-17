@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47237313788b3ac4096d53deb8b9dee8, type: 3}
   m_Name: Mountain Bark
   m_EditorClassIdentifier: 
-  id: mountain_bark
   attribut_type: 1
-  temperature: 0
-  humidity: 0
+  temperature: -30
+  humidity_rate: 10
   material: {fileID: 2100000, guid: d759f8ac96fcd67409f91c48b25227c3, type: 2}

@@ -2,21 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BiomState
-{
-    DESERT,
-    MOUNTAIN,
-    PLAIN,
-    SWAMP
-};
-
-public struct Environnment
-{
-    public BiomState State;
-    public float temperature;
-    public float humidity;
-}
-
 public class EnvironmentManager : Singleton<EnvironmentManager>
 {
     [Header("PLAINS BIOM")]
@@ -65,9 +50,18 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [SerializeField]
     private Material _terrain_material;
 
-    public Environnment get_environment(Vector3 position)
+    public Environment get_environment(Vector3 position)
     {
-        return new Environnment();
+        Vector2 xz_position = new Vector2(position.x, position.z);
+
+        Vector2 xz_desert_pos = new Vector2(_desert_position.position.x, _desert_position.position.z);
+        Vector2 xz_mountain_pos = new Vector2(_mountain_position.position.x, _mountain_position.position.z);
+        Vector2 xz_plain_pos = new Vector2(_plain_position.position.x, _plain_position.position.z);
+        Vector2 xz_swamp_pos = new Vector2(_swamp_position.position.x, _swamp_position.position.z);
+
+        //if (Helpers.is_left())
+
+        return new Environment();
     }
 
     public void update_shader()

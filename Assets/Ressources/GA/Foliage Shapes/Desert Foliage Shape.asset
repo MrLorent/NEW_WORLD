@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6e34839e06a9e46a4a9f4777c74e5f, type: 3}
   m_Name: Desert Foliage Shape
   m_EditorClassIdentifier: 
-  id: desert_foliage_shape
   attribut_type: 2
-  temperature: 100
-  humidity: 0
+  temperature: 45
+  humidity_rate: 0
   foliage_prefab: {fileID: 8268357091503493088, guid: acfa3cbb3953c1d458a40d07d54ce02f, type: 3}

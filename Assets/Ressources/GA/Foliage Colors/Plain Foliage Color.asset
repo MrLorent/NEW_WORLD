@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c278c4f74dee52149bf21beefb90ee60, type: 3}
   m_Name: Plain Foliage Color
   m_EditorClassIdentifier: 
-  id: plain_foliage_color
   attribut_type: 3
-  temperature: 0
-  humidity: 100
+  temperature: 5
+  humidity_rate: 40
   material: {fileID: 2100000, guid: 8747d8ff321d2b44286c4d2245953487, type: 2}
