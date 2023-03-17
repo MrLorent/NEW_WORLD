@@ -2,51 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// desert Color(0.9058824F, 0.8F, 0.5529411F, 1F); #E7CC8D
+// mountain Color(0.6039216F, 0.8980392F, 1.0F, 1F); #9AE5FF
+// plain Color(0.8470588F, 0.2941176F, 0.3686274F, 1F); #D84B5E
+// swamp Color(0.145098F, 0.145098F, 0.3254901F, 1F); #343484
+
 public class EnvironmentManager : Singleton<EnvironmentManager>
 {
     [Header("PLAINS BIOM")]
     [SerializeField]
-    private Transform _plain_position;
-    [SerializeField]
-    private float _plain_radius = 200.0F;
-    [SerializeField]
-    private Color _plain_ground_color = new Color(0.8470588F, 0.2941176F, 0.3686274F, 1F);
+    private Biom _BOTTOM_RIGHT;
 
     [Space(10)]
 
     [Header("DESERT BIOM")]
     [SerializeField]
-    private Transform _desert_position;
-    [SerializeField]
-    private float _desert_radius = 200.0F;
-    [SerializeField]
-    private Color _desert_ground_color = new Color(0.9058824F, 0.8F, 0.5529411F, 1F);
-
+    private Biom _TOP_RIGHT;
+    
     [Space(10)]
 
     [Header("MOUNTAINS BIOM")]
     [SerializeField]
-    private Transform _mountain_position;
-    [SerializeField]
-    private float _mountain_radius = 200.0F;
-    [SerializeField]
-    private Color _mountain_ground_color = new Color(0.6039216F, 0.8980392F, 1.0F, 1F);
-    [SerializeField]
-    private Color _snow_color = new Color(1.0F, 1.0F, 1.0F, 1F);
+    private Biom _BOTTOM_LEFT;
 
     [Space(10)]
 
     [Header("SWAMP BIOM")]
     [SerializeField]
-    private Transform _swamp_position;
-    [SerializeField]
-    private float _swamp_radius = 200.0F;
-    [SerializeField]
-    private Color _swamp_ground_color = new Color(0.145098F, 0.145098F, 0.3254901F, 1F);
-
+    private Biom _TOP_LEFT;
+    
     [Space(10)]
 
     [Header("TERRAIN SHADER")]
+    [SerializeField]
+    private Color _snow_color = new Color(1.0F, 1.0F, 1.0F, 1F);
+
     [SerializeField]
     private Material _terrain_material;
 
@@ -54,12 +44,34 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     {
         Vector2 xz_position = new Vector2(position.x, position.z);
 
-        Vector2 xz_desert_pos = new Vector2(_desert_position.position.x, _desert_position.position.z);
-        Vector2 xz_mountain_pos = new Vector2(_mountain_position.position.x, _mountain_position.position.z);
-        Vector2 xz_plain_pos = new Vector2(_plain_position.position.x, _plain_position.position.z);
-        Vector2 xz_swamp_pos = new Vector2(_swamp_position.position.x, _swamp_position.position.z);
+        Vector2 xz_desert = new Vector2(_TOP_RIGHT.transform.position.x, _TOP_RIGHT.transform.position.z);
+        Vector2 xz_mountain = new Vector2(_BOTTOM_LEFT.transform.position.x, _BOTTOM_LEFT.transform.position.z);
+        Vector2 xz_plain = new Vector2(_BOTTOM_RIGHT.transform.position.x, _BOTTOM_RIGHT.transform.position.z);
+        Vector2 xz_swamp = new Vector2(_TOP_LEFT.transform.position.x, _TOP_LEFT.transform.position.z);
 
-        //if (Helpers.is_left())
+        Vector2 TOP_LEFT = xz_swamp;
+        Vector2 TOP_RIGHT = xz_desert;
+        Vector2 BOTTOM_RIGHT = xz_plain;
+        Vector2 BOTTOM_LEFT = xz_mountain;
+
+        /*if (Helpers.is_left(BOTTOM_LEFT, TOP_LEFT, xz_position))
+        {
+            if (Helpers.is_left(BOTTOM_RIGHT, BOTTOM_LEFT, xz_position))
+            {
+                return new Environment(
+
+
+                );
+            }
+        }
+        else if ((Helpers.is_left(xz_desert, xz_plain, xz_position))
+        {
+
+        }
+        else
+        {
+
+        }*/
 
         return new Environment();
     }
@@ -67,29 +79,16 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     public void update_shader()
     {
         // Pass the biom colors to the shader
-        _terrain_material.SetColor("_Plain_Color", _plain_ground_color);
-        _terrain_material.SetColor("_Desert_Color", _desert_ground_color);
-        _terrain_material.SetColor("_Mountain_Color", _mountain_ground_color);
+        _terrain_material.SetColor("_Plain_Color", _BOTTOM_RIGHT.ground_color);
+        _terrain_material.SetColor("_Desert_Color", _TOP_RIGHT.ground_color);
+        _terrain_material.SetColor("_Mountain_Color", _BOTTOM_LEFT.ground_color);
+        _terrain_material.SetColor("_Swamp_Color", _TOP_LEFT.ground_color);
         _terrain_material.SetColor("_Snow_Color", _snow_color);
-        _terrain_material.SetColor("_Swamp_Color", _swamp_ground_color);
 
         // Pass the bioms position to the shader
-        _terrain_material.SetVector("_Desert_Position", new Vector4(_desert_position.position.x, _desert_position.position.y, _desert_position.position.z, 1));
-        _terrain_material.SetFloat("_Desert_Radius", _desert_radius);
-
-        _terrain_material.SetVector("_Mountain_Position", new Vector4(_mountain_position.position.x, _mountain_position.position.y, _mountain_position.position.z, 1));
-        _terrain_material.SetFloat("_Mountain_Radius", _mountain_radius);
-
-        _terrain_material.SetVector("_Plain_Position", new Vector4(_plain_position.position.x, _plain_position.position.y, _plain_position.position.z, 1));
-        _terrain_material.SetFloat("_Plain_Radius", _plain_radius);
-
-        _terrain_material.SetVector("_Swamp_Position", new Vector4(_swamp_position.position.x, _swamp_position.position.y, _swamp_position.position.z, 1));
-        _terrain_material.SetFloat("_Swamp_Radius", _swamp_radius);
-
-        // Update biom colliders
-        _desert_position.GetComponent<SphereCollider>().radius = _desert_radius;
-        _mountain_position.GetComponent<SphereCollider>().radius = _mountain_radius;
-        _plain_position.GetComponent<SphereCollider>().radius = _plain_radius;
-        _swamp_position.GetComponent<SphereCollider>().radius = _swamp_radius;
+        _terrain_material.SetVector("_TOP_RIGHT", new Vector4(_TOP_RIGHT.transform.position.x, _TOP_RIGHT.transform.position.y, _TOP_RIGHT.transform.position.z, 1));
+        _terrain_material.SetVector("_BOTTOM_LEFT", new Vector4(_BOTTOM_LEFT.transform.position.x, _BOTTOM_LEFT.transform.position.y, _BOTTOM_LEFT.transform.position.z, 1));
+        _terrain_material.SetVector("_BOTTOM_RIGHT", new Vector4(_BOTTOM_RIGHT.transform.position.x, _BOTTOM_RIGHT.transform.position.y, _BOTTOM_RIGHT.transform.position.z, 1));
+        _terrain_material.SetVector("_TOP_LEFT", new Vector4(_TOP_LEFT.transform.position.x, _TOP_LEFT.transform.position.y, _TOP_LEFT.transform.position.z, 1));
     }
 }

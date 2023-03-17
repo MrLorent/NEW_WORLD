@@ -31,21 +31,17 @@ Shader "Custom/TerrainShader"
             float3 worldPos;
         };
 
-        fixed3 _Desert_Position;
-        float _Desert_Radius;
+        fixed3 _TOP_RIGHT;
         fixed4 _Desert_Color;
 
-        fixed3 _Mountain_Position;
-        float _Mountain_Radius;
+        fixed3 _BOTTOM_LEFT;
         fixed4 _Mountain_Color;
         fixed4 _Snow_Color;
 
-        fixed3 _Plain_Position;
-        float _Plain_Radius;
+        fixed3 _BOTTOM_RIGHT;
         fixed4 _Plain_Color;
 
-        fixed3 _Swamp_Position;
-        float _Swamp_Radius;
+        fixed3 _TOP_LEFT;
         fixed4 _Swamp_Color;
 
         half _Glossiness;
@@ -80,18 +76,11 @@ Shader "Custom/TerrainShader"
 
             float2 xy_position = float2(position.x, position.z);
 
-            float2 TOP_LEFT = float2(_Swamp_Position.x, _Swamp_Position.z);
-            float TL_RADIUS = _Swamp_Radius;
-
-            float2 TOP_RIGHT = float2(_Desert_Position.x, _Desert_Position.z);
-            float TR_RADIUS = _Desert_Radius;
-
-            float2 BOTTOM_RIGHT = float2(_Plain_Position.x, _Plain_Position.z);
-            float BR_RADIUS = _Plain_Radius;
-
-            float2 BOTTOM_LEFT = float2(_Mountain_Position.x, _Mountain_Position.z);
-            float BL_RADIUS = _Mountain_Radius;
-
+            float2 TOP_LEFT = float2(_TOP_LEFT.x, _TOP_LEFT.z);
+            float2 TOP_RIGHT = float2(_TOP_RIGHT.x, _TOP_RIGHT.z);
+            float2 BOTTOM_RIGHT = float2(_BOTTOM_RIGHT.x, _BOTTOM_RIGHT.z);
+            float2 BOTTOM_LEFT = float2(_BOTTOM_LEFT.x, _BOTTOM_LEFT.z);
+            
             if(is_left(BOTTOM_LEFT, TOP_LEFT, xy_position)) // xy_position is on BL_TL left ?
             {
                 if(is_left(BOTTOM_RIGHT, BOTTOM_LEFT, xy_position))

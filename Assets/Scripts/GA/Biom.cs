@@ -29,19 +29,24 @@ public class Biom : MonoBehaviour
 {
     [Header("ALGO GEN PARAMS")]
     [SerializeField]
-    private BiomType biom_type;
+    public BiomType biom_type;
 
     [SerializeField]
     [Range(-50.0f, 50.0f)]
-    private float temperature;
+    public float temperature;
 
     [SerializeField]
     [Range(0.0f, 100.0f)]
-    private float humidity_rate;
+    public float humidity_rate;
 
-    public Environment get_caracteristics()
+    [Header("COLORS")]
+    public Color ground_color;
+
+    private float radius;
+    
+    private void Start()
     {
-        return new Environment(biom_type, temperature, humidity_rate);
+        radius = GetComponent<SphereCollider>().radius;
     }
 
     private void OnTriggerEnter(Collider collision)

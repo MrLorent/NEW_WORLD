@@ -308,6 +308,7 @@ MonoBehaviour:
   biom_type: 2
   temperature: 5
   humidity_rate: 40
+  ground_color: {r: 0.84705883, g: 0.29411766, b: 0.36862746, a: 0}
 --- !u!135 &286405802
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -381,19 +382,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c89e47825519142be8cdef5b1f5190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _plain_position: {fileID: 286405800}
-  _plain_radius: 200
-  _plain_ground_color: {r: 0.8470588, g: 0.2941176, b: 0.3686274, a: 1}
-  _desert_position: {fileID: 1022774164}
-  _desert_radius: 200
-  _desert_ground_color: {r: 0.9058824, g: 0.8, b: 0.5529411, a: 1}
-  _mountain_position: {fileID: 963725057}
-  _mountain_radius: 200
-  _mountain_ground_color: {r: 0.6039216, g: 0.8980392, b: 1, a: 1}
+  _BOTTOM_RIGHT: {fileID: 286405801}
+  _TOP_RIGHT: {fileID: 1022774165}
+  _BOTTOM_LEFT: {fileID: 963725058}
+  _TOP_LEFT: {fileID: 1975275990}
   _snow_color: {r: 1, g: 1, b: 1, a: 1}
-  _swamp_position: {fileID: 1975275989}
-  _swamp_radius: 200
-  _swamp_ground_color: {r: 0.20314167, g: 0.20314167, b: 0.5188679, a: 1}
   _terrain_material: {fileID: 2100000, guid: 23ad38f24373c5342886055f59dbe2c6, type: 2}
 --- !u!1 &342955577
 GameObject:
@@ -726,6 +719,7 @@ MonoBehaviour:
   biom_type: 1
   temperature: -30
   humidity_rate: 10
+  ground_color: {r: 0.6039216, g: 0.8980392, b: 1, a: 0}
 --- !u!135 &963725059
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -835,6 +829,7 @@ MonoBehaviour:
   biom_type: 0
   temperature: 45
   humidity_rate: 0
+  ground_color: {r: 0.90588236, g: 0.8, b: 0.5529412, a: 0}
 --- !u!135 &1022774166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1242,7 +1237,7 @@ Terrain:
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
-  m_DrawHeightmap: 1
+  m_DrawHeightmap: 0
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 0
   m_StaticShadowCaster: 0
@@ -1335,6 +1330,7 @@ MonoBehaviour:
   biom_type: 3
   temperature: 40
   humidity_rate: 60
+  ground_color: {r: 0.20392157, g: 0.20392157, b: 0.5176471, a: 0}
 --- !u!135 &1975275991
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1533,7 +1529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &5748167016967101570
 MeshRenderer:
   m_ObjectHideFlags: 0
