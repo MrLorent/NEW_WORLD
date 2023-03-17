@@ -66,11 +66,11 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     public void update_shader()
     {
         // Pass the biom colors to the shader
-        _terrain_material.SetColor("_Plain_Color", _BOTTOM_RIGHT.ground_color);
-        _terrain_material.SetColor("_Desert_Color", _TOP_RIGHT.ground_color);
-        _terrain_material.SetColor("_Mountain_Color", _BOTTOM_LEFT.ground_color);
-        _terrain_material.SetColor("_Swamp_Color", _TOP_LEFT.ground_color);
-        _terrain_material.SetColor("_Snow_Color", _snow_color);
+        _terrain_material.SetColor("_TOP_LEFT_COLOR", _TOP_LEFT.ground_color);
+        _terrain_material.SetColor("_TOP_RIGHT_COLOR", _TOP_RIGHT.ground_color);
+        _terrain_material.SetColor("_BOTTOM_RIGHT_COLOR", _BOTTOM_RIGHT.ground_color);
+        _terrain_material.SetColor("_BOTTOM_LEFT_COLOR", _BOTTOM_LEFT.ground_color);
+        _terrain_material.SetColor("_SNOW_COLOR", _snow_color);
 
         // Pass the bioms position to the shader
         _terrain_material.SetVector("_TOP_RIGHT", new Vector4(_TOP_RIGHT.transform.position.x, _TOP_RIGHT.transform.position.y, _TOP_RIGHT.transform.position.z, 1));
