@@ -9,34 +9,21 @@ using UnityEngine;
 
 public class EnvironmentManager : Singleton<EnvironmentManager>
 {
-    [Header("PLAINS BIOM")]
+    [Header("BIOMS")]
     [SerializeField]
     private Biom _BOTTOM_RIGHT;
-
-    [Space(10)]
-
-    [Header("DESERT BIOM")]
     [SerializeField]
     private Biom _TOP_RIGHT;
-    
-    [Space(10)]
-
-    [Header("MOUNTAINS BIOM")]
     [SerializeField]
     private Biom _BOTTOM_LEFT;
-
-    [Space(10)]
-
-    [Header("SWAMP BIOM")]
     [SerializeField]
     private Biom _TOP_LEFT;
-    
-    [Space(10)]
 
-    [Header("TERRAIN SHADER")]
+    [Header("GENERAL COLORS")]
     [SerializeField]
     private Color _snow_color = new Color(1.0F, 1.0F, 1.0F, 1F);
 
+    [Header("TERRAIN SHADER")]
     [SerializeField]
     private Material _terrain_material;
 
