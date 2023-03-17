@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &57113702
 Transform:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 173883167}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &173883166
 GameObject:
@@ -184,8 +184,8 @@ Transform:
   m_Children:
   - {fileID: 1799149670}
   - {fileID: 1853455082}
-  - {fileID: 1088823915}
   - {fileID: 57113702}
+  - {fileID: 342955578}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -251,10 +251,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1226507038}
-  - {fileID: 467925947}
+  - {fileID: 1088823915}
   - {fileID: 582457868}
+  - {fileID: 1226507038}
   - {fileID: 308851621}
+  - {fileID: 467925947}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -304,7 +305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Plain
+  biom_type: 2
+  temperature: 5
+  humidity_rate: 40
+  ground_color: {r: 0.84705883, g: 0.29411766, b: 0.36862746, a: 0}
 --- !u!135 &286405802
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -329,7 +333,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -378,20 +382,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c89e47825519142be8cdef5b1f5190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _plain_position: {fileID: 286405800}
-  _plain_radius: 200
-  _plain_ground_color: {r: 0.8470588, g: 0.2941176, b: 0.3686274, a: 1}
-  _desert_position: {fileID: 1022774164}
-  _desert_radius: 200
-  _desert_ground_color: {r: 0.9058824, g: 0.8, b: 0.5529411, a: 1}
-  _mountain_position: {fileID: 963725057}
-  _mountain_radius: 200
-  _mountain_ground_color: {r: 0.6039216, g: 0.8980392, b: 1, a: 1}
+  _BOTTOM_RIGHT: {fileID: 286405801}
+  _TOP_RIGHT: {fileID: 1022774165}
+  _BOTTOM_LEFT: {fileID: 963725058}
+  _TOP_LEFT: {fileID: 1975275990}
   _snow_color: {r: 1, g: 1, b: 1, a: 1}
-  _swamp_position: {fileID: 1975275989}
-  _swamp_radius: 200
-  _swamp_ground_color: {r: 0.20314167, g: 0.20314167, b: 0.5188679, a: 1}
   _terrain_material: {fileID: 2100000, guid: 23ad38f24373c5342886055f59dbe2c6, type: 2}
+--- !u!1 &342955577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342955578}
+  m_Layer: 0
+  m_Name: Flowers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &342955578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342955577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 173883167}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &467925946
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +449,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 259546284}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &467925948
 MonoBehaviour:
@@ -436,8 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b046aa65dc3444fbd4cd679b808a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _terrain: {fileID: 1853455085}
-  nbDecoupe: 100
+  terrain: {fileID: 1853455085}
 --- !u!1 &518453218
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +588,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 259546284}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &582457869
 MonoBehaviour:
@@ -690,7 +716,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Mountain
+  biom_type: 1
+  temperature: -30
+  humidity_rate: 10
+  ground_color: {r: 0.6039216, g: 0.8980392, b: 1, a: 0}
 --- !u!135 &963725059
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -715,7 +744,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -797,7 +826,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Desert
+  biom_type: 0
+  temperature: 45
+  humidity_rate: 0
+  ground_color: {r: 0.90588236, g: 0.8, b: 0.5529412, a: 0}
 --- !u!135 &1022774166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -822,7 +854,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -938,7 +970,7 @@ GameObject:
   - component: {fileID: 1088823915}
   - component: {fileID: 1088823916}
   m_Layer: 0
-  m_Name: Flowers
+  m_Name: GOLManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -951,13 +983,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088823914}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 173883167}
-  m_RootOrder: 2
+  m_Father: {fileID: 259546284}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1088823916
 MonoBehaviour:
@@ -971,13 +1003,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40ef65b1758040248e0bf1b6b583d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flower_container: {fileID: 342955578}
   prefab:
+  - {fileID: 464499013385506749, guid: 1f36aa7f7b8594bdbb0d12d8b26420ea, type: 3}
+  - {fileID: 464499013385506749, guid: 1f36aa7f7b8594bdbb0d12d8b26420ea, type: 3}
+  - {fileID: 1858308155718916281, guid: 99c066e4c45304713abe3977c332e5b4, type: 3}
+  - {fileID: 1500488111050528894, guid: 164b74a95334945a690ee2f0dac1d60a, type: 3}
   - {fileID: 6799716409087563353, guid: 0d11c01ccbc1c454299d1547601110b6, type: 3}
   - {fileID: 7305774944793065711, guid: 8281f04b94bfe460ea0387b28dc6f8c9, type: 3}
   - {fileID: 3533261551484599725, guid: 84e8a393345dc41e88e9a73b350b5e63, type: 3}
-  - {fileID: 464499013385506749, guid: 1f36aa7f7b8594bdbb0d12d8b26420ea, type: 3}
-  - {fileID: 1500488111050528894, guid: 164b74a95334945a690ee2f0dac1d60a, type: 3}
-  - {fileID: 1858308155718916281, guid: 99c066e4c45304713abe3977c332e5b4, type: 3}
+  - {fileID: 3533261551484599725, guid: 84e8a393345dc41e88e9a73b350b5e63, type: 3}
 --- !u!1 &1226507037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1043,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 259546284}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1226507039
 MonoBehaviour:
@@ -1246,7 +1281,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 008ca07f852fec540a575d6737987992, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ed57de69f0ad649c4bcd10967e5ee5fa, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1975275988
 GameObject:
@@ -1294,7 +1329,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03d1eecf0af3bf40891c2ace706a7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Swamp
+  biom_type: 3
+  temperature: 40
+  humidity_rate: 60
+  ground_color: {r: 0.20392157, g: 0.20392157, b: 0.5176471, a: 0}
 --- !u!135 &1975275991
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1319,7 +1357,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c278c4f74dee52149bf21beefb90ee60, type: 3}
   m_Name: Desert Foliage Color
   m_EditorClassIdentifier: 
-  id: desert_foliage_color
   attribut_type: 3
-  temperature: 100
-  humidity: 0
+  temperature: 45
+  humidity_rate: 0
   material: {fileID: 2100000, guid: eb6eea9b024f55d448c44df159059f0f, type: 2}

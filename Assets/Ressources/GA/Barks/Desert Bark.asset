@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47237313788b3ac4096d53deb8b9dee8, type: 3}
   m_Name: Desert Bark
   m_EditorClassIdentifier: 
-  id: desert_bark
   attribut_type: 1
-  temperature: 100
-  humidity: 0
+  temperature: 45
+  humidity_rate: 0
   material: {fileID: 2100000, guid: 1640190cf307280499625e151892aef8, type: 2}

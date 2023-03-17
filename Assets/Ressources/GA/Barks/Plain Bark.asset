@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47237313788b3ac4096d53deb8b9dee8, type: 3}
   m_Name: Plain Bark
   m_EditorClassIdentifier: 
-  id: plain_bark
   attribut_type: 1
-  temperature: 0
-  humidity: 100
+  temperature: 5
+  humidity_rate: 40
   material: {fileID: 2100000, guid: fa521f07e2b57984287df10aa95eb18e, type: 2}

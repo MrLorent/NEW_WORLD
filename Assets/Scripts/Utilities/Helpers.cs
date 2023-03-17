@@ -8,6 +8,23 @@ using System.Globalization;
 /// </summary>
 public static class Helpers
 {
+    public static bool is_left(Vector2 a, Vector2 b, Vector2 c)
+    {
+        return ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) > 0;
+    }
+
+    public static Vector2 get_intersection(Vector2 A1, Vector2 A2, Vector2 B1, Vector2 B2)
+    {
+        float tmp = (B2.x - B1.x) * (A2.y - A1.y) - (B2.y - B1.y) * (A2.x - A1.x);
+
+        float mu = ((A1.x - B1.x) * (A2.y - A1.y) - (A1.y - B1.y) * (A2.x - A1.x)) / tmp;
+
+        return new Vector2(
+            B1.x + (B2.x - B1.x) * mu,
+            B1.y + (B2.y - B1.y) * mu
+        );
+    }
+
     /// <summary>
     /// Destroy the gameObject linked to this transform.
     /// Use it like so:
@@ -69,7 +86,7 @@ public static class Helpers
         new_mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         new_mesh.CombineMeshes(combine);
 
-        container.GetComponent<MeshFilter>().sharedMesh.Clear();
+        if(container.GetComponent<MeshFilter>().sharedMesh != null) container.GetComponent<MeshFilter>().sharedMesh.Clear();
         container.GetComponent<MeshFilter>().sharedMesh = new_mesh;
         container.DestroyChildren();
     }

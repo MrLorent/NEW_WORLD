@@ -2,11 +2,11 @@ Shader "Custom/TerrainShader"
 {
     Properties
     {
-        _Plain_Color ("Plain Color (Default)", Color) = (1,1,1,1)
-        _Desert_Color ("Desert Color", Color) = (1,1,1,1)
-        _Mountain_Color ("Mountain Color", Color) = (1,1,1,1)
-        _Snow_Color ("Snow Color", Color) = (1,1,1,1)
-        _Swamp_Color ("Swamp Color", Color) = (1,1,1,1)
+        _BOTTOM_RIGHT_COLOR ("Plain Color (Default)", Color) = (1,1,1,1)
+        _TOP_RIGHT_COLOR ("Desert Color", Color) = (1,1,1,1)
+        _BOTTOM_LEFT_COLOR ("Mountain Color", Color) = (1,1,1,1)
+        _SNOW_COLOR ("Snow Color", Color) = (1,1,1,1)
+        _TOP_LEFT_COLOR ("Swamp Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.25
         _Metallic ("Metallic", Range(0,1)) = 0.0
@@ -31,22 +31,19 @@ Shader "Custom/TerrainShader"
             float3 worldPos;
         };
 
-        fixed3 _Desert_Position;
-        float _Desert_Radius;
-        fixed4 _Desert_Color;
+        fixed3 _TOP_LEFT;
+        fixed4 _TOP_LEFT_COLOR;
 
-        fixed3 _Mountain_Position;
-        float _Mountain_Radius;
-        fixed4 _Mountain_Color;
-        fixed4 _Snow_Color;
+        fixed3 _TOP_RIGHT;
+        fixed4 _TOP_RIGHT_COLOR;
 
-        fixed3 _Plain_Position;
-        float _Plain_Radius;
-        fixed4 _Plain_Color;
+        fixed3 _BOTTOM_RIGHT;
+        fixed4 _BOTTOM_RIGHT_COLOR;
 
-        fixed3 _Swamp_Position;
-        float _Swamp_Radius;
-        fixed4 _Swamp_Color;
+        fixed3 _BOTTOM_LEFT;
+        fixed4 _BOTTOM_LEFT_COLOR;
+
+        fixed4 _SNOW_COLOR;
 
         half _Glossiness;
         half _Metallic;
@@ -80,27 +77,20 @@ Shader "Custom/TerrainShader"
 
             float2 xy_position = float2(position.x, position.z);
 
-            float2 TOP_LEFT = float2(_Swamp_Position.x, _Swamp_Position.z);
-            float TL_RADIUS = _Swamp_Radius;
-
-            float2 TOP_RIGHT = float2(_Desert_Position.x, _Desert_Position.z);
-            float TR_RADIUS = _Desert_Radius;
-
-            float2 BOTTOM_RIGHT = float2(_Plain_Position.x, _Plain_Position.z);
-            float BR_RADIUS = _Plain_Radius;
-
-            float2 BOTTOM_LEFT = float2(_Mountain_Position.x, _Mountain_Position.z);
-            float BL_RADIUS = _Mountain_Radius;
-
+            float2 TOP_LEFT = float2(_TOP_LEFT.x, _TOP_LEFT.z);
+            float2 TOP_RIGHT = float2(_TOP_RIGHT.x, _TOP_RIGHT.z);
+            float2 BOTTOM_RIGHT = float2(_BOTTOM_RIGHT.x, _BOTTOM_RIGHT.z);
+            float2 BOTTOM_LEFT = float2(_BOTTOM_LEFT.x, _BOTTOM_LEFT.z);
+            
             if(is_left(BOTTOM_LEFT, TOP_LEFT, xy_position)) // xy_position is on BL_TL left ?
             {
                 if(is_left(BOTTOM_RIGHT, BOTTOM_LEFT, xy_position))
                 {
-                    return _Mountain_Color;
+                    return _BOTTOM_LEFT_COLOR;
                 }
                 else if(is_left(TOP_LEFT, TOP_RIGHT, xy_position))
                 {
-                    return _Swamp_Color;
+                    return _TOP_LEFT_COLOR;
                 }
                 else
                 {
@@ -108,18 +98,18 @@ Shader "Custom/TerrainShader"
                     float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
                     float linear_factor = (xy_position.y - start.y) / (end.y - start.y);
                     linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
-                    return lerp(_Mountain_Color, _Swamp_Color, linear_factor);
+                    return lerp(_BOTTOM_LEFT_COLOR, _TOP_LEFT_COLOR, linear_factor);
                 }
             }
             else if(is_left(TOP_RIGHT, BOTTOM_RIGHT, xy_position))
             {
                 if(is_left(BOTTOM_RIGHT, BOTTOM_LEFT, xy_position))
                 {
-                    return _Plain_Color;
+                    return _BOTTOM_RIGHT_COLOR;
                 }
                 else if(is_left(TOP_LEFT, TOP_RIGHT, xy_position))
                 {
-                    return _Desert_Color;
+                    return _TOP_RIGHT_COLOR;
                 }
                 else
                 {
@@ -127,7 +117,7 @@ Shader "Custom/TerrainShader"
                     float2 end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));
                     float linear_factor = (xy_position.y - start.y) / (end.y - start.y);
                     linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
-                    return lerp(_Plain_Color, _Desert_Color, linear_factor);
+                    return lerp(_BOTTOM_RIGHT_COLOR, _TOP_RIGHT_COLOR, linear_factor);
                 }
             }
             else
@@ -138,7 +128,7 @@ Shader "Custom/TerrainShader"
                     float2 end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
                     float linear_factor = (xy_position.x - start.x) / (end.x - start.x);
                     linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
-                    return lerp(_Mountain_Color, _Plain_Color, linear_factor);
+                    return lerp(_BOTTOM_LEFT_COLOR, _BOTTOM_RIGHT_COLOR, linear_factor);
                 }
                 else if(is_left(TOP_LEFT, TOP_RIGHT, xy_position))
                 {
@@ -146,7 +136,7 @@ Shader "Custom/TerrainShader"
                     float2 end = get_intersection(BOTTOM_RIGHT, TOP_RIGHT, position, position + float2(1,0));
                     float linear_factor = (xy_position.x - start.x) / (end.x - start.x);
                     linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
-                    return lerp(_Swamp_Color, _Desert_Color, linear_factor);
+                    return lerp(_TOP_LEFT_COLOR, _TOP_RIGHT_COLOR, linear_factor);
                 }
                 else
                 {
@@ -155,8 +145,8 @@ Shader "Custom/TerrainShader"
                     float linear_factor = (xy_position.x - start.x) / (end.x - start.x);
                     linear_factor = linear_factor * linear_factor * (3.0F - 2.0F * linear_factor);
                     
-                    fixed4 BOTTOM_COLOR = lerp(_Mountain_Color, _Plain_Color, linear_factor);
-                    fixed4 TOP_COLOR = lerp(_Swamp_Color, _Desert_Color, linear_factor);
+                    fixed4 BOTTOM_COLOR = lerp(_BOTTOM_LEFT_COLOR, _BOTTOM_RIGHT_COLOR, linear_factor);
+                    fixed4 TOP_COLOR = lerp(_TOP_LEFT_COLOR, _TOP_RIGHT_COLOR, linear_factor);
                     
                     start = get_intersection(BOTTOM_LEFT, BOTTOM_RIGHT, position, position + float2(0,-1));
                     end = get_intersection(TOP_LEFT, TOP_RIGHT, position, position + float2(0,1));

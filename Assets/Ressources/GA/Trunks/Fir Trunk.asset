@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402c352001fe3ac428361e44cacb7cf3, type: 3}
   m_Name: Fir Trunk
   m_EditorClassIdentifier: 
-  id: fir
   attribut_type: 0
-  temperature: 0
-  humidity: 0
+  temperature: -30
+  humidity_rate: 10
   lsystem_base: {fileID: 11400000, guid: 287ddd09033eaf74f899b14402839351, type: 2}

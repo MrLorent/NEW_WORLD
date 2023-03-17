@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402c352001fe3ac428361e44cacb7cf3, type: 3}
   m_Name: Oak Trunk
   m_EditorClassIdentifier: 
-  id: oak
   attribut_type: 0
-  temperature: 0
-  humidity: 100
+  temperature: 5
+  humidity_rate: 40
   lsystem_base: {fileID: 11400000, guid: 5dad41d8c6bf94641a0d83de1d2a686b, type: 2}

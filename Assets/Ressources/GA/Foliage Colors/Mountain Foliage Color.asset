@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c278c4f74dee52149bf21beefb90ee60, type: 3}
   m_Name: Mountain Foliage Color
   m_EditorClassIdentifier: 
-  id: mountain_foliage_color
   attribut_type: 3
-  temperature: 0
-  humidity: 0
+  temperature: -30
+  humidity_rate: 10
   material: {fileID: 2100000, guid: 3f7f21911efa6164995a6bce283c4be0, type: 2}
