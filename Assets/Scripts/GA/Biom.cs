@@ -5,10 +5,10 @@ using UnityEngine;
 
 public enum BiomType
 {
-    DESERT,
-    MOUNTAIN,
-    PLAIN,
-    SWAMP
+    DESERT = 0,
+    MOUNTAIN = 1,
+    PLAIN = 2,
+    SWAMP = 3
 };
 
 public struct Environment

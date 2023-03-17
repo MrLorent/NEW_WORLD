@@ -135,7 +135,7 @@ public class GOLManager : Singleton<GOLManager>
                 {
                     for(int flowers_per_cell=0; flowers_per_cell< 3; flowers_per_cell++)
                     {
-                        int random = Random.Range(2*future_cell.biom, 2*future_cell.biom+2);
+                        int random = Random.Range(2 * (int)future_cell.biom, 2 * (int)future_cell.biom + 2);
                         Vector3 random_position = Vector3.zero;
                         random_position.x = Random.Range(future_cell.position.x - Cell.dimensions.x * 0.5F, future_cell.position.x + Cell.dimensions.x * 0.5F);
                         random_position.z = Random.Range(future_cell.position.z - Cell.dimensions.y * 0.5F, future_cell.position.z + Cell.dimensions.y * 0.5F);

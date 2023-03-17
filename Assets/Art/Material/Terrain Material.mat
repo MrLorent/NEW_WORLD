@@ -76,6 +76,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _BOTTOM_LEFT_COLOR: {r: 0.6039216, g: 0.8980392, b: 1, a: 0}
+    - _BOTTOM_RIGHT_COLOR: {r: 0.84705883, g: 0.29411766, b: 0.36862746, a: 0}
     - _Color: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
     - _Default_Color: {r: 0.84705883, g: 0.29411766, b: 0.36862746, a: 1}
     - _Desert_Color: {r: 0.90588236, g: 0.8, b: 0.5529412, a: 0}
@@ -86,8 +88,11 @@ Material:
     - _Plain_Color: {r: 0.84705883, g: 0.29411766, b: 0.36862746, a: 0}
     - _Plain_Position: {r: 750, g: 0, b: 250, a: 1}
     - _Position: {r: 250, g: 0, b: 760, a: 1}
+    - _SNOW_COLOR: {r: 1, g: 1, b: 1, a: 1}
     - _Snow_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Swam_Position: {r: 800, g: 0, b: 790, a: 1}
     - _Swamp_Color: {r: 0.20392157, g: 0.20392157, b: 0.5176471, a: 0}
     - _Swamp_Position: {r: 250, g: 0, b: 750, a: 1}
+    - _TOP_LEFT_COLOR: {r: 0.20392157, g: 0.20392157, b: 0.5176471, a: 0}
+    - _TOP_RIGHT_COLOR: {r: 0.90588236, g: 0.8, b: 0.5529412, a: 0}
   m_BuildTextureStacks: []

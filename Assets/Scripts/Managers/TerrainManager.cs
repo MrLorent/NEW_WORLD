@@ -14,14 +14,19 @@ public struct Cell
     public List<GameObject> primitive;
 
     // Genetic Algoritm parameters
-    public int biom;
+    public BiomType biom;
+    public float temperature;
+    public float humidity_rate;
 
     // CONSTRUCTORS
-    public Cell(Vector3 position, GOLState state, int biom) {
+    public Cell(Vector3 position, GOLState state, BiomType biom, float temperature, float humidity_rate) {
         this.position = position;
         this.GOL_state = state;
         this.primitive = new List<GameObject>();
         this.biom = biom;
+        this.temperature = temperature;
+        this.humidity_rate = humidity_rate;
+
     }
 
     public Cell(Cell cell) {
@@ -29,6 +34,8 @@ public struct Cell
         this.GOL_state = cell.GOL_state;
         this.primitive = cell.primitive;
         this.biom = cell.biom;
+        this.temperature = cell.temperature;
+        this.humidity_rate = cell.humidity_rate;
     }
 };
 
@@ -61,23 +68,41 @@ public class TerrainManager : Singleton<TerrainManager>
 
         for (int x = 0; x < NB_CELL_X; x++)
         {
-            TerrainManager.Instance.grid.Add(new List<Cell>());
+            grid.Add(new List<Cell>());
 
             for (int z = 0; z < NB_CELL_Z; z++)
             {
                 float cell_x = terrain.transform.position.x + x * Cell.dimensions.x + Cell.dimensions.x * 0.5F;
                 float cell_z = terrain.transform.position.z + z * Cell.dimensions.y + Cell.dimensions.y * 0.5F;
                 float cell_y = terrain.transform.position.y + TerrainManager.Instance.terrain.SampleHeight(new Vector3(cell_x, 0, cell_z));
-
+                Vector3 cell_position = new Vector3(cell_x, cell_y, cell_z);
 
                 //HERE CALL THE FUNCTION TO GET THE BIOME
-                TerrainManager.Instance.grid[x].Add(new Cell(
-                    new Vector3(cell_x, cell_y, cell_z),
+                Environment cell_environment = EnvironmentManager.Instance.get_environment(cell_position);
+
+                grid[x].Add(new Cell(
+                    cell_position,
                     GOLManager.Instance.get_random_GOL_state(),
-                    1
+                    cell_environment.biom_type,
+                    cell_environment.temperature,
+                    cell_environment.humidity_rate
                 ));
             }
         }
+
+        for (int z = NB_CELL_Z-1; z >= 0; z--)
+        {
+            string line = "";
+
+            for (int x = 0; x < NB_CELL_Z; x++)
+            {
+                line += (int)grid[z][x].biom + " ";
+            }
+
+            Debug.Log(line);
+        }
+
+        
 
         GOLManager.Instance.init();
     }
