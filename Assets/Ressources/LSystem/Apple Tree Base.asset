@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 493bf437bf8382b468bf2ec96d0d1401, type: 3}
-  m_Name: Tortilis Base
+  m_Script: {fileID: 11500000, guid: b8aa5daa292047648b4716bb7984f6c8, type: 3}
+  m_Name: Apple Tree Base
   m_EditorClassIdentifier: 
-  axiom: '!(0.08)F(0.75)[&(a1)!(wr)"(r1)B]|[&(a2)!(wr)"(r2)B]'
-  start_width: 0.08
-  start_length: 0.75
+  axiom: '!(0.10)F(1.00)[&(a1)+(o1)!(q2)"(r1)A][&(a2)+(o2)!(q2)"(r2)A]'
+  start_width: 0.1
+  start_length: 1
   tropism: 1

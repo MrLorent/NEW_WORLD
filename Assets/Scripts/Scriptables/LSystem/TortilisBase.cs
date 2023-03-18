@@ -8,8 +8,8 @@ public class TortilisBase : LSystemBase
     TortilisBase()
     {
         /*====== AXIOM ======*/
-        start_width = 0.16F;
-        start_length = 1.5F;
+        start_width = 0.08F;
+        start_length = 0.75F;
         axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)!(wr)\"(r1)B]|[&(a2)!(wr)\"(r2)B]";
 
         /*====== RULES ======*/
@@ -30,7 +30,7 @@ public class TortilisBase : LSystemBase
             {"lg",  1.115F  },
             {"wg",  1.109F   },
             {"wr",  0.707F  },
-            {"min_w",  0.02F   },
+            {"min_w",  0.01F   },
             {"Tx",  0.0F    },
             {"Ty",  -1.0F   },
             {"Tz",  0.0F    },
@@ -38,6 +38,11 @@ public class TortilisBase : LSystemBase
         };
 
         /*==== TROPISM ====*/
-        tropism = false;
+        tropism = true;
+    }
+
+    public override float elasticity(float width)
+    {
+        return 5.0F;
     }
 }

@@ -8,8 +8,8 @@ public class WeepingWillowBase : LSystemBase
     WeepingWillowBase()
     {
         /*====== AXIOM ======*/
-        start_width = 0.2F;
-        start_length = 1.5F;
+        start_width = 0.1F;
+        start_length = 1.0F;
         axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")[&(a1)+(d1)!(wr)\"(lr)A][&(a2)+(d2)!(wr)\"(lr)A]";
 
         /*====== RULES ======*/
@@ -31,7 +31,7 @@ public class WeepingWillowBase : LSystemBase
             {"wg",  1.109F  },
             {"wr",   0.707F   },
             {"lr",   0.9F   },
-            {"min_w",  0.02F },
+            {"min_w",  0.01F },
             {"Tx",  -0.02F  },
             {"Ty",  -1.0F   },
             {"Tz",  0.0F    },
