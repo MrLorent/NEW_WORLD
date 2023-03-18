@@ -15,7 +15,7 @@ public class LSystem : MonoBehaviour
     [SerializeField]
     private GameObject branch_mesh;
     [SerializeField]
-    private GameObject foliage_prefab;
+    private FoliageShape foliage_shape;
 
     [Header("CONTAINERS")]
     [SerializeField]
@@ -40,7 +40,7 @@ public class LSystem : MonoBehaviour
 
     private void Start()
     {
-        if (lsystem_base != null && foliage_prefab != null) Init();
+        if (lsystem_base != null && foliage_shape != null) Init();
     }
 
     public void Init()
@@ -49,10 +49,10 @@ public class LSystem : MonoBehaviour
         Draw();
     }
 
-    public void Init(LSystemBase LS_base, GameObject foliage_shape)
+    public void Init(LSystemBase LS_base, FoliageShape fs)
     {
         lsystem_base = LS_base;
-        foliage_prefab = foliage_shape;
+        foliage_shape = fs;
         InititalizeAxiom();
         Draw();
     }
@@ -288,9 +288,9 @@ public class LSystem : MonoBehaviour
 
                 case 'X':
                     GameObject foliage_x = Instantiate(
-                        foliage_prefab,
+                        foliage_shape.foliage_prefab,
                         turtle.transform.position,
-                        Quaternion.identity,
+                        turtle.transform.rotation,
                         foliage_container
                     );
 
@@ -299,9 +299,9 @@ public class LSystem : MonoBehaviour
 
                 case 'Y':
                     GameObject foliage_y = Instantiate(
-                        foliage_prefab,
+                        foliage_shape.foliage_prefab,
                         turtle.transform.position,
-                        Quaternion.identity,
+                        foliage_shape.get_orientation(turtle.transform.rotation),
                         foliage_container
                     );
 
@@ -310,9 +310,9 @@ public class LSystem : MonoBehaviour
 
                 case 'Z':
                     GameObject foliage_z = Instantiate(
-                        foliage_prefab,
+                        foliage_shape.foliage_prefab,
                         turtle.transform.position,
-                        Quaternion.identity,
+                        foliage_shape.get_orientation(turtle.transform.rotation),
                         foliage_container
                     );
                     break;

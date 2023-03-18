@@ -23,10 +23,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9ce44910dba970544a89dd5e0fca516f, type: 2}
   - {fileID: 11400000, guid: 03d35db9920a78b41b5224dd2959238d, type: 2}
   foliage_shapes:
-  - {fileID: 11400000, guid: 426237783b1a996458e8cb455915ee7e, type: 2}
-  - {fileID: 11400000, guid: 66552d7568656d64faf10033137bdc54, type: 2}
-  - {fileID: 11400000, guid: fc91f6dc0c7d398458b4c1415dd08014, type: 2}
-  - {fileID: 11400000, guid: 53542b08f8672fa4bb67afefb1959279, type: 2}
+  - {fileID: 11400000, guid: 48369b3e0d97cf34482418ab06dbd6cd, type: 2}
+  - {fileID: 11400000, guid: cd5b2e9325c911c4483322bdcbd4f0da, type: 2}
+  - {fileID: 11400000, guid: d3e889d13aaefae4f8fd6acac5d5d514, type: 2}
+  - {fileID: 11400000, guid: d35fc7382a89de64587e0b5aac0bf76e, type: 2}
   foliage_colors:
   - {fileID: 11400000, guid: e1d1379ba58b7284e9acb2ee2349865f, type: 2}
   - {fileID: 11400000, guid: d13bd3142b468184dbe981d1059bbf1a, type: 2}

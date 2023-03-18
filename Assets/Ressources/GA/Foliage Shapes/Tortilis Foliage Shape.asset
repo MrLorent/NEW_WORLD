@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6e34839e06a9e46a4a9f4777c74e5f, type: 3}
-  m_Name: Swamp Foliage Shape
+  m_Script: {fileID: 11500000, guid: 9455e72ffc8da8a4f8300cb7f658e169, type: 3}
+  m_Name: Tortilis Foliage Shape
   m_EditorClassIdentifier: 
-  attribut_type: 0
-  temperature: 40
-  humidity_rate: 60
-  foliage_prefab: {fileID: 65605707294998241, guid: 457eba57ec1bcd94da9b951ab488ef65, type: 3}
+  attribut_type: 2
+  temperature: 45
+  humidity_rate: 0
+  foliage_prefab: {fileID: 8268357091503493088, guid: acfa3cbb3953c1d458a40d07d54ce02f, type: 3}

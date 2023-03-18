@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6e34839e06a9e46a4a9f4777c74e5f, type: 3}
-  m_Name: Mountain Foliage Shape
+  m_Script: {fileID: 11500000, guid: d2d377064092df942a4d4abf729de816, type: 3}
+  m_Name: Oak Foliage Shape
   m_EditorClassIdentifier: 
   attribut_type: 2
-  temperature: -30
-  humidity_rate: 10
+  temperature: 5
+  humidity_rate: 40
   foliage_prefab: {fileID: 669752575027983814, guid: 7a694949d831f5d4d9cef053349b8c79, type: 3}
