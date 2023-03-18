@@ -56,11 +56,11 @@ public class GAManager : Singleton<GAManager>
         _trees_population.Sort(
             delegate (Tree a, Tree b)
             {
-                if (a.fitness > b.fitness)
+                if (a.fitness_score > b.fitness_score)
                 {
                     return 1;
                 }
-                else if (a.fitness < b.fitness)
+                else if (a.fitness_score < b.fitness_score)
                 {
                     return -1;
                 }

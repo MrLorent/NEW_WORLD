@@ -10,10 +10,7 @@ public class Tree : MonoBehaviour
     [SerializeField] private Transform _trunk_container;
     [SerializeField] private Transform _foliage_container;
 
-    public Material material;
-    public float fitnessScore = 1.0f;
-    public float fitness { get; private set; }
-    public Color color = new Color(1.0f, 1.0f, 1.0f);
+    public float fitness_score { get; private set; }
 
     /*======== PRIVATE ========*/
     [Header("LSYSTEM")]
@@ -39,7 +36,7 @@ public class Tree : MonoBehaviour
         _trunk_container.GetComponent<MeshRenderer>().material = bark.material;
         _foliage_container.GetComponent<MeshRenderer>().material = foliage_color.material;
 
-        compute_fitness();
+        compute_fitness_score();
 
         _lsystem.Init(trunk.lsystem_base, foliage_shape.foliage_prefab);
     }
@@ -54,7 +51,7 @@ public class Tree : MonoBehaviour
         _trunk_container.GetComponent<MeshRenderer>().material = bark.material;
         _foliage_container.GetComponent<MeshRenderer>().material = foliage_color.material;
 
-        compute_fitness();
+        compute_fitness_score();
 
         _lsystem.Init(trunk.lsystem_base, foliage_shape.foliage_prefab);
     }
@@ -65,7 +62,7 @@ public class Tree : MonoBehaviour
         _lsystem.Draw();
     }
 
-    private void compute_fitness()
+    private void compute_fitness_score()
     {
         int x = (int) (transform.position.x / Cell.dimensions.x);
         int z = (int) (transform.position.z / Cell.dimensions.y);
@@ -76,13 +73,6 @@ public class Tree : MonoBehaviour
         float tree_temperature = (trunk.temperature + bark.temperature + foliage_shape.temperature + foliage_color.temperature) / 4.0F;
         float tree_humidity_rate = (trunk.humidity_rate + bark.humidity_rate + foliage_shape.humidity_rate + foliage_color.humidity_rate) / 4.0F;
 
-        fitness = (environment_temperature - tree_temperature) + (environment_humidity_rate - tree_humidity_rate);
-    }
-
-
-
-    public void SetColor(Color color)
-    {
-        this.color = color;
+        fitness_score = (environment_temperature - tree_temperature) + (environment_humidity_rate - tree_humidity_rate);
     }
 }
