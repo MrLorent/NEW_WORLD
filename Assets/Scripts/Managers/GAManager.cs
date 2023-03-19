@@ -58,11 +58,11 @@ public class GAManager : Singleton<GAManager>
         _trees_population.Sort(
             delegate (Tree a, Tree b)
             {
-                if (a.fitness_score > b.fitness_score)
+                if (a.fitness_score < b.fitness_score)
                 {
                     return 1;
                 }
-                else if (a.fitness_score < b.fitness_score)
+                else if (a.fitness_score > b.fitness_score)
                 {
                     return -1;
                 }
@@ -100,22 +100,22 @@ public class GAManager : Singleton<GAManager>
             FoliageShape child_foliage_shape = Random.Range(0, 100) > 50 ? mother.foliage_shape : father.foliage_shape;
             FoliageColor child_foliage_color = Random.Range(0, 100) > 50 ? mother.foliage_color : father.foliage_color;
 
-            if (Random.Range(0,1) < mutation_rate)
+            if (Random.Range(0f,1f) < mutation_rate)
             {
                 child_trunk = get_random_trunk();
             }
 
-            if (Random.Range(0, 1) < mutation_rate)
+            if (Random.Range(0f, 1f) < mutation_rate)
             {
                 child_bark = get_random_bark();
             }
 
-            if (Random.Range(0, 1) < mutation_rate)
+            if (Random.Range(0f, 1f) < mutation_rate)
             {
                 child_foliage_shape = get_random_foliage_shape();
             }
 
-            if (Random.Range(0, 1) < mutation_rate)
+            if (Random.Range(0f, 1f) < mutation_rate)
             {
                 child_foliage_color = get_random_foliage_color();
             }

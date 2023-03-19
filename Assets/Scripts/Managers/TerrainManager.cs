@@ -97,8 +97,8 @@ public class TerrainManager : Singleton<TerrainManager>
     {
         Vector3 random_position = Vector3.zero;
 
-        random_position.x = terrain.transform.position.x + UnityEngine.Random.Range(0, terrain.terrainData.size.x);
-        random_position.z = terrain.transform.position.z + UnityEngine.Random.Range(0, terrain.terrainData.size.z);
+        random_position.x = terrain.transform.position.x + UnityEngine.Random.Range(0f, terrain.terrainData.size.x);
+        random_position.z = terrain.transform.position.z + UnityEngine.Random.Range(0f, terrain.terrainData.size.z);
         random_position.y = terrain.transform.position.y + terrain.SampleHeight(random_position);
 
         return random_position;

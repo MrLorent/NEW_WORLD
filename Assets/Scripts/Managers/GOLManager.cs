@@ -13,6 +13,9 @@ public enum GOLState
 public class GOLManager : Singleton<GOLManager>
 {
     [SerializeField]
+    private float _spawn_rate;
+
+    [SerializeField]
     private Transform _flower_container;
 
     [SerializeField]
@@ -22,7 +25,7 @@ public class GOLManager : Singleton<GOLManager>
 
     public void init()
     {
-        InvokeRepeating("run", 0f, 0.5f);
+        InvokeRepeating("run", 0F, 10F);
     }
 
     public GOLState get_random_GOL_state()
@@ -30,7 +33,7 @@ public class GOLManager : Singleton<GOLManager>
         //Using Random.range with int is exclusive
         int random = UnityEngine.Random.Range(0, 100);
 
-        if (random < 20)
+        if (random < _spawn_rate)
         {
             return GOLState.ALIVE;
         }
