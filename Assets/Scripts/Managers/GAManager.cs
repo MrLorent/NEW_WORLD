@@ -48,8 +48,8 @@ public class GAManager : Singleton<GAManager>
     private void next_generation()
     {
         Debug.Log("Nb trees in list : " + _trees_population.Count);
-        selection();
-        reproduction();
+        selection(ref _trees_population);
+        reproduction(ref _trees_population);
         StartCoroutine(grow_trees());
     }
 
@@ -64,9 +64,9 @@ public class GAManager : Singleton<GAManager>
         Invoke("next_generation", 0.5F);
     }
 
-    private void selection()
+    private void selection(ref List<Tree> _biom_population)
     {
-        _trees_population.Sort(
+        _biom_population.Sort(
             delegate (Tree a, Tree b)
             {
                 if (a.fitness_score < b.fitness_score)
@@ -88,22 +88,22 @@ public class GAManager : Singleton<GAManager>
 
         if ((_trees_population.Count - amonth_to_kill) % 2 != 0) amonth_to_kill--;
         
-        for(int i = _trees_population.Count - amonth_to_kill; i < _trees_population.Count; i++)
+        for(int i = _biom_population.Count - amonth_to_kill; i < _biom_population.Count; i++)
         {
             _trees_population[i].transform.Destroy();
         }
 
-        _trees_population.RemoveRange(_trees_population.Count - amonth_to_kill, amonth_to_kill);
+        _biom_population.RemoveRange(_biom_population.Count - amonth_to_kill, amonth_to_kill);
     }
 
-    private void reproduction()
+    private void reproduction(ref List<Tree> _biom_population)
     {
         List<Tree> childs = new List<Tree>();
 
-        for(int i = 1;  i < _trees_population.Count; i += 2)
+        for(int i = 1;  i < _biom_population.Count; i += 2)
         {
-            Tree mother = _trees_population[i - 1];
-            Tree father = _trees_population[i];
+            Tree mother = _biom_population[i - 1];
+            Tree father = _biom_population[i];
 
             Tree first_child_genotype = new Tree();
             Tree second_child_genotype = new Tree();
@@ -180,7 +180,7 @@ public class GAManager : Singleton<GAManager>
             childs.Add(child_2);
         }
 
-        _trees_population.AddRange(childs);
+        _biom_population.AddRange(childs);
     }
 
     private void mutation(ref Tree tree)
