@@ -27,8 +27,6 @@ public class Tree : MonoBehaviour
     [SerializeField]
     private int _iteration_max = 6;
 
-    private Tree best_tree_around = null;
-
     private void Awake()
     {
         _lsystem = GetComponent<LSystem>();
@@ -98,17 +96,5 @@ public class Tree : MonoBehaviour
         float humidity_fitness = Mathf.Clamp(1.0F / humidity_difference, 0.0F, 1.0F) * 100;
 
         fitness_score = (temperature_fitness + humidity_fitness) / 2.0F;
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Tree other))
-        {
-            Debug.Log(other.fitness_score);
-            if (best_tree_around == null || other.fitness_score > best_tree_around.fitness_score)
-            {
-                best_tree_around = other;
-            }
-        }
     }
 }
