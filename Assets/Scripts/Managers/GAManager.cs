@@ -11,7 +11,7 @@ public class GAManager : Singleton<GAManager>
     private GameObject _tree_prefab;
 
     [SerializeField]
-    private uint _start_population_size = 50;
+    private uint _start_population_size = 10;
 
     [SerializeField]
     private Transform _trees_container;
@@ -28,6 +28,8 @@ public class GAManager : Singleton<GAManager>
 
     private void Start()
     {
+        EnvironmentManager.Instance.compute_extremums();
+
         for(uint i = 0; i < _start_population_size; i++)
         {
             Tree new_tree = Instantiate(

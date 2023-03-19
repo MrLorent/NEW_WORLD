@@ -21,6 +21,8 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [SerializeField]
     private Biom _TOP_LEFT;
 
+    private List<Biom> _bioms;
+
     [Header("GENERAL COLORS")]
     [SerializeField]
     private Color _snow_color = new Color(1.0F, 1.0F, 1.0F, 1F);
@@ -28,6 +30,29 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [Header("TERRAIN SHADER")]
     [SerializeField]
     private Material _terrain_material;
+
+    private void Start()
+    {
+        _bioms = new List<Biom>()
+        { 
+            _TOP_LEFT,
+            _TOP_RIGHT,
+            _BOTTOM_RIGHT,
+            _BOTTOM_LEFT
+        };
+    }
+
+    public void compute_extremums()
+    {
+        foreach(Biom biom in _bioms)
+        {
+            if (biom.temperature < Attribut.TEMP_MIN) Attribut.TEMP_MIN = biom.temperature;
+            else if (biom.temperature > Attribut.TEMP_MAX) Attribut.TEMP_MAX = biom.temperature;
+
+            if (biom.humidity_rate < Attribut.HUM_MIN) Attribut.HUM_MIN = biom.humidity_rate;
+            else if (biom.humidity_rate > Attribut.HUM_MAX) Attribut.HUM_MAX = biom.humidity_rate;
+        }
+    }
 
     public Environment get_environment(Vector3 position)
     {
