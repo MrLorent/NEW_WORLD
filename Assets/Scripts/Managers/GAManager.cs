@@ -73,7 +73,9 @@ public class GAManager : Singleton<GAManager>
             }
         );
 
-        int amonth_to_kill = (_trees_population.Count / 3) % 2 != 0 ? (_trees_population.Count / 3) + 1 : (_trees_population.Count / 3); ;
+        int amonth_to_kill = _trees_population.Count / 2;
+
+        if ((_trees_population.Count - amonth_to_kill) % 2 != 0) amonth_to_kill--;
         
         for(int i = _trees_population.Count - amonth_to_kill; i < _trees_population.Count; i++)
         {

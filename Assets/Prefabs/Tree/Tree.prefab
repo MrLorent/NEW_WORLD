@@ -41,8 +41,8 @@ NavMeshObstacle:
   m_GameObject: {fileID: 4932153740331618756}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trunk_container: {fileID: 6478666098354735777}
   _foliage_container: {fileID: 7014407828845840553}
+  fitness_score: 0
 --- !u!114 &7128397108312836060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turtle_mesh: {fileID: 8246579523791496141, guid: 35c829f36c3b88b45b2fd93fd6cb26a3, type: 3}
   branch_mesh: {fileID: 7588318906811468712, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
-  foliage_prefab: {fileID: 0}
+  foliage_shape: {fileID: 0}
   trunk_container: {fileID: 6478666098354735777}
   foliage_container: {fileID: 7014407828845840553}
   iterations: 1

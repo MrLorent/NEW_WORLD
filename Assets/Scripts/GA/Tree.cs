@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -8,14 +9,20 @@ public class Tree : MonoBehaviour
 
     /*======== PUBLIC ========*/
     [Header("3D MODEL")]
-    [SerializeField] private Transform _trunk_container;
-    [SerializeField] private Transform _foliage_container;
+    [SerializeField]
+    private Transform _trunk_container;
+    
+    [SerializeField]
+    private Transform _foliage_container;
 
-    public float fitness_score;// { get; private set; }
+    public float fitness_score { get; private set; }
 
     /*======== PRIVATE ========*/
     [Header("LSYSTEM")]
+    [SerializeField]
     private LSystem _lsystem;
+    [SerializeField]
+    private int _iteration_max = 6;
 
     public Trunk trunk { get; private set; }
     public Bark bark { get; private set; }
@@ -40,6 +47,7 @@ public class Tree : MonoBehaviour
         compute_fitness_score();
 
         _lsystem.Init(trunk.lsystem_base, foliage_shape);
+        _lsystem.iterations = Random.Range(1, _iteration_max);
     }
 
     public void init(Trunk t, Bark b, FoliageShape fs, FoliageColor fc)
@@ -55,15 +63,20 @@ public class Tree : MonoBehaviour
         compute_fitness_score();
 
         _lsystem.Init(trunk.lsystem_base, foliage_shape);
+        _lsystem.iterations = 1;
     }
 
     public void grow()
     {
-        if(_lsystem.iterations <6)
+        if(_lsystem.iterations < _iteration_max)
         {
-        _lsystem.iterations++;
+            _lsystem.iterations++;
+            _lsystem.Draw();
         }
-        _lsystem.Draw();
+        else
+        {
+            transform.localScale *= 1.1F;
+        }
     }
 
     private void compute_fitness_score()
