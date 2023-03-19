@@ -44,16 +44,29 @@ public class GAManager : Singleton<GAManager>
             _trees_population.Add(new_tree);
         }
 
-        InvokeRepeating("next_generation", 0.0F, 10.0F);
+        next_generation();
     }
 
     private void next_generation()
     {
-        Selection();
-        Reproduction();
+        Debug.Log("Nb trees in list : " + _trees_population.Count);
+        selection();
+        reproduction();
+        StartCoroutine(grow_trees());
     }
 
-    private void Selection()
+    IEnumerator grow_trees()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.05F);
+        foreach (Tree tree in _trees_population)
+        {
+            tree.grow();
+            yield return wait;
+        }
+        Invoke("next_generation", 0.5F);
+    }
+
+    private void selection()
     {
         _trees_population.Sort(
             delegate (Tree a, Tree b)
@@ -85,7 +98,7 @@ public class GAManager : Singleton<GAManager>
         _trees_population.RemoveRange(_trees_population.Count - amonth_to_kill, amonth_to_kill);
     }
 
-    private void Reproduction()
+    private void reproduction()
     {
         List<Tree> childs = new List<Tree>();
 
@@ -94,52 +107,105 @@ public class GAManager : Singleton<GAManager>
             Tree mother = _trees_population[i - 1];
             Tree father = _trees_population[i];
 
-            mother.grow();
-            father.grow();
+            Tree first_child_genotype = new Tree();
+            Tree second_child_genotype = new Tree();
 
-            Trunk child_trunk = Random.Range(0, 100) > 50 ? mother.trunk : father.trunk;
-            Bark child_bark = Random.Range(0, 100) > 50 ? mother.bark : father.bark;
-            FoliageShape child_foliage_shape = Random.Range(0, 100) > 50 ? mother.foliage_shape : father.foliage_shape;
-            FoliageColor child_foliage_color = Random.Range(0, 100) > 50 ? mother.foliage_color : father.foliage_color;
-
-            if (Random.Range(0f,1f) < mutation_rate)
+            // TRUNK CROSSOVER
+            if(Random.Range(0, 100) > 50)
             {
-                child_trunk = get_random_trunk();
+                first_child_genotype.trunk = mother.trunk;
+                second_child_genotype.trunk = father.trunk;
+            }
+            else
+            {
+                first_child_genotype.trunk = father.trunk;
+                second_child_genotype.trunk = mother.trunk;
             }
 
-            if (Random.Range(0f, 1f) < mutation_rate)
+            // BARK CROSSOVER
+            if (Random.Range(0, 100) > 50)
             {
-                child_bark = get_random_bark();
+                first_child_genotype.bark = mother.bark;
+                second_child_genotype.bark = father.bark;
+            }
+            else
+            {
+                first_child_genotype.bark = father.bark;
+                second_child_genotype.bark = mother.bark;
             }
 
-            if (Random.Range(0f, 1f) < mutation_rate)
+            // FOLIAGE SHAPE CROSSOVER
+            if (Random.Range(0, 100) > 50)
             {
-                child_foliage_shape = get_random_foliage_shape();
+                first_child_genotype.foliage_shape = mother.foliage_shape;
+                second_child_genotype.foliage_shape = father.foliage_shape;
+            }
+            else
+            {
+                first_child_genotype.foliage_shape = father.foliage_shape;
+                second_child_genotype.foliage_shape = mother.foliage_shape;
             }
 
-            if (Random.Range(0f, 1f) < mutation_rate)
+            // FOLIAGE COLOR CROSSOVER
+            if (Random.Range(0, 100) > 50)
             {
-                child_foliage_color = get_random_foliage_color();
+                first_child_genotype.foliage_color = mother.foliage_color;
+                second_child_genotype.foliage_color = father.foliage_color;
+            }
+            else
+            {
+                first_child_genotype.foliage_color = father.foliage_color;
+                second_child_genotype.foliage_color = mother.foliage_color;
             }
 
-            Tree child = Instantiate(
+            mutation(ref first_child_genotype);
+            mutation(ref second_child_genotype);
+
+            Tree child_1 = Instantiate(
                 _tree_prefab,
                 TerrainManager.Instance.get_random_position(),
                 Quaternion.identity,
                 _trees_container
             ).GetComponent<Tree>();
 
-            child.init(
-                child_trunk,
-                child_bark,
-                child_foliage_shape,
-                child_foliage_color
-            );
+            Tree child_2 = Instantiate(
+                _tree_prefab,
+                TerrainManager.Instance.get_random_position(),
+                Quaternion.identity,
+                _trees_container
+            ).GetComponent<Tree>();
 
-            childs.Add(child);
+            child_1.init(first_child_genotype);
+            child_2.init(second_child_genotype);
+
+            childs.Add(child_1);
+            childs.Add(child_2);
         }
 
         _trees_population.AddRange(childs);
+    }
+
+    private void mutation(ref Tree tree)
+    {
+        if (Random.Range(0f, 1f) < mutation_rate)
+        {
+            tree.trunk = get_random_trunk();
+        }
+
+        if (Random.Range(0f, 1f) < mutation_rate)
+        {
+            tree.bark = get_random_bark();
+        }
+
+        if (Random.Range(0f, 1f) < mutation_rate)
+        {
+            tree.foliage_shape = get_random_foliage_shape();
+        }
+
+        if (Random.Range(0f, 1f) < mutation_rate)
+        {
+            tree.foliage_color = get_random_foliage_color();
+        }
     }
 
     public Trunk get_random_trunk()

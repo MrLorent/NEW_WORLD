@@ -22,10 +22,10 @@ public class Tree : MonoBehaviour
     [SerializeField]
     private int _iteration_max = 6;
 
-    public Trunk trunk { get; private set; }
-    public Bark bark { get; private set; }
-    public FoliageShape foliage_shape { get; private set; }
-    public FoliageColor foliage_color { get; private set; }
+    public Trunk trunk;
+    public Bark bark;
+    public FoliageShape foliage_shape;
+    public FoliageColor foliage_color;
 
     private void Awake()
     {
@@ -48,12 +48,12 @@ public class Tree : MonoBehaviour
         _lsystem.iterations = Random.Range(1, _iteration_max);
     }
 
-    public void init(Trunk t, Bark b, FoliageShape fs, FoliageColor fc)
+    public void init(Tree t)
     {
-        trunk = t;
-        bark = b;
-        foliage_shape = fs;
-        foliage_color = fc;
+        trunk = t.trunk;
+        bark = t.bark;
+        foliage_shape = t.foliage_shape;
+        foliage_color = t.foliage_color;
 
         _trunk_container.GetComponent<MeshRenderer>().material = bark.material;
         _foliage_container.GetComponent<MeshRenderer>().material = foliage_color.material;
@@ -92,8 +92,8 @@ public class Tree : MonoBehaviour
         float temperature_difference = Mathf.Abs(environment_temperature - tree_temperature);
         float humidity_difference = Mathf.Abs(environment_humidity_rate - tree_humidity_rate);
 
-        float temperature_fitness = Mathf.Clamp(1.0F / temperature_difference, 0.0F, 1.0F) * 100;
-        float humidity_fitness = Mathf.Clamp(1.0F / humidity_difference, 0.0F, 1.0F) * 100;
+        float temperature_fitness = 1.0F / temperature_difference * 100;
+        float humidity_fitness = 1.0F / humidity_difference * 100;
 
         fitness_score = (temperature_fitness + humidity_fitness) / 2.0F;
     }
