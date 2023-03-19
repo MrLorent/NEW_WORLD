@@ -39,7 +39,7 @@ public class Tree : MonoBehaviour
 
         compute_fitness_score();
 
-        _lsystem.Init(trunk.lsystem_base, foliage_shape.foliage_prefab);
+        _lsystem.Init(trunk.lsystem_base, foliage_shape);
     }
 
     public void init(Trunk t, Bark b, FoliageShape fs, FoliageColor fc)
@@ -54,7 +54,7 @@ public class Tree : MonoBehaviour
 
         compute_fitness_score();
 
-        _lsystem.Init(trunk.lsystem_base, foliage_shape.foliage_prefab);
+        _lsystem.Init(trunk.lsystem_base, foliage_shape);
     }
 
     public void grow()
