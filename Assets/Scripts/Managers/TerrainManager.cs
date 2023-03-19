@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public struct Cell
 {
@@ -97,10 +97,33 @@ public class TerrainManager : Singleton<TerrainManager>
     {
         Vector3 random_position = Vector3.zero;
 
-        random_position.x = terrain.transform.position.x + UnityEngine.Random.Range(0f, terrain.terrainData.size.x);
-        random_position.z = terrain.transform.position.z + UnityEngine.Random.Range(0f, terrain.terrainData.size.z);
-        random_position.y = terrain.transform.position.y + terrain.SampleHeight(random_position);
+        random_position.x = terrain.transform.position.x + Random.Range(0f, terrain.terrainData.size.x);
+        random_position.z = terrain.transform.position.z + Random.Range(0f, terrain.terrainData.size.z);
+
+        random_position = get_position_on_nav_mesh(random_position);
 
         return random_position;
+    }
+
+    public Vector3 get_random_position_around(Vector3 base_position, float radius)
+    {
+        Vector3 random_position = Vector3.zero;
+        float angle = Random.Range(0f, 2 * Mathf.PI);
+
+        random_position.x = base_position.x + radius * Mathf.Cos(angle);
+        random_position.z = base_position.z + radius * Mathf.Sin(angle);
+
+        random_position = get_position_on_nav_mesh(random_position);
+
+        return random_position;
+    }
+
+    public Vector3 get_position_on_nav_mesh(Vector3 world_position)
+    {
+        NavMeshHit hit;
+
+        while (!NavMesh.SamplePosition(new Vector3(world_position.x, 0, world_position.z), out hit, 100.0F, NavMesh.AllAreas));
+        
+        return hit.position;
     }
 }

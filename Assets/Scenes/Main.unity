@@ -998,7 +998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attributs_index: {fileID: 11400000, guid: 26d8dc16c2901184baeb52b6a370bfbc, type: 2}
   _tree_prefab: {fileID: 7128397108312836057, guid: 6b539f274fe7140d0b6b1d5f342ce79d, type: 3}
-  _start_population_size: 100
+  _start_population_size: 250
   _trees_container: {fileID: 1799149670}
   mutation_rate: 0.2
 --- !u!1 &1510818871

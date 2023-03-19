@@ -41,10 +41,10 @@ NavMeshObstacle:
   m_GameObject: {fileID: 4932153740331618756}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_Shape: 0
+  m_Extents: {x: 1, y: 1, z: 1}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
@@ -98,7 +98,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trunk_container: {fileID: 6478666098354735777}
   _foliage_container: {fileID: 7014407828845840553}
-  fitness_score: 0
+  trunk: {fileID: 0}
+  bark: {fileID: 0}
+  foliage_shape: {fileID: 0}
+  foliage_color: {fileID: 0}
+  _lsystem: {fileID: 0}
+  _iteration_max: 6
 --- !u!114 &7128397108312836060
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour
 {
-
     /*======== PUBLIC ========*/
     [Header("3D MODEL")]
     [SerializeField]
@@ -12,6 +11,11 @@ public class Tree : MonoBehaviour
     
     [SerializeField]
     private Transform _foliage_container;
+
+    public Trunk trunk;
+    public Bark bark;
+    public FoliageShape foliage_shape;
+    public FoliageColor foliage_color;
 
     public float fitness_score { get; private set; }
 
@@ -21,11 +25,6 @@ public class Tree : MonoBehaviour
     private LSystem _lsystem;
     [SerializeField]
     private int _iteration_max = 6;
-
-    public Trunk trunk { get; private set; }
-    public Bark bark { get; private set; }
-    public FoliageShape foliage_shape { get; private set; }
-    public FoliageColor foliage_color { get; private set; }
 
     private void Awake()
     {
@@ -48,12 +47,12 @@ public class Tree : MonoBehaviour
         _lsystem.iterations = Random.Range(1, _iteration_max);
     }
 
-    public void init(Trunk t, Bark b, FoliageShape fs, FoliageColor fc)
+    public void init(Tree t)
     {
-        trunk = t;
-        bark = b;
-        foliage_shape = fs;
-        foliage_color = fc;
+        trunk = t.trunk;
+        bark = t.bark;
+        foliage_shape = t.foliage_shape;
+        foliage_color = t.foliage_color;
 
         _trunk_container.GetComponent<MeshRenderer>().material = bark.material;
         _foliage_container.GetComponent<MeshRenderer>().material = foliage_color.material;
