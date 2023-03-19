@@ -28,8 +28,6 @@ public class GAManager : Singleton<GAManager>
 
     private void Start()
     {
-        EnvironmentManager.Instance.compute_extremums();
-
         for(uint i = 0; i < _start_population_size; i++)
         {
             Tree new_tree = Instantiate(
