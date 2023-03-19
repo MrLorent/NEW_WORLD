@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 1b32978382d410044b3ee0cc220c2fc1, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &57113701
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286405799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 193, y: 0, z: 150}
+  m_LocalPosition: {x: 150, y: 0, z: 150}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -382,10 +382,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c89e47825519142be8cdef5b1f5190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _BOTTOM_RIGHT: {fileID: 1022774165}
+  _BOTTOM_RIGHT: {fileID: 963725058}
   _TOP_RIGHT: {fileID: 1975275990}
   _BOTTOM_LEFT: {fileID: 286405801}
-  _TOP_LEFT: {fileID: 963725058}
+  _TOP_LEFT: {fileID: 1022774165}
   _snow_color: {r: 1, g: 1, b: 1, a: 1}
   _terrain_material: {fileID: 2100000, guid: 23ad38f24373c5342886055f59dbe2c6, type: 2}
 --- !u!1 &342955577
@@ -695,7 +695,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963725056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 191, y: 0, z: 387}
+  m_LocalPosition: {x: 450, y: 0, z: 150}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -774,7 +774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022774163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 450, y: 0, z: 150}
+  m_LocalPosition: {x: 150, y: 0, z: 450}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1126,7 +1126,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2387857945924035183}
+  - {fileID: 4641155815412149380}
   - {fileID: 963725057}
   - {fileID: 1975275989}
   - {fileID: 1022774164}
@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94bd766c0c26d47b1a62742218efefd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smooth: 0.005
+  smooth: 0.004
   add_random: 0.02
 --- !u!154 &1853455084
 TerrainCollider:
@@ -1248,7 +1248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975275988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 450, y: 0, z: 323}
+  m_LocalPosition: {x: 450, y: 0, z: 450}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1508,21 +1508,31 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!33 &717285629750631205
-MeshFilter:
+--- !u!1 &4530231867713994687
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6887498448354636116}
-  m_Mesh: {fileID: -2432090755550338912, guid: 58d4da01dfa8001499c63a22d2e7de15, type: 3}
---- !u!4 &2387857945924035183
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4641155815412149380}
+  - component: {fileID: 7547924963886568910}
+  - component: {fileID: 6456516869575684442}
+  m_Layer: 0
+  m_Name: Terrain Mesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4641155815412149380
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6887498448354636116}
+  m_GameObject: {fileID: 4530231867713994687}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1531,13 +1541,13 @@ Transform:
   m_Father: {fileID: 1853455082}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &4094323310893236145
+--- !u!23 &6456516869575684442
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6887498448354636116}
+  m_GameObject: {fileID: 4530231867713994687}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1573,21 +1583,11 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6887498448354636116
-GameObject:
+--- !u!33 &7547924963886568910
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2387857945924035183}
-  - component: {fileID: 717285629750631205}
-  - component: {fileID: 4094323310893236145}
-  m_Layer: 0
-  m_Name: Terrain Mesh
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_GameObject: {fileID: 4530231867713994687}
+  m_Mesh: {fileID: -2432090755550338912, guid: 5a250fe63750c3e4188f5a1d34be4a61, type: 3}
