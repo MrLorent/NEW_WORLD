@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class Tree : MonoBehaviour
@@ -10,16 +9,16 @@ public class Tree : MonoBehaviour
     [SerializeField] private Transform _trunk_container;
     [SerializeField] private Transform _foliage_container;
 
-    public float fitness_score { get; private set; }
+    public float fitness_score; //{ get; private set; }
 
     /*======== PRIVATE ========*/
     [Header("LSYSTEM")]
     private LSystem _lsystem;
 
-    public Trunk trunk { get; private set; }
-    public Bark bark { get; private set; }
-    public FoliageShape foliage_shape { get; private set; }
-    public FoliageColor foliage_color { get; private set; }
+    public Trunk trunk; //{ get; private set; }
+    public Bark bark; // { get; private set; }
+    public FoliageShape foliage_shape; // { get; private set; }
+    public FoliageColor foliage_color; // { get; private set; }
 
     private void Awake()
     {
@@ -58,8 +57,15 @@ public class Tree : MonoBehaviour
 
     public void grow()
     {
-        _lsystem.iterations++;
-        _lsystem.Draw();
+        if(_lsystem.iterations < 7)
+        {
+            _lsystem.iterations++;
+            _lsystem.Draw();
+        }
+        else
+        {
+            transform.localScale *= 1.1F;
+        }
     }
 
     public Quaternion get_foliage_orientation(Quaternion turtle)
@@ -75,9 +81,17 @@ public class Tree : MonoBehaviour
         float environment_temperature = TerrainManager.Instance.grid[x][z].temperature;
         float environment_humidity_rate = TerrainManager.Instance.grid[x][z].humidity_rate;
 
-        float tree_temperature = (trunk.temperature + bark.temperature + foliage_shape.temperature + foliage_color.temperature) / 4.0F;
-        float tree_humidity_rate = (trunk.humidity_rate + bark.humidity_rate + foliage_shape.humidity_rate + foliage_color.humidity_rate) / 4.0F;
+        float trunk_coef = 0.4F;
+        float bark_coef = 0.1F;
+        float foliage_shape_coef = 0.3F;
+        float foliage_color_coef = 0.2F;
 
-        fitness_score = (environment_temperature - tree_temperature) + (environment_humidity_rate - tree_humidity_rate);
+        float tree_temperature = (trunk.temperature * trunk_coef + bark.temperature * bark_coef + foliage_shape.temperature * foliage_shape_coef + foliage_color.temperature * foliage_color_coef) / 4.0F;
+        float temperature_fit_rate = 1 - Mathf.Abs(environment_temperature - tree_temperature) / (Attribut.TEMP_MAX - Attribut.TEMP_MIN);
+
+        float tree_humidity_rate = (trunk.humidity_rate * trunk_coef + bark.humidity_rate * bark_coef + foliage_shape.humidity_rate * foliage_shape_coef + foliage_color.humidity_rate * foliage_color_coef) / 4.0F;
+        float humidity_fit_rate = 1 - Mathf.Abs(environment_humidity_rate - tree_humidity_rate) / (Attribut.HUM_MAX - Attribut.HUM_MIN);
+
+        fitness_score = (temperature_fit_rate + humidity_fit_rate) / 2.0F;
     }
 }
