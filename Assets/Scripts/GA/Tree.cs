@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour
 {
-
     /*======== PUBLIC ========*/
     [Header("3D MODEL")]
     [SerializeField]

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public struct Cell
 {
@@ -99,7 +100,10 @@ public class TerrainManager : Singleton<TerrainManager>
 
         random_position.x = terrain.transform.position.x + UnityEngine.Random.Range(0f, terrain.terrainData.size.x);
         random_position.z = terrain.transform.position.z + UnityEngine.Random.Range(0f, terrain.terrainData.size.z);
-        random_position.y = terrain.transform.position.y + terrain.SampleHeight(random_position);
+
+        NavMeshHit hit;
+        while(!NavMesh.SamplePosition(new Vector3(random_position.x, -10.0F, random_position.z), out hit, 100.0f, NavMesh.AllAreas));
+        random_position = hit.position;
 
         return random_position;
     }
