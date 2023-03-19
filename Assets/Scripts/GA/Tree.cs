@@ -13,6 +13,11 @@ public class Tree : MonoBehaviour
     [SerializeField]
     private Transform _foliage_container;
 
+    public Trunk trunk;
+    public Bark bark;
+    public FoliageShape foliage_shape;
+    public FoliageColor foliage_color;
+
     public float fitness_score { get; private set; }
 
     /*======== PRIVATE ========*/
@@ -22,10 +27,7 @@ public class Tree : MonoBehaviour
     [SerializeField]
     private int _iteration_max = 6;
 
-    public Trunk trunk;
-    public Bark bark;
-    public FoliageShape foliage_shape;
-    public FoliageColor foliage_color;
+    private Tree best_tree_around = null;
 
     private void Awake()
     {
@@ -92,9 +94,21 @@ public class Tree : MonoBehaviour
         float temperature_difference = Mathf.Abs(environment_temperature - tree_temperature);
         float humidity_difference = Mathf.Abs(environment_humidity_rate - tree_humidity_rate);
 
-        float temperature_fitness = 1.0F / temperature_difference * 100;
-        float humidity_fitness = 1.0F / humidity_difference * 100;
+        float temperature_fitness = Mathf.Clamp(1.0F / temperature_difference, 0.0F, 1.0F) * 100;
+        float humidity_fitness = Mathf.Clamp(1.0F / humidity_difference, 0.0F, 1.0F) * 100;
 
         fitness_score = (temperature_fitness + humidity_fitness) / 2.0F;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Tree other))
+        {
+            Debug.Log(other.fitness_score);
+            if (best_tree_around == null || other.fitness_score > best_tree_around.fitness_score)
+            {
+                best_tree_around = other;
+            }
+        }
     }
 }
