@@ -81,10 +81,9 @@ public class Tree : MonoBehaviour
         float temperature_difference = Mathf.Abs(environment_temperature - tree_temperature);
         float humidity_difference = Mathf.Abs(environment_humidity_rate - tree_humidity_rate);
 
-        float temperature_fitness = 1.0F / temperature_difference * 100;
-        float humidity_fitness = 1.0F / humidity_difference * 100;
+        float temperature_fitness = Mathf.Clamp(1.0F / temperature_difference, 0.0F, 1.0F) * 100;
+        float humidity_fitness = Mathf.Clamp(1.0F / humidity_difference, 0.0F, 1.0F) * 100;
 
         fitness_score = (temperature_fitness + humidity_fitness) / 2.0F;
-
     }
 }

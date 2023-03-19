@@ -10,7 +10,7 @@ public class DiamondSquareGenerator : MonoBehaviour
     public void generate_map()
     {
         Terrain terrain = GetComponent<Terrain>();
-        terrain.transform.position = new Vector3(0, 20, 0);
+        terrain.transform.position = new Vector3(0, 0, 0);
         Vector3 TS = terrain.terrainData.size;
 
         int res = terrain.terrainData.heightmapResolution;
