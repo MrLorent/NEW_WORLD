@@ -217,6 +217,7 @@ Transform:
   - {fileID: 1853455082}
   - {fileID: 57113702}
   - {fileID: 342955578}
+  - {fileID: 375916627}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -419,6 +420,37 @@ Transform:
   m_Father: {fileID: 173883167}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &375916626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 375916627}
+  m_Layer: 0
+  m_Name: Rocks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &375916627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375916626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 173883167}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &467925946
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +496,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1853455085}
+  rock_prefab: {fileID: 1933929876962978919, guid: 84ab6b879046f4ad8809454f4b4cdeb8, type: 3}
+  nb_rocks: 100
+  rock_parent: {fileID: 375916627}
 --- !u!1 &518453218
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +640,6 @@ MonoBehaviour:
   boidPrefab:
   - {fileID: 3257870102885010105, guid: d3ca32186c4b941e5adf44b51f552182, type: 3}
   - {fileID: 7621014199956840448, guid: 2fc807e24e7f240b1bea5a9e6bb464a7, type: 3}
-  nb_swarm: 5
   boids_per_swarm: 40
   _boids_container: {fileID: 57113702}
 --- !u!1 &686422703

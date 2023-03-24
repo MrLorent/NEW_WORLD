@@ -51,6 +51,11 @@ public class TerrainManager : Singleton<TerrainManager>
     public int NB_CELL_X { get; private set; } = 100;
     public int NB_CELL_Z { get; private set; } = 100;
 
+    [Header("ROCKS")]
+    public List<GameObject> rock_prefab = new List<GameObject>();
+    public int nb_rocks = 100;
+    public Transform rock_parent;
+
     [HideInInspector] public List<List<Cell>> grid;
 
     void Start(){
@@ -89,8 +94,22 @@ public class TerrainManager : Singleton<TerrainManager>
                 ));
             }
         }
+        
+        SpawnRock();
 
+        
         GOLManager.Instance.init();
+    }
+
+    private void SpawnRock()
+    {
+        for (int i = 0; i < nb_rocks; i++)
+        {
+            Vector3 random_position = get_random_position();
+            BiomType biom_type = EnvironmentManager.Instance.get_biom(random_position).biom_type;
+            int biom_value = (int)biom_type;
+            GameObject rock = Instantiate(rock_prefab[biom_value], random_position, Quaternion.Euler(0, Random.Range(0, 360), 0), rock_parent);
+        }
     }
 
     public Vector3 get_random_position()
@@ -122,7 +141,7 @@ public class TerrainManager : Singleton<TerrainManager>
     {
         NavMeshHit hit;
 
-        while (!NavMesh.SamplePosition(new Vector3(world_position.x, 0, world_position.z), out hit, 100.0F, NavMesh.AllAreas));
+        NavMesh.SamplePosition(new Vector3(world_position.x, 0, world_position.z), out hit, 100.0F, NavMesh.AllAreas);
         
         return hit.position;
     }

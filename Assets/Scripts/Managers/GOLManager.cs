@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public enum GOLState
 {
@@ -144,7 +146,10 @@ public class GOLManager : Singleton<GOLManager>
                         random_position.z = Random.Range(future_cell.position.z - Cell.dimensions.y * 0.5F, future_cell.position.z + Cell.dimensions.y * 0.5F);
                         random_position.y = TerrainManager.Instance.terrain.SampleHeight(random_position);
 
-                        GameObject flower = Instantiate(prefab[random], random_position, Quaternion.identity, _flower_container);
+                        NavMeshHit hit;
+                        NavMesh.SamplePosition(new Vector3(random_position.x, random_position.y, random_position.z), out hit, 20f, NavMesh.AllAreas);
+
+                        GameObject flower = Instantiate(prefab[random], hit.position, Quaternion.identity, _flower_container);
                         flower.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
                         future_cell.flowers.Add(flower);
