@@ -72,7 +72,10 @@ public class Tree : MonoBehaviour
         }
         else
         {
-            transform.localScale *= 1.1F;
+            if(transform.localScale.x < 3.5F)
+            {
+                transform.localScale *= 1.1F;
+            }
         }
     }
 
