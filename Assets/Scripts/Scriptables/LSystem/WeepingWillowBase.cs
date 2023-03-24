@@ -46,4 +46,14 @@ public class WeepingWillowBase : LSystemBase
     {
         return 1.0F / width;
     }
+
+    public override float get_foliage_scale_Y(int age)
+    {
+        return age >= 2 ? Mathf.Clamp(age * 0.5F, 1, 3.0F) : 0.0F;
+    }
+
+    public override float get_foliage_scale_Z(int age)
+    {
+        return age >= 1 ? Mathf.Clamp(age * 0.33F, 1, 2.75F) : 0.0F;
+    }
 }

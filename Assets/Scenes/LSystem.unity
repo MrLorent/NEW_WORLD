@@ -649,11 +649,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turtle_mesh: {fileID: 8246579523791496141, guid: 35c829f36c3b88b45b2fd93fd6cb26a3, type: 3}
   branch_mesh: {fileID: 7588318906811468712, guid: 161baf812c028bc4585b3b5d5df04d45, type: 3}
-  foliage_shape: {fileID: 11400000, guid: 48369b3e0d97cf34482418ab06dbd6cd, type: 2}
+  foliage_shape: {fileID: 11400000, guid: d35fc7382a89de64587e0b5aac0bf76e, type: 2}
   trunk_container: {fileID: 8857086}
   foliage_container: {fileID: 1798841658}
   iterations: 7
-  lsystem_base: {fileID: 11400000, guid: aebaa9db894a78647a8e3db5d39eb3e1, type: 2}
+  lsystem_base: {fileID: 11400000, guid: 5efac4654feb0bc42ad9a48d3fe7a371, type: 2}
 --- !u!4 &1255140724
 Transform:
   m_ObjectHideFlags: 0
