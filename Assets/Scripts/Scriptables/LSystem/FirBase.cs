@@ -53,11 +53,6 @@ public class FirBase : LSystemBase
         return 5.0F;
     }
 
-    public override float get_foliage_scale_X(int age)
-    {
-        return 1.0F;
-    }
-
     public override float get_foliage_scale_Y(int age)
     {
         return age >= 2 ? Mathf.Clamp(age * 0.5F, 1, 3.0F) : 0.0F;
