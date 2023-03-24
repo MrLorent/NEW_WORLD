@@ -49,16 +49,16 @@ public class OakBase : LSystemBase
 
     public override float get_foliage_scale_X(int age)
     {
-        return Mathf.Clamp(age * 0.75F, 1, 4);
+        return Mathf.Clamp(age * 0.75F, 1, 3.5F);
     }
 
     public override float get_foliage_scale_Y(int age)
     {
-        return Mathf.Clamp(age * 0.5F, 1, 4);
+        return Mathf.Clamp(age * 0.5F, 1, 3.5F);
     }
 
     public override float get_foliage_scale_Z(int age)
     {
-        return Mathf.Clamp(age * 0.33F, 1, 4);
+        return Mathf.Clamp(age * 0.33F, 1, 3.5F);
     }
 }

@@ -653,7 +653,7 @@ MonoBehaviour:
   trunk_container: {fileID: 8857086}
   foliage_container: {fileID: 1798841658}
   iterations: 3
-  lsystem_base: {fileID: 11400000, guid: 5dad41d8c6bf94641a0d83de1d2a686b, type: 2}
+  lsystem_base: {fileID: 11400000, guid: a95c5efb889326a41a40207e350df074, type: 2}
 --- !u!4 &1255140724
 Transform:
   m_ObjectHideFlags: 0

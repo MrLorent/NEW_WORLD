@@ -16,7 +16,8 @@ public class AppleTreeBase : LSystemBase
         rules = new Dictionary<char, string>()
         {
             {  'A', "F(l)[&(a1)+(o1)!(q2)\"(r1)A][&(a2)+(o2)!(q2)\"(r2)A]Z"  },
-            {'Y', "" },
+            {'X', "" },
+            {'Y', "X" },
             {'Z', "Y" }
         };
 
@@ -47,5 +48,20 @@ public class AppleTreeBase : LSystemBase
     public override float elasticity(float width)
     {
         return 15.0F;
+    }
+
+    public override float get_foliage_scale_X(int age)
+    {
+        return Mathf.Clamp(age * 0.75F, 1, 3.0F);
+    }
+
+    public override float get_foliage_scale_Y(int age)
+    {
+        return Mathf.Clamp(age * 0.5F, 1, 3.0F);
+    }
+
+    public override float get_foliage_scale_Z(int age)
+    {
+        return Mathf.Clamp(age * 0.33F, 1, 3.0F);
     }
 }
