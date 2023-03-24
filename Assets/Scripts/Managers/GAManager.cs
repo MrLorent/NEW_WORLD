@@ -49,11 +49,7 @@ public class GAManager : Singleton<GAManager>
             new_tree.init();
 
             // REGISTER NEW TREE
-            int x = (int)(tree_position.x / Cell.dimensions.x);
-            int z = (int)(tree_position.z / Cell.dimensions.y);
-
-            BiomType tree_biom = TerrainManager.Instance.grid[x][z].biom;
-
+            BiomType tree_biom =EnvironmentManager.Instance.get_biom(tree_position);
             _trees_population[tree_biom].Add(new_tree);
         }
 
@@ -207,10 +203,7 @@ public class GAManager : Singleton<GAManager>
 
                 child_1.init(first_child_genotype);
 
-                int x = (int)(first_child_position.x / Cell.dimensions.x);
-                int z = (int)(first_child_position.z / Cell.dimensions.y);
-
-                BiomType child_biom = TerrainManager.Instance.grid[x][z].biom;
+                BiomType child_biom = EnvironmentManager.Instance.get_biom(first_child_position);
                 childs[child_biom].Add(child_1);
 
                 // SECOND CHILD
@@ -224,10 +217,8 @@ public class GAManager : Singleton<GAManager>
 
                 child_2.init(second_child_genotype);
 
-                x = (int)(second_child_position.x / Cell.dimensions.x);
-                z = (int)(second_child_position.z / Cell.dimensions.y);
 
-                child_biom = TerrainManager.Instance.grid[x][z].biom;
+                child_biom = EnvironmentManager.Instance.get_biom(second_child_position);
                 childs[child_biom].Add(child_2);
             }
         }

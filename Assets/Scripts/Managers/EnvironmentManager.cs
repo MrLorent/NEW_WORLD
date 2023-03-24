@@ -40,6 +40,8 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
             _BOTTOM_RIGHT,
             _BOTTOM_LEFT
         };
+
+        update_shader();
     }
 
     public Environment get_environment(Vector3 position)
@@ -220,30 +222,11 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     }
 
     //Return the biom at the given position
-    public Biom get_biom(Vector3 position)
+    public BiomType get_biom(Vector3 position)
     {
-        Vector2 xz_position = new Vector2(position.x, position.z);
-        if (xz_position.x < _TOP_LEFT.transform.position.x)
-        {
-            if (xz_position.y < _TOP_LEFT.transform.position.z)
-            {
-                return _TOP_LEFT;
-            }
-            else
-            {
-                return _BOTTOM_LEFT;
-            }
-        }
-        else
-        {
-            if (xz_position.y < _TOP_RIGHT.transform.position.z)
-            {
-                return _TOP_RIGHT;
-            }
-            else
-            {
-                return _BOTTOM_RIGHT;
-            }
-        }
+            int x = (int)(position.x / Cell.dimensions.x);
+            int z = (int)(position.z / Cell.dimensions.y);
+
+            return TerrainManager.Instance.grid[x][z].biom;
     }
 }

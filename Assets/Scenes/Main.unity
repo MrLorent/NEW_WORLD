@@ -496,7 +496,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1853455085}
-  rock_prefab: {fileID: 1933929876962978919, guid: 84ab6b879046f4ad8809454f4b4cdeb8, type: 3}
+  rock_prefab:
+  - {fileID: 1933929876962978919, guid: 84ab6b879046f4ad8809454f4b4cdeb8, type: 3}
+  - {fileID: 1933929876962978919, guid: 84ab6b879046f4ad8809454f4b4cdeb8, type: 3}
+  - {fileID: 1933929876962978919, guid: 84ab6b879046f4ad8809454f4b4cdeb8, type: 3}
+  - {fileID: 1933929876962978919, guid: 84ab6b879046f4ad8809454f4b4cdeb8, type: 3}
   nb_rocks: 100
   rock_parent: {fileID: 375916627}
 --- !u!1 &518453218

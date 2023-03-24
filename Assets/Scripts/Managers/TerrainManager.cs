@@ -106,7 +106,7 @@ public class TerrainManager : Singleton<TerrainManager>
         for (int i = 0; i < nb_rocks; i++)
         {
             Vector3 random_position = get_random_position();
-            BiomType biom_type = EnvironmentManager.Instance.get_biom(random_position).biom_type;
+            BiomType biom_type = EnvironmentManager.Instance.get_biom(random_position);
             int biom_value = (int)biom_type;
             GameObject rock = Instantiate(rock_prefab[biom_value], random_position, Quaternion.Euler(0, Random.Range(0, 360), 0), rock_parent);
         }
