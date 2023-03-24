@@ -145,6 +145,7 @@ public class GOLManager : Singleton<GOLManager>
                         random_position.y = TerrainManager.Instance.terrain.SampleHeight(random_position);
 
                         GameObject flower = Instantiate(prefab[random], random_position, Quaternion.identity, _flower_container);
+                        flower.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
                         future_cell.flowers.Add(flower);
                     }
