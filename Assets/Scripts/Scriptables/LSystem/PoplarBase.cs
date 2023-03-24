@@ -18,7 +18,8 @@ public class PoplarBase : LSystemBase
             { 'A', "F(l)[&(a0)!(wr)\"(r2)B]+(d)!(wr)\"(r1)A" },
             { 'B', "F(l)[>(a2)$!(wr)\"(r2)C]!(wr)\"(r1)CZ" },
             { 'C', "F(l)[<(a2)$!(wr)\"(r2)B]!(wr)\"(r1)BZ" },
-            {'Y', "" },
+            {'X', "" },
+            {'Y', "X" },
             {'Z', "Y" }
         };
 
@@ -47,5 +48,20 @@ public class PoplarBase : LSystemBase
     public override float elasticity(float width)
     {
         return 5.0F;
+    }
+
+    public override float get_foliage_scale_X(int age)
+    {
+        return age >= 3 ? Mathf.Clamp(age * 0.75F, 1, 3.0F) : 0.0F;
+    }
+
+    public override float get_foliage_scale_Y(int age)
+    {
+        return age >= 2 ? Mathf.Clamp(age * 0.5F, 1, 2.75F) : 0.0F;
+    }
+
+    public override float get_foliage_scale_Z(int age)
+    {
+        return age >= 1 ? Mathf.Clamp(age * 0.33F, 1, 2.75F) : 0.0F;
     }
 }
