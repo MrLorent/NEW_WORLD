@@ -10,9 +10,6 @@ public class BoidsManager : MonoBehaviour
     private List<Boid> boidPrefab;
 
     [SerializeField]
-    private int nb_swarm = 5;
-
-    [SerializeField]
     private int boids_per_swarm = 200;
 
     [SerializeField]
@@ -30,9 +27,9 @@ public class BoidsManager : MonoBehaviour
 
         _boids = new List<Boid>();
 
-        for (int i = 0; i < nb_swarm; i++)
+        for (int i = 0; i < EnvironmentManager.Instance._bioms.Count; i++)
         {
-            random_position.Add(GetRandomPosition());
+            random_position.Add(get_biome_position(i));
             for (int j = 0; j < boids_per_swarm; j++)
             {
                 SpawnBoid(boidPrefab[i%boidPrefab.Count].gameObject, i);
@@ -58,21 +55,17 @@ public class BoidsManager : MonoBehaviour
     }
 
 
-     public Vector3 GetRandomPosition()
+     public Vector3 get_biome_position(int index)
     {
         NavMeshHit hit;
-        Vector3 random_position = Vector3.zero;
+        Vector2 biom_position = EnvironmentManager.Instance.get_biome_position(EnvironmentManager.Instance._bioms[index]);
+        Vector3 position = new Vector3(biom_position.x, 0.0f, biom_position.y);
 
-        do
-        {
-            random_position.x = Random.Range(terrain.transform.position.x, terrain.terrainData.size.x);
-            random_position.z = Random.Range(terrain.transform.position.z, terrain.terrainData.size.z);
-           
+        NavMesh.SamplePosition(new Vector3(position.x, -10.0f, position.z), out hit, 500.0f, NavMesh.AllAreas);
 
-        } while (!NavMesh.SamplePosition(new Vector3(random_position.x, -10.0f, random_position.z), out hit, 500.0f, NavMesh.AllAreas));
+        position = hit.position;
 
-        random_position = hit.position;
+        return new Vector3(position.x, position.y, position.z);
 
-        return new Vector3(random_position.x, random_position.y, random_position.z);
     }
 }

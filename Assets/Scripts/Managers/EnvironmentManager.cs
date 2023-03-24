@@ -13,7 +13,7 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
 {
     [Header("BIOMS")]
     [SerializeField]
-    private Biom _BOTTOM_RIGHT;
+    public Biom _BOTTOM_RIGHT;
     [SerializeField]
     private Biom _TOP_RIGHT;
     [SerializeField]
@@ -21,7 +21,7 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     [SerializeField]
     private Biom _TOP_LEFT;
 
-    private List<Biom> _bioms;
+    public List<Biom> _bioms { get; private set; }
 
     [Header("GENERAL COLORS")]
     [SerializeField]
@@ -46,10 +46,10 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
     {
         Vector2 xz_position = new Vector2(position.x, position.z);
 
-        Vector2 xz_desert = new Vector2(_TOP_RIGHT.transform.position.x, _TOP_RIGHT.transform.position.z);
-        Vector2 xz_mountain = new Vector2(_BOTTOM_LEFT.transform.position.x, _BOTTOM_LEFT.transform.position.z);
-        Vector2 xz_plain = new Vector2(_BOTTOM_RIGHT.transform.position.x, _BOTTOM_RIGHT.transform.position.z);
-        Vector2 xz_swamp = new Vector2(_TOP_LEFT.transform.position.x, _TOP_LEFT.transform.position.z);
+        Vector2 xz_desert = get_biome_position(_TOP_RIGHT);
+        Vector2 xz_mountain = get_biome_position(_BOTTOM_LEFT);
+        Vector2 xz_plain = get_biome_position(_BOTTOM_RIGHT);
+        Vector2 xz_swamp = get_biome_position(_TOP_LEFT);
 
         Vector2 XZ_TOP_LEFT = xz_swamp;
         Vector2 XZ_TOP_RIGHT = xz_desert;
@@ -200,5 +200,22 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
         _terrain_material.SetVector("_BOTTOM_LEFT", new Vector4(_BOTTOM_LEFT.transform.position.x, _BOTTOM_LEFT.transform.position.y, _BOTTOM_LEFT.transform.position.z, 1));
         _terrain_material.SetVector("_BOTTOM_RIGHT", new Vector4(_BOTTOM_RIGHT.transform.position.x, _BOTTOM_RIGHT.transform.position.y, _BOTTOM_RIGHT.transform.position.z, 1));
         _terrain_material.SetVector("_TOP_LEFT", new Vector4(_TOP_LEFT.transform.position.x, _TOP_LEFT.transform.position.y, _TOP_LEFT.transform.position.z, 1));
+    }
+
+    public Vector2 get_biome_position(Biom biome)
+    {
+        switch (biome.biom_type)
+        {
+            case BiomType.DESERT:
+                return new Vector2(_TOP_LEFT.transform.position.x, _TOP_LEFT.transform.position.z);
+            case BiomType.SWAMP:
+                return new Vector2(_TOP_RIGHT.transform.position.x, _TOP_RIGHT.transform.position.z);
+            case BiomType.PLAIN:
+                return new Vector2(_BOTTOM_LEFT.transform.position.x, _BOTTOM_LEFT.transform.position.z);
+            case BiomType.MOUNTAIN:
+                return new Vector2(_BOTTOM_RIGHT.transform.position.x, _BOTTOM_RIGHT.transform.position.z);
+            default:
+                return Vector2.zero;
+        }
     }
 }
