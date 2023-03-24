@@ -22,4 +22,19 @@ public abstract class LSystemBase : ScriptableObject
     {
         return 10.0F;
     }
+
+    public virtual float get_foliage_scale_X(int age)
+    {
+        return 1.0F;
+    }
+
+    public virtual float get_foliage_scale_Y(int age)
+    {
+        return 1.0F;
+    }
+
+    public virtual float get_foliage_scale_Z(int age)
+    {
+        return 1.0F;
+    }
 }

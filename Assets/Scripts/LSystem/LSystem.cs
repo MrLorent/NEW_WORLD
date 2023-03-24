@@ -287,34 +287,51 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case 'X':
-                    GameObject foliage_x = Instantiate(
-                        foliage_shape.foliage_prefab,
-                        turtle.transform.position,
-                        turtle.transform.rotation,
-                        foliage_container
-                    );
+                    if(iterations > 3)
+                    {
+                        GameObject foliage_x = Instantiate(
+                            foliage_shape.foliage_prefab,
+                            turtle.transform.position,
+                            turtle.transform.rotation,
+                            foliage_container
+                        );
 
-                    foliage_x.transform.localScale = new Vector3(iterations * 0.5F, iterations * 0.5F, iterations * 0.5F);
+                        // Scale foliage
+                        float scale = lsystem_base.get_foliage_scale_X(iterations);
+                        foliage_x.transform.localScale = new Vector3(scale, scale, scale);
+                    }
                     break;
 
                 case 'Y':
-                    GameObject foliage_y = Instantiate(
-                        foliage_shape.foliage_prefab,
-                        turtle.transform.position,
-                        foliage_shape.get_orientation(turtle.transform.rotation),
-                        foliage_container
-                    );
+                    if(iterations > 2)
+                    {
+                        GameObject foliage_y = Instantiate(
+                            foliage_shape.foliage_prefab,
+                            turtle.transform.position,
+                            foliage_shape.get_orientation(turtle.transform.rotation),
+                            foliage_container
+                        );
 
-                    foliage_y.transform.localScale = new Vector3(iterations * 0.25F, iterations * 0.25F, iterations * 0.25F);
+                        // Scale foliage
+                        float scale = lsystem_base.get_foliage_scale_Y(iterations);
+                        foliage_y.transform.localScale = new Vector3(scale, scale, scale);
+                    }
                     break;
 
                 case 'Z':
-                    GameObject foliage_z = Instantiate(
-                        foliage_shape.foliage_prefab,
-                        turtle.transform.position,
-                        foliage_shape.get_orientation(turtle.transform.rotation),
-                        foliage_container
-                    );
+                    if(iterations > 1)
+                    {
+                        GameObject foliage_z = Instantiate(
+                            foliage_shape.foliage_prefab,
+                            turtle.transform.position,
+                            foliage_shape.get_orientation(turtle.transform.rotation),
+                            foliage_container
+                        );
+
+                        // Scale foliage
+                        float scale = lsystem_base.get_foliage_scale_Z(iterations);
+                        foliage_z.transform.localScale = new Vector3(scale, scale, scale);
+                    }
                     break;
 
                 case '+':

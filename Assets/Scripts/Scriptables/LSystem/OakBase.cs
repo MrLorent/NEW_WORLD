@@ -10,13 +10,14 @@ public class OakBase : LSystemBase
         /*====== AXIOM ======*/
         start_width = 0.1F;
         start_length = 1.0F;
-        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")F(" + Helpers.convert_float_to_string(start_length) + ")A";
+        axiom = "!(" + Helpers.convert_float_to_string(start_width) + ")\"(" + Helpers.convert_float_to_string(start_length) + ")A";
 
         /*====== RULES ======*/
         rules = new Dictionary<char, string>()
         {
             {'A', "F(l)+(d1)[&(a)!(wr)\"(lr)A]+(d2)[&(a)!(wr)\"(lr)A]+(d2)[&(a)!(wr)\"(lr)A]Z" },
-            {'Y', "" },
+            {'X', "" },
+            {'Y', "X" },
             {'Z', "Y" }
         };
 
@@ -44,5 +45,20 @@ public class OakBase : LSystemBase
     public override float elasticity(float width)
     {
         return 15.0F;
+    }
+
+    public override float get_foliage_scale_X(int age)
+    {
+        return Mathf.Clamp(age * 0.75F, 1, 4);
+    }
+
+    public override float get_foliage_scale_Y(int age)
+    {
+        return Mathf.Clamp(age * 0.5F, 1, 4);
+    }
+
+    public override float get_foliage_scale_Z(int age)
+    {
+        return Mathf.Clamp(age * 0.33F, 1, 4);
     }
 }
