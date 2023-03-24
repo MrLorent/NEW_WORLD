@@ -15,6 +15,8 @@ MonoBehaviour:
   trunks:
   - {fileID: 11400000, guid: ce92daa5d5ba6794aa1732a2ef81f841, type: 2}
   - {fileID: 11400000, guid: d4867385fd876fb4bbb41e500c26b7eb, type: 2}
+  - {fileID: 11400000, guid: f72970b613599a84f8c1da18b3e1dae8, type: 2}
+  - {fileID: 11400000, guid: 02dee57eb1ae16047a0dbea48fc15ba2, type: 2}
   - {fileID: 11400000, guid: a1e11a7800de847498fe101562459cea, type: 2}
   - {fileID: 11400000, guid: 2f3edfb32dbcfbc46a8d8082e96d7f67, type: 2}
   barks:

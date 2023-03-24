@@ -294,7 +294,7 @@ public class LSystem : MonoBehaviour
                         GameObject foliage_x = Instantiate(
                             foliage_shape.foliage_prefab,
                             turtle.transform.position,
-                            turtle.transform.rotation,
+                            foliage_shape.get_orientation(turtle.transform.rotation),
                             foliage_container
                         );
 

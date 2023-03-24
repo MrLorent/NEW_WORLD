@@ -24,7 +24,7 @@ public class Tree : MonoBehaviour
     [SerializeField]
     private LSystem _lsystem;
     [SerializeField]
-    private int _iteration_max = 7;
+    private int _iteration_max = 6;
 
     private void Awake()
     {
