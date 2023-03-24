@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 402c352001fe3ac428361e44cacb7cf3, type: 3}
-  m_Name: Weeping Willow Trunk
+  m_Name: Weeping Willow Trunk 1
   m_EditorClassIdentifier: 
   attribut_type: 0
   temperature: 40
   humidity_rate: 60
-  lsystem_base: {fileID: 11400000, guid: 5efac4654feb0bc42ad9a48d3fe7a371, type: 2}
+  lsystem_base: {fileID: 11400000, guid: a95c5efb889326a41a40207e350df074, type: 2}
