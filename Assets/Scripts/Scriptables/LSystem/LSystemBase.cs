@@ -25,16 +25,16 @@ public abstract class LSystemBase : ScriptableObject
 
     public virtual float get_foliage_scale_X(int age)
     {
-        return 1.0F;
+        return age >= 3 ? 1.0F : 0.0F;
     }
 
     public virtual float get_foliage_scale_Y(int age)
     {
-        return 1.0F;
+        return age >= 2 ? 1.0F : 0.0F;
     }
 
     public virtual float get_foliage_scale_Z(int age)
     {
-        return 1.0F;
+        return age >= 1 ? 1.0F : 0.0F;
     }
 }

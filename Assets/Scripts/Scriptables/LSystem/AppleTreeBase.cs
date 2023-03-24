@@ -52,16 +52,16 @@ public class AppleTreeBase : LSystemBase
 
     public override float get_foliage_scale_X(int age)
     {
-        return Mathf.Clamp(age * 0.75F, 1, 3.0F);
+        return age >= 3 ? Mathf.Clamp(age * 0.75F, 1, 3.0F) : 0.0F;
     }
 
     public override float get_foliage_scale_Y(int age)
     {
-        return Mathf.Clamp(age * 0.5F, 1, 3.0F);
+        return age >= 2 ? Mathf.Clamp(age * 0.5F, 1, 3.0F) : 0.0F;
     }
 
     public override float get_foliage_scale_Z(int age)
     {
-        return Mathf.Clamp(age * 0.33F, 1, 3.0F);
+        return age >= 1 ? Mathf.Clamp(age * 0.33F, 1, 3.0F) : 0.0F;
     }
 }

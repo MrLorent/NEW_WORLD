@@ -19,7 +19,8 @@ public class FirBase : LSystemBase
             { 'B', "F(l)[&(a0)!(wr)\"(r2)C]+(d2)[&(a0)!(wr)\"(r2)C]+(d1)[&(a0)!(wr)\"(r2)C]+(d3)!(wr)\"(r1)A" },
             { 'C', "^(a3)F(l)[>(a2)$!(wr)\"(r2)D]!(wr)\"(r1)DZ" },
             { 'D', "^(a3)F(l)[<(a2)$!(wr)\"(r2)C]!(wr)\"(r1)CZ" },
-            {'Y', "" },
+            {'X', "" },
+            {'Y', "X" },
             {'Z', "Y" }
         };
 

@@ -287,7 +287,9 @@ public class LSystem : MonoBehaviour
                     break;
 
                 case 'X':
-                    if(iterations > 3)
+                    float scale_x = lsystem_base.get_foliage_scale_X(iterations);
+
+                    if(scale_x > 0)
                     {
                         GameObject foliage_x = Instantiate(
                             foliage_shape.foliage_prefab,
@@ -297,13 +299,14 @@ public class LSystem : MonoBehaviour
                         );
 
                         // Scale foliage
-                        float scale = lsystem_base.get_foliage_scale_X(iterations);
-                        foliage_x.transform.localScale = new Vector3(scale, scale, scale);
+                        foliage_x.transform.localScale = new Vector3(scale_x, scale_x, scale_x);
                     }
                     break;
 
                 case 'Y':
-                    if(iterations > 2)
+                    float scale_y = lsystem_base.get_foliage_scale_Y(iterations);
+
+                    if (scale_y > 0)
                     {
                         GameObject foliage_y = Instantiate(
                             foliage_shape.foliage_prefab,
@@ -313,13 +316,14 @@ public class LSystem : MonoBehaviour
                         );
 
                         // Scale foliage
-                        float scale = lsystem_base.get_foliage_scale_Y(iterations);
-                        foliage_y.transform.localScale = new Vector3(scale, scale, scale);
+                        foliage_y.transform.localScale = new Vector3(scale_y, scale_y, scale_y);
                     }
                     break;
 
                 case 'Z':
-                    if(iterations > 1)
+                    float scale_z = lsystem_base.get_foliage_scale_Z(iterations);
+
+                    if (scale_z > 0)
                     {
                         GameObject foliage_z = Instantiate(
                             foliage_shape.foliage_prefab,
@@ -329,8 +333,7 @@ public class LSystem : MonoBehaviour
                         );
 
                         // Scale foliage
-                        float scale = lsystem_base.get_foliage_scale_Z(iterations);
-                        foliage_z.transform.localScale = new Vector3(scale, scale, scale);
+                        foliage_z.transform.localScale = new Vector3(scale_z, scale_z, scale_z);
                     }
                     break;
 
