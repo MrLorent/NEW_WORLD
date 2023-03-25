@@ -647,8 +647,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boidPrefab:
-  - {fileID: 3257870102885010105, guid: d3ca32186c4b941e5adf44b51f552182, type: 3}
+  - {fileID: 7621014199956840448, guid: 19439bbf7a6b80c47b28e143d03523c4, type: 3}
   - {fileID: 7621014199956840448, guid: 2fc807e24e7f240b1bea5a9e6bb464a7, type: 3}
+  - {fileID: 3257870102885010105, guid: d3ca32186c4b941e5adf44b51f552182, type: 3}
+  - {fileID: 3257870102885010105, guid: 349cef5b9aca5fc469d8090f8509d3af, type: 3}
   boids_per_swarm: 40
   _boids_container: {fileID: 57113702}
 --- !u!1 &686422703

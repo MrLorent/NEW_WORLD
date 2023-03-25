@@ -1,9 +1,39 @@
 fileFormatVersion: 2
-guid: 6ce25317f9e36b049ac26db9b1bde397
+guid: 85a0fff398997514aa81f27afa4d439b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black eyes
+    second: {fileID: 2100000, guid: f4dc42918225da34db833b89468a9ca2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White Eyes.001
+    second: {fileID: 2100000, guid: c45148f84e955a24ea516b84a3aa3cfd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: belly
+    second: {fileID: 2100000, guid: a351249c1c0600246a26cbbf713ed635, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body
+    second: {fileID: 2100000, guid: 37eb6e1adb9431b49ba0f3e5df643b5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: corp bleu.001
+    second: {fileID: 2100000, guid: e5e5f4a1bdef8184d9fd348887f74474, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: griffes
+    second: {fileID: 2100000, guid: 99f481a3bff6ba94dbe1984cb59b62ec, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
