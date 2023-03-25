@@ -496,7 +496,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 1853455085}
-  rock_prefab:
+  biom_rocks_colors:
+  - {fileID: 2100000, guid: b8928cb57055a0b4ebc0e511f0989dab, type: 2}
+  - {fileID: 2100000, guid: c707fa20f5b1f3447b4829798250feda, type: 2}
+  - {fileID: 2100000, guid: 60275be123fb610499a573b3a761624e, type: 2}
+  - {fileID: 2100000, guid: c6b8784ea38fb9a4ba1793cfb118a889, type: 2}
+  rock_prefabs:
   - {fileID: 1933929876962978919, guid: 84ab6b879046f4ad8809454f4b4cdeb8, type: 3}
   - {fileID: 1933929876962978919, guid: 45528693046113e4c8c2ca69a332af25, type: 3}
   - {fileID: 1933929876962978919, guid: eaa41de21f913cf46bf166e6e8d52f45, type: 3}
@@ -1673,7 +1678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4530231867713994687}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

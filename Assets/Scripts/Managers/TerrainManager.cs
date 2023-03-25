@@ -52,8 +52,10 @@ public class TerrainManager : Singleton<TerrainManager>
     public int NB_CELL_Z { get; private set; } = 100;
 
     [Header("ROCKS")]
-    public List<GameObject> rock_prefab = new List<GameObject>();
-    public int nb_rocks = 100;
+    [SerializeField] private List<Material> biom_rocks_colors;
+
+    [SerializeField] private List<GameObject> rock_prefabs;
+    public int nb_rocks = 200;
     public Transform rock_parent;
 
     [HideInInspector] public List<List<Cell>> grid;
@@ -107,8 +109,15 @@ public class TerrainManager : Singleton<TerrainManager>
         {
             Vector3 random_position = get_random_position();
             BiomType biom_type = EnvironmentManager.Instance.get_biom(random_position);
-            int biom_value = (int)biom_type;
-            GameObject rock = Instantiate(rock_prefab[biom_value], random_position, Quaternion.Euler(0, Random.Range(0, 360), 0), rock_parent);
+            
+            MeshRenderer rock_renderer = Instantiate(
+                rock_prefabs[Random.Range(0, rock_prefabs.Count)],
+                random_position,
+                Quaternion.Euler(0, Random.Range(0, 360), 0),
+                rock_parent
+            ).GetComponentInChildren<MeshRenderer>();
+
+            rock_renderer.material = biom_rocks_colors[(int)biom_type];
         }
     }
 
