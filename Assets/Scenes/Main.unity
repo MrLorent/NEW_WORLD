@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   biom_type: 3
   temperature: 40
   humidity_rate: 60
-  ground_color: {r: 0.20392157, g: 0.20392157, b: 0.5176471, a: 0}
+  ground_color: {r: 0.14509805, g: 0.14509805, b: 0.3254902, a: 0}
 --- !u!1 &1981493409
 GameObject:
   m_ObjectHideFlags: 0
