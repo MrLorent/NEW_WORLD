@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2674518525384766626}
   - component: {fileID: 6676877898424102475}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Desert Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d39f926c256f48529380099124b7a21, type: 2}
+  - {fileID: 2100000, guid: c707fa20f5b1f3447b4829798250feda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
