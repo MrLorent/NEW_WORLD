@@ -15,6 +15,8 @@ public class GAManager : Singleton<GAManager>
 
     [SerializeField]
     private Transform _trees_container;
+
+    //each biom has a list of trees that are in it
     private Dictionary<BiomType, List<Tree>> _trees_population;
 
     [SerializeField]
@@ -56,20 +58,16 @@ public class GAManager : Singleton<GAManager>
         next_generation();
     }
 
+    // compute the next generation
     private void next_generation()
     {
-        Debug.Log(
-            "NEXT GENERATION"
-            + "\n- Desert : " + _trees_population[BiomType.DESERT].Count
-            + "\n- Mountain : " + _trees_population[BiomType.MOUNTAIN].Count
-            + "\n- Plain : " + _trees_population[BiomType.PLAIN].Count
-            + "\n- Swamp : " + _trees_population[BiomType.SWAMP].Count
-        );
         selection();
         reproduction();
         StartCoroutine(grow_trees());
     }
 
+    //This is a coroutine that will grow the trees, every 0.05 seconds a tree will grow
+    //When all the trees have grown, the next generation will be computed
     IEnumerator grow_trees()
     {
         WaitForSeconds wait = new WaitForSeconds(0.05F);
@@ -85,6 +83,7 @@ public class GAManager : Singleton<GAManager>
         Invoke("next_generation", 0.5F);
     }
 
+    //This function will select the best trees and kill the worst ones
     private void selection()
     {
         foreach (KeyValuePair<BiomType, List<Tree>> biom in _trees_population)
@@ -120,6 +119,8 @@ public class GAManager : Singleton<GAManager>
         }
     }
 
+
+    //This function take trees from the same biom and make them reproduce
     private void reproduction()
     {
         Dictionary<BiomType, List<Tree>> childs = new Dictionary<BiomType, List<Tree>>()

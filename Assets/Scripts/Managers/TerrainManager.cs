@@ -73,6 +73,7 @@ public class TerrainManager : Singleton<TerrainManager>
         //We define the size of a cell in the grid
         Cell.dimensions = new Vector2((MAX_X - MIN_X) / (float)NB_CELL_X, (MAX_Z - MIN_Z) / (float)NB_CELL_Z);
 
+        //We initialize the grid
         for (int x = 0; x < NB_CELL_X; x++)
         {
             grid.Add(new List<Cell>());
@@ -84,7 +85,6 @@ public class TerrainManager : Singleton<TerrainManager>
                 float cell_y = terrain.transform.position.y + TerrainManager.Instance.terrain.SampleHeight(new Vector3(cell_x, 0, cell_z));
                 Vector3 cell_position = new Vector3(cell_x, cell_y, cell_z);
 
-                //HERE CALL THE FUNCTION TO GET THE BIOME
                 Environment cell_environment = EnvironmentManager.Instance.get_environment(cell_position);
 
                 grid[x].Add(new Cell(

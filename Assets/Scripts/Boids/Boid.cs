@@ -22,9 +22,10 @@ public class Boid : MonoBehaviour
         terrain = Terrain.activeTerrain;
     }
 
+    //This method is applying the steering forces to the boid and moving it
+    //the steering forces are calculated with the cohesion, separation and alignment factors
     public void SimulateMovement(List<Boid> other, float time)
     {
-
         //default vars
         Vector3 steering = Vector3.zero;
 
@@ -49,14 +50,14 @@ public class Boid : MonoBehaviour
 
             float distance = Vector3.Distance(boid.transform.position, this.transform.position);
 
-            //identify local neighbour
+            //identify local neighbour and avoid clumping
             if (distance < NoClumpingRadius)
             {
                 separationDirection += boid.transform.position - transform.position;
                 separationCount++;
             }
 
-             //identify local neighbour
+             //identify local neighbour and align
             if (distance < LocalAreaRadius && boid.SwarmIndex == this.SwarmIndex)
             {
                 alignmentDirection += boid.transform.forward;
@@ -64,6 +65,7 @@ public class Boid : MonoBehaviour
 
             }
 
+            //identify local neighbour and cohere
             if(distance > LocalAreaRadius && boid.SwarmIndex == this.SwarmIndex)
             {
                 cohesionDirection += boid.transform.position - transform.position;
@@ -78,12 +80,6 @@ public class Boid : MonoBehaviour
         //flip and normalize
         separationDirection = -separationDirection.normalized;
 
-       
-
-        //cohesionDirection -= transform.position;
-
-
-
         //apply to steering
         steering = separationDirection.normalized * 0.4f;
         steering += alignmentDirection.normalized * 0.24f;
@@ -93,7 +89,6 @@ public class Boid : MonoBehaviour
         if (steering != Vector3.zero){
            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(steering), SteeringSpeed * time);
         }
-
 
         //move 
         transform.position += transform.TransformDirection(new Vector3(0, 0, speed)) * time;

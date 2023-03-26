@@ -26,6 +26,8 @@ public class DiamondSquareGenerator : MonoBehaviour
             }
         }
 
+        // Initialisation :
+        // set the height of the corner to random values between 0 and add_random
         heights[0, 0] = Random.Range(0.0f, add_random);
         heights[0, max] = Random.Range(0.0f, add_random);
         heights[max, 0] = Random.Range(0.0f, add_random);
@@ -36,7 +38,7 @@ public class DiamondSquareGenerator : MonoBehaviour
 
         while (index > 1)
         {
-            /// Diamant :
+            // Diamond :
             for (int i = 0; i < count; i++)
             {
                 for (int j = 0; j < count; j++)
@@ -56,7 +58,7 @@ public class DiamondSquareGenerator : MonoBehaviour
                 }
             }
 
-            /// Carré :
+            // Square :
             int margin = 0;
             for (int i = 0; i <= max; i += index / 2)
             {
@@ -92,6 +94,8 @@ public class DiamondSquareGenerator : MonoBehaviour
                         sum += heights[i, j + index / 2];
                         ++number_of_neighbors;
                     }
+
+                    //smoothing the height to avoid sharp edges
                     heights[i, j] =
                         sum / number_of_neighbors + Random.Range(-index / 2, index / 2) * smooth;
                 }
@@ -100,6 +104,7 @@ public class DiamondSquareGenerator : MonoBehaviour
             index /= 2;
         }
 
+        // Apply the new heights to the terrain
         terrain.terrainData.SetHeights(0, 0, heights);
     }
 }

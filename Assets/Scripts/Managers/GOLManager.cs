@@ -27,12 +27,14 @@ public class GOLManager : Singleton<GOLManager>
 
     public void init()
     {
+        //Every 10 seconds, a new state of the game of life is computed
         InvokeRepeating("run", 0F, 10F);
     }
 
+    //randomly set the state of a cell to alive or dead, it depends on the spawn rate
+    //this is used to initialize the grid
     public GOLState get_random_GOL_state()
     {
-        //Using Random.range with int is exclusive
         int random = UnityEngine.Random.Range(0, 100);
 
         if (random < _spawn_rate)
@@ -101,6 +103,8 @@ public class GOLManager : Singleton<GOLManager>
         }
     }
 
+
+    //Count the number of neighbors of a cell, if the cell is on the edge of the grid, it will wrap around
     private int CountNeighbors(int x, int y)
     {
         int sum = 0;
@@ -126,6 +130,7 @@ public class GOLManager : Singleton<GOLManager>
         return sum;
     }
 
+    //Instantiate flowers on the terrain if the cell is alive
     private void DrawFlowers()
     {
 
@@ -160,6 +165,7 @@ public class GOLManager : Singleton<GOLManager>
         }
     }
 
+    //Destroy flowers if the cell is dead
     private void Clear()
     {
          for(int x = 0; x < TerrainManager.Instance.NB_CELL_X; x++)

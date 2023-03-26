@@ -31,6 +31,8 @@ public class Tree : MonoBehaviour
         _lsystem = GetComponent<LSystem>();
     }
 
+    //init the tree with random parameters and set the number of iterations to a random value
+    //this method is used when the first generation is created
     public void init()
     {
         trunk = GAManager.Instance.get_random_trunk();
@@ -47,6 +49,7 @@ public class Tree : MonoBehaviour
         _lsystem.iterations = Random.Range(1, _iteration_max);
     }
 
+    //init a tree with the given parameters and set the number of iterations to 1
     public void init(Tree t)
     {
         trunk = t.trunk;
@@ -63,6 +66,7 @@ public class Tree : MonoBehaviour
         _lsystem.iterations = 1;
     }
 
+    //grow the tree by one iteration or by one scale if the tree is fully grown
     public void grow()
     {
         if(_lsystem.iterations < _iteration_max)
@@ -79,6 +83,7 @@ public class Tree : MonoBehaviour
         }
     }
 
+    //compute the fitness score of the tree using tunk, bark, foliage_shape and foliage_color attributs indepedently and then average them
     private void compute_fitness_score()
     {
         int x = (int) (transform.position.x / Cell.dimensions.x);
@@ -87,7 +92,6 @@ public class Tree : MonoBehaviour
         float environment_temperature = TerrainManager.Instance.grid[x][z].temperature;
         float environment_humidity_rate = TerrainManager.Instance.grid[x][z].humidity_rate;
 
-        //compute the fitness score of the tree using tunk, bark, foliage_shape and foliage_color attributs indepedently and then average them
         float tree_temperature = (trunk.temperature + bark.temperature + foliage_shape.temperature + foliage_color.temperature) / 4.0F;
         float tree_humidity_rate = (trunk.humidity_rate + bark.humidity_rate + foliage_shape.humidity_rate + foliage_color.humidity_rate) / 4.0F;
 

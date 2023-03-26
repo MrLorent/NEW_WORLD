@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+//This class is used to manage the boids
+//It is used to keep track of the boids and to spawn them
 public class BoidsManager : MonoBehaviour
 {
 
@@ -45,6 +48,7 @@ public class BoidsManager : MonoBehaviour
         }
     }
 
+    //Instantiate a boid and add it to the list
     private void SpawnBoid(GameObject prefab, int swarmIndex)
     {
         GameObject boidInstance = Instantiate(prefab, random_position[swarmIndex], Quaternion.identity, _boids_container);
@@ -55,7 +59,8 @@ public class BoidsManager : MonoBehaviour
     }
 
 
-     public Vector3 get_biome_position(int index)
+    //Get the position of a biom object
+    public Vector3 get_biome_position(int index)
     {
         NavMeshHit hit;
         Vector2 biom_position = EnvironmentManager.Instance.get_biome_position(EnvironmentManager.Instance._bioms[index]);
