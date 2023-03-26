@@ -71,6 +71,34 @@ Shader "Custom/TerrainShader"
             );
         }
 
+
+        // Gives the color of the given position.
+        // The map is sliced into 9 parts, the four bioms at the corners,
+        // And intermediate values between them like so :
+        // 
+        // ----------------------------------------------------
+        // |                |                |                |
+        // |                |                |                |
+        // |    TOP LEFT    |  INTERMEDIATE  |   TOP RIGHT    |
+        // |                |                |                |
+        // |                |                |                |
+        // ----------------------------------------------------
+        // |                |                |                |
+        // |                |                |                |
+        // |  INTERMEDIATE  |  INTERMEDIATE  |  INTERMEDIATE  |
+        // |                |                |                |
+        // |                |                |                |
+        // ----------------------------------------------------
+        // |                |                |                |
+        // |  BOTTOM LEFT   |  INTERMEDIATE  |  BOTTOM RIGHT  |
+        // |                |                |                |
+        // |                |                |                |
+        // ----------------------------------------------------
+        // 
+        // It's the same algorithm that is use EnvironmentManager.cs script
+        // to give the environment of a given position.
+        // For more details, see the documentation in EnvironmentManager.cs.
+        //
         fixed4 get_base_color(float3 position)
         {   
             fixed4 color = fixed4(1,1,1,1);

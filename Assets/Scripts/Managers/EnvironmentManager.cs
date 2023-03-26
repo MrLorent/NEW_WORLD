@@ -44,8 +44,38 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
         update_shader();
     }
 
+    /// <summary>
+    /// Gives the environment of the given position.
+    /// The map is sliced into 9 parts, the four bioms at the corners,
+    /// And intermediate values between them like so :
+    /// 
+    /// ----------------------------------------------------
+    /// |                |                |                |
+    /// |                |                |                |
+    /// |    TOP LEFT    |  INTERMEDIATE  |   TOP RIGHT    |
+    /// |                |                |                |
+    /// |                |                |                |
+    /// ----------------------------------------------------
+    /// |                |                |                |
+    /// |                |                |                |
+    /// |  INTERMEDIATE  |  INTERMEDIATE  |  INTERMEDIATE  |
+    /// |                |                |                |
+    /// |                |                |                |
+    /// ----------------------------------------------------
+    /// |                |                |                |
+    /// |  BOTTOM LEFT   |  INTERMEDIATE  |  BOTTOM RIGHT  |
+    /// |                |                |                |
+    /// |                |                |                |
+    /// ----------------------------------------------------
+    /// 
+    /// It's the same algorithm that is use in the terrain shader
+    /// to give the right color to the terrain
+    /// 
+    /// </summary>
+    ///
     public Environment get_environment(Vector3 position)
     {
+        // Project all position to 2D ground plan
         Vector2 xz_position = new Vector2(position.x, position.z);
 
         Vector2 xz_desert = get_biome_position(_TOP_RIGHT);
@@ -58,8 +88,22 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
         Vector2 XZ_BOTTOM_RIGHT = xz_plain;
         Vector2 XZ_BOTTOM_LEFT = xz_mountain;
 
+        // -------------
+        // | X |   |   |
+        // -------------
+        // | X |   |   |
+        // -------------
+        // | X |   |   |
+        // -------------
         if (Helpers.is_left(XZ_BOTTOM_LEFT, XZ_TOP_LEFT, xz_position))
         {
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
+            // | X |   |   |
+            // -------------
             if (Helpers.is_left(XZ_BOTTOM_RIGHT, XZ_BOTTOM_LEFT, xz_position))
             {
                 return new Environment(
@@ -68,6 +112,14 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                     _BOTTOM_LEFT.humidity_rate
                 );
             }
+
+            // -------------
+            // | X |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
             else if (Helpers.is_left(XZ_TOP_LEFT, XZ_TOP_RIGHT, xz_position))
             {
                 return new Environment(
@@ -76,6 +128,14 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                     _TOP_LEFT.humidity_rate
                 );
             }
+
+            // -------------
+            // |   |   |   |
+            // -------------
+            // | X |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
             else
             {
                 Vector2 start = Helpers.get_intersection(XZ_BOTTOM_LEFT, XZ_BOTTOM_RIGHT, xz_position, xz_position + new Vector2(0, -1));
@@ -85,14 +145,31 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
 
                 return new Environment(
                     ((XZ_BOTTOM_LEFT - xz_position).magnitude - (XZ_TOP_LEFT - xz_position).magnitude) < 0.005 ? _BOTTOM_LEFT.biom_type : _TOP_LEFT.biom_type,
+
+                    // Set temperature and humidity according to distance to each of the 2 bioms
                     Mathf.Lerp(_BOTTOM_LEFT.temperature, _TOP_LEFT.temperature, linear_factor),
                     Mathf.Lerp(_BOTTOM_LEFT.humidity_rate, _TOP_LEFT.humidity_rate, linear_factor)
                 );
 
             }
         }
+
+        // -------------
+        // |   |   | X |
+        // -------------
+        // |   |   | X |
+        // -------------
+        // |   |   | X |
+        // -------------
         else if (Helpers.is_left(XZ_TOP_RIGHT, XZ_BOTTOM_RIGHT, xz_position))
         {
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   | X |
+            // -------------
             if (Helpers.is_left(XZ_BOTTOM_RIGHT, XZ_BOTTOM_LEFT, xz_position))
             {
                 return new Environment(
@@ -101,6 +178,14 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                     _BOTTOM_RIGHT.humidity_rate
                 );
             }
+
+            // -------------
+            // |   |   | X |
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
             else if (Helpers.is_left(XZ_TOP_LEFT, XZ_TOP_RIGHT, xz_position))
             {
                 return new Environment(
@@ -109,6 +194,14 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                     _TOP_RIGHT.humidity_rate
                 );
             }
+
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   | X |
+            // -------------
+            // |   |   |   |
+            // -------------
             else
             {
                 Vector2 start = Helpers.get_intersection(XZ_BOTTOM_LEFT, XZ_BOTTOM_RIGHT, xz_position, xz_position + new Vector2(0, -1));
@@ -117,15 +210,33 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                 linear_factor *= linear_factor * (3.0F - 2.0F * linear_factor);
 
                 return new Environment(
+                    // Include the position to the closest biom
                     ((XZ_BOTTOM_RIGHT - xz_position).magnitude - (XZ_TOP_RIGHT - xz_position).magnitude) < 0.005 ? _BOTTOM_RIGHT.biom_type : _TOP_RIGHT.biom_type,
+
+                    // Set temperature and humidity according to distance to each of the 2 bioms
                     Mathf.Lerp(_BOTTOM_RIGHT.temperature, _TOP_RIGHT.temperature, linear_factor),
                     Mathf.Lerp(_BOTTOM_RIGHT.humidity_rate, _TOP_RIGHT.humidity_rate, linear_factor)
                 );
 
             }
         }
+
+        // -------------
+        // |   | X |   |
+        // -------------
+        // |   | X |   |
+        // -------------
+        // |   | X |   |
+        // -------------
         else
         {
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   | X |   |
+            // -------------
             if (Helpers.is_left(XZ_BOTTOM_RIGHT, XZ_BOTTOM_LEFT, xz_position))
             {
                 Vector2 start = Helpers.get_intersection(XZ_BOTTOM_LEFT, XZ_TOP_LEFT, xz_position, xz_position + new Vector2(-1, 0));
@@ -134,12 +245,23 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                 linear_factor *= linear_factor * (3.0F - 2.0F * linear_factor);
 
                 return new Environment(
+                    // Include the position to the closest biom
                     ((XZ_BOTTOM_LEFT - xz_position).magnitude - (XZ_BOTTOM_RIGHT - xz_position).magnitude) < 0.005 ? _BOTTOM_LEFT.biom_type : _BOTTOM_RIGHT.biom_type,
+
+                    // Set temperature and humidity according to distance to each of the 2 bioms
                     Mathf.Lerp(_BOTTOM_LEFT.temperature, _BOTTOM_RIGHT.temperature, linear_factor),
                     Mathf.Lerp(_BOTTOM_LEFT.humidity_rate, _BOTTOM_RIGHT.humidity_rate, linear_factor)
                 );
             }
-            else if(Helpers.is_left(XZ_TOP_LEFT, XZ_TOP_RIGHT, xz_position))
+
+            // -------------
+            // |   | X |   |
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   |   |   |
+            // -------------
+            else if (Helpers.is_left(XZ_TOP_LEFT, XZ_TOP_RIGHT, xz_position))
             {
                 Vector2 start = Helpers.get_intersection(XZ_BOTTOM_LEFT, XZ_TOP_LEFT, xz_position, xz_position + new Vector2(-1, 0));
                 Vector2 end = Helpers.get_intersection(XZ_BOTTOM_RIGHT, XZ_TOP_RIGHT, xz_position, xz_position + new Vector2(1, 0));
@@ -147,11 +269,22 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                 linear_factor *= linear_factor * (3.0F - 2.0F * linear_factor);
 
                 return new Environment(
+                    // Include the position to the closest biom
                     ((XZ_TOP_LEFT - xz_position).magnitude - (XZ_TOP_RIGHT - xz_position).magnitude) < 0.005 ? _TOP_LEFT.biom_type : _TOP_RIGHT.biom_type,
+
+                    // Set temperature and humidity according to distance to each of the 2 bioms
                     Mathf.Lerp(_TOP_LEFT.temperature, _TOP_RIGHT.temperature, linear_factor),
                     Mathf.Lerp(_TOP_LEFT.humidity_rate, _TOP_RIGHT.humidity_rate, linear_factor)
                 );
             }
+
+            // -------------
+            // |   |   |   |
+            // -------------
+            // |   | X |   |
+            // -------------
+            // |   |   |   |
+            // -------------
             else
             {
                 Vector2 start = Helpers.get_intersection(XZ_BOTTOM_LEFT, XZ_TOP_LEFT, xz_position, xz_position + new Vector2(-1, 0));
@@ -159,16 +292,24 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                 float linear_factor = (xz_position.x - start.x) / (end.x - start.x);
                 linear_factor *= linear_factor * (3.0F - 2.0F * linear_factor);
 
+                // PROCESS BOTTOM PART
                 Vector2 closest_bottom = ((XZ_BOTTOM_LEFT - xz_position).magnitude - (XZ_BOTTOM_RIGHT - xz_position).magnitude) < 0.005 ? XZ_BOTTOM_LEFT : XZ_BOTTOM_RIGHT;
                 Environment bottom_env = new Environment(
+                    // Include the position to the closest biom
                     ((XZ_BOTTOM_LEFT - xz_position).magnitude - (XZ_BOTTOM_RIGHT - xz_position).magnitude) < 0.005 ? _BOTTOM_LEFT.biom_type : _BOTTOM_RIGHT.biom_type,
+
+                    // Set temperature and humidity according to distance to each of the 2 bioms
                     Mathf.Lerp(_BOTTOM_LEFT.temperature, _BOTTOM_RIGHT.temperature, linear_factor),
                     Mathf.Lerp(_BOTTOM_LEFT.humidity_rate, _BOTTOM_RIGHT.humidity_rate, linear_factor)
                 );
 
+                // PROCESS TOP PART
                 Vector2 closest_top = ((XZ_TOP_LEFT - xz_position).magnitude - (XZ_TOP_RIGHT - xz_position).magnitude) < 0.005 ? XZ_TOP_LEFT : XZ_TOP_RIGHT;
                 Environment top_env = new Environment(
+                    // Include the position to the closest biom
                     ((XZ_TOP_LEFT - xz_position).magnitude - (XZ_TOP_RIGHT - xz_position).magnitude) < 0.005 ? _TOP_LEFT.biom_type : _TOP_RIGHT.biom_type,
+
+                    // Set temperature and humidity according to distance to each of the 2 bioms
                     Mathf.Lerp(_TOP_LEFT.temperature, _TOP_RIGHT.temperature, linear_factor),
                     Mathf.Lerp(_TOP_LEFT.humidity_rate, _TOP_RIGHT.humidity_rate, linear_factor)
                 );
@@ -178,8 +319,12 @@ public class EnvironmentManager : Singleton<EnvironmentManager>
                 linear_factor = (xz_position.y - start.y) / (end.y - start.y);
                 linear_factor *= linear_factor * (3.0F - 2.0F * linear_factor);
 
+                // MERGE BOTTOM AND TOP PART
                 return new Environment(
+                    // Include the position to the closest biom
                     ((closest_bottom - xz_position).magnitude - (closest_top - xz_position).magnitude) < 0.005 ? bottom_env.biom_type : top_env.biom_type,
+
+                    // Set temperature and humidity according to distance to each of the 2 bioms
                     Mathf.Lerp(bottom_env.temperature, top_env.temperature, linear_factor),
                     Mathf.Lerp(bottom_env.humidity_rate, top_env.humidity_rate, linear_factor)
                 );
