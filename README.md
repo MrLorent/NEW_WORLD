@@ -35,6 +35,8 @@ On free fly mode only :
 | +---LSystem
 +---Scenes
 | \---Main
+| \---Diamond Square
+| \---LSystem
 +---Scripts
 | +---Boids
 | +---Diamond Square
@@ -63,7 +65,13 @@ On free fly mode only :
 
     - **LSystem**: All LSystem models objects (LSystem bases).
 
-- **Scenes**: Contains all the Unity scenes created during development. The "Main" scene is the actual game.
+- **Scenes**: Contains all the Unity scenes created during development.
+
+    - **Main**: The actual project scene.
+
+    - **Diamond Square**: Map generation experimentation scene.
+
+    - **LSystem**: Tree generation experimentation scene.
 
 - **Scripts**: Basically contains all the C# code of the project.
 
